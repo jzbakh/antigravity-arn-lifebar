@@ -1,0 +1,34 @@
+# Git
+.gitattributes
+.gitignore
+.git/**
+
+# GitHub repo infrastructure
+.github/**
+
+# Test harness (own package.json with devDeps — must never ship)
+test/**
+
+# Dev tooling
+scripts/**
+
+# Build artefacts
+VSIX/**
+vsix/**
+*.vsix
+
+# Repo-only docs
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+
+# README assets — Marketplace rewrites relative paths to GitHub raw URLs,
+# so only the icon (referenced by package.json.icon) needs to be bundled.
+media/ARN-Lifebar_demo.png
+media/Antigravity_ARN-Lifebar.jpg
+media/Bitcoin.png
+media/Ethereum.png
+media/Solana.png
+
+# Self
+.vscodeignore

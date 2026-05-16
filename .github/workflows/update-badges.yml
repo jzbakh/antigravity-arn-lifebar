@@ -1,0 +1,101 @@
+name: update-badges
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    name: Refresh VS Marketplace badge JSONs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the badges branch directly
+        uses: actions/checkout@v5
+        with:
+          ref: badges
+
+      - name: Query VS Marketplace gallery API
+        id: query
+        run: |
+          set -euo pipefail
+          RESPONSE=$(curl -sS \
+            -H "Accept: application/json;api-version=6.0-preview.1" \
+            -H "Content-Type: application/json" \
+            -X POST https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery \
+            -d '{"flags":914,"filters":[{"criteria":[{"filterType":7,"value":"jzbakh.antigravity-arn-lifebar"}]}]}')
+
+          VERSION=$(echo "$RESPONSE" | jq -r '
+            (.results // [])[0] // {}
+            | (.extensions // [])[0] // {}
+            | (.versions // [])[0] // {}
+            | (.version // "unknown")
+          ')
+
+          DOWNLOADS=$(echo "$RESPONSE" | jq -r '
+            (.results // [])[0] // {}
+            | (.extensions // [])[0] // {}
+            | (.statistics // [])
+            | map(select(.statisticName == "downloadCount"))
+            | (.[0].value // 0)
+          ')
+
+          echo "version=$VERSION"   >> "$GITHUB_OUTPUT"
+          echo "downloads=$DOWNLOADS" >> "$GITHUB_OUTPUT"
+
+      - name: Bail out cleanly if the extension is not yet indexed
+        if: steps.query.outputs.version == 'unknown' && steps.query.outputs.downloads == '0'
+        run: |
+          echo "Marketplace has not propagated yet — skipping badge refresh."
+          exit 0
+
+      - name: Format numbers (1234 -> 1.2k, 1234567 -> 1.2M)
+        id: fmt
+        run: |
+          format_num() {
+            local n=$1
+            if   [ "$n" -ge 1000000 ]; then awk -v n="$n" 'BEGIN{printf "%.1fM", n/1000000}';
+            elif [ "$n" -ge 1000 ];    then awk -v n="$n" 'BEGIN{printf "%.1fk", n/1000}';
+            else echo "$n"; fi
+          }
+          DOWNLOADS_PRETTY=$(format_num "${{ steps.query.outputs.downloads }}")
+          echo "downloads_pretty=$DOWNLOADS_PRETTY" >> "$GITHUB_OUTPUT"
+
+      - name: Write shields.io endpoint JSONs
+        run: |
+          mkdir -p .github/badges
+          cat > .github/badges/marketplace-version.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "VS Marketplace",
+            "message": "v${{ steps.query.outputs.version }}",
+            "color": "blue",
+            "namedLogo": "visualstudiocode"
+          }
+          EOF
+          cat > .github/badges/marketplace-installs.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "Downloads",
+            "message": "${{ steps.fmt.outputs.downloads_pretty }}",
+            "color": "success",
+            "namedLogo": "visualstudiocode"
+          }
+          EOF
+
+      - name: Commit + push only if something changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/badges/
+          if git diff --quiet --staged; then
+            echo "No badge changes."
+            exit 0
+          fi
+          git commit -m "chore(badges): refresh v${{ steps.query.outputs.version }} (${{ steps.query.outputs.downloads }} downloads)"
+          git push origin badges
