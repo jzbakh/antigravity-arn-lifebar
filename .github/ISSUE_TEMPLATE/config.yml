@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/jzbakh/antigravity-arn-lifebar/discussions
+    about: Questions, ideas, show & tell — please use Discussions before opening an issue.
+  - name: 🔐 Report a security vulnerability
+    url: https://github.com/jzbakh/antigravity-arn-lifebar/security/advisories/new
+    about: Use GitHub's private advisory flow — do NOT open a public issue for security reports.

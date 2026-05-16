@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local builds
+**/VSIX/
+**/vsix/
+*.vsix
+
+# Test harness artefacts
+test/node_modules/
+test/.vscode-test/
+test/coverage/
+test/.nyc_output/
+

@@ -1,0 +1,61 @@
+{
+  "name": "antigravity-arn-lifebar",
+  "displayName": "Antigravity ARN-Lifebar",
+  "description": "AI usage in Antigravity IDE status bar.",
+  "publisher": "jzbakh",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "author": "jason-zbakh",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "ARN-Lifebar",
+    "ARN",
+    "Lifebar",
+    "arn lifebar",
+    "antigravity",
+    "cockpit",
+    "quota",
+    "google-ai",
+    "status-bar",
+    "statusbar"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity-arn-lifebar.openSettings",
+        "title": "ARN-Lifebar: Open Settings"
+      },
+      {
+        "command": "antigravity-arn-lifebar.refresh",
+        "title": "ARN-Lifebar: Refresh quotas"
+      }
+    ]
+  },
+  "icon": "media/ARN-Lifebar.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jzbakh/antigravity-arn-lifebar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jzbakh/antigravity-arn-lifebar/issues"
+  },
+  "homepage": "https://github.com/jzbakh/antigravity-arn-lifebar#readme",
+  "qna": "https://github.com/jzbakh/antigravity-arn-lifebar/issues",
+  "sponsor": {
+    "url": "https://www.buymeacoffee.com/ARN_Inside"
+  }
+}

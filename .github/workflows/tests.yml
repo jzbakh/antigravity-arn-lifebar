@@ -1,0 +1,88 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 06:00 UTC
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+      - name: package.json is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8'))"
+      - name: extension.js parses cleanly
+        run: node -c extension.js
+      - name: Required manifest fields present
+        run: |
+          node -e "
+          const p = require('./package.json');
+          const required = ['name','displayName','description','version','publisher','license','engines','main','contributes','repository','icon'];
+          const missing = required.filter(k => !p[k]);
+          if (missing.length) { console.error('Missing manifest fields:', missing); process.exit(1); }
+          console.log('All required fields present.');
+          "
+      - name: Extension manifest has zero runtime deps
+        run: |
+          node -e "
+          const p = require('./package.json');
+          if (p.dependencies && Object.keys(p.dependencies).length) {
+            console.error('Runtime dependencies are forbidden in the extension manifest:', p.dependencies);
+            process.exit(1);
+          }
+          console.log('OK — zero runtime dependencies.');
+          "
+
+  tests:
+    name: Tests (${{ matrix.os }})
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: test/package-lock.json
+      - name: Install test harness
+        working-directory: test
+        run: npm ci
+      - name: Run tests (Linux — headless)
+        if: runner.os == 'Linux'
+        working-directory: test
+        run: xvfb-run -a npm test
+      - name: Run tests
+        if: runner.os != 'Linux'
+        working-directory: test
+        run: npm test
+
+  ci-passed:
+    name: CI passed
+    needs: [validate, tests]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Aggregate gate
+        run: |
+          echo "validate=${{ needs.validate.result }}"
+          echo "tests=${{ needs.tests.result }}"
+          test "${{ needs.validate.result }}" = "success" || exit 1
+          test "${{ needs.tests.result }}" = "success" || exit 1
+          echo "All checks passed."

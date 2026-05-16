@@ -1,0 +1,154 @@
+name: 🐞 Bug report
+description: Report a reproducible defect in ARN-Lifebar.
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug! The more context you give, the faster it gets fixed.
+
+        Before submitting, please make sure your issue has not already been reported in [open issues](https://github.com/jzbakh/antigravity-arn-lifebar/issues).
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences describing what is broken.
+      placeholder: "Status bar shows 'LS not found' even though Antigravity IDE is running and signed in."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps a stranger could follow on their own machine.
+      placeholder: |
+        1. Open Antigravity IDE
+        2. Sign in with my Google account
+        3. Wait 60 seconds
+        4. Observe the status bar still shows "LS not found"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: "Status bar should show per-model quotas (Pro / Flash / Other)."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: "Status bar stays on 'LS not found' indefinitely."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version
+      placeholder: "Windows 11 23H2 / macOS 14.5 / Ubuntu 22.04"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ide
+    attributes:
+      label: IDE
+      options:
+        - Antigravity IDE
+        - VS Code
+        - Cursor
+        - Windsurf
+        - VSCodium
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: ide-version
+    attributes:
+      label: IDE version
+      description: "From: Help → About (or the equivalent in your fork)."
+      placeholder: "Antigravity 1.2.3 (build 0958016b2a)"
+    validations:
+      required: true
+
+  - type: input
+    id: extension-version
+    attributes:
+      label: ARN-Lifebar version
+      description: "Visible in the Extensions panel next to the extension name."
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-source
+    attributes:
+      label: Installed from
+      options:
+        - VS Marketplace
+        - Open VSX
+        - VSIX file (manual)
+        - Cloned from source
+    validations:
+      required: true
+
+  - type: dropdown
+    id: auth-status
+    attributes:
+      label: Antigravity sign-in status
+      description: "Are you signed in to a Google account inside Antigravity IDE? Quotas are not readable without a signed-in session."
+      options:
+        - Signed in
+        - Not signed in
+        - Not applicable (IDE other than Antigravity)
+    validations:
+      required: true
+
+  - type: textarea
+    id: output-channel
+    attributes:
+      label: ARN-Lifebar output channel
+      description: |
+        Open `View → Output → ARN-Lifebar` and paste the last ~30 lines.
+        Redact anything you consider sensitive.
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / screen recording
+      description: |
+        Drag-and-drop images or short videos directly into this field — GitHub uploads them automatically.
+        A screenshot of the status bar (with or without tooltip) is especially helpful.
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: "Workarounds tried, related issues, network setup quirks (proxy, VPN, etc.)."
+    validations:
+      required: false
