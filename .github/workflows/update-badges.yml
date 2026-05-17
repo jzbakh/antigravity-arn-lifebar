@@ -42,7 +42,7 @@ jobs:
             | (.extensions // [])[0] // {}
             | (.statistics // [])
             | map(select(.statisticName == "downloadCount"))
-            | (.[0].value // 0)
+            | (.[0].value // 0 | floor)
           ')
 
           echo "version=$VERSION"   >> "$GITHUB_OUTPUT"
