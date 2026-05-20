@@ -3,9 +3,9 @@
 # Antigravity ARN-Lifebar: Minimalist extension to view your AI usage in the Status Bar.
 
 [![VS Marketplace](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jzbakh/antigravity-arn-lifebar/badges/.github/badges/marketplace-version.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
-[![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jzbakh/antigravity-arn-lifebar/badges/.github/badges/marketplace-installs.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
-[![Open VSX](https://img.shields.io/open-vsx/v/jzbakh/antigravity-arn-lifebar?label=Open%20VSX&color=blue)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
-[![Open VSX Downloads](https://img.shields.io/open-vsx/dt/jzbakh/antigravity-arn-lifebar?label=Downloads&color=success)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
+[![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jzbakh/antigravity-arn-lifebar/badges/.github/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
+[![Open VSX](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jzbakh/antigravity-arn-lifebar/badges/.github/badges/openvsx-version.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
+[![Open VSX Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jzbakh/antigravity-arn-lifebar/badges/.github/badges/openvsx-downloads.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
 
 [![GitHub stars](https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=flat&color=gold)](https://github.com/jzbakh/antigravity-arn-lifebar)
 [![GitHub issues](https://img.shields.io/github/issues/jzbakh/antigravity-arn-lifebar)](https://github.com/jzbakh/antigravity-arn-lifebar/issues)
