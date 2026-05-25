@@ -3,7 +3,7 @@
   "displayName": "Antigravity ARN-Lifebar",
   "description": "AI usage in Antigravity IDE status bar.",
   "publisher": "jzbakh",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "GPL-3.0-or-later",
   "author": "jason-zbakh",
   "engines": {

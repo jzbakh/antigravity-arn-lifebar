@@ -5,6 +5,19 @@ All notable changes to **Antigravity ARN-Lifebar** will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] — 2026-05-25
+
+### Changed
+- Updated README.md documentation.
+
+### Fixed
+- Cached Open VSX badge data on the `badges` branch to avoid upstream rate limits.
+- Cast Marketplace `downloadCount` to integer in CI workflows (fixes display formatting from "9.0" to "9").
+
+### Chores & CI
+- Bumped GitHub Actions to the latest versions.
+- Bumped development dependencies (`mocha` to 11.7.6 and `@vscode/test-cli`).
+
 ## [1.0.0] — 2026-05-16
 
 First public release on Visual Studio Marketplace and Open VSX.
@@ -19,4 +32,5 @@ First public release on Visual Studio Marketplace and Open VSX.
 - Dedicated **ARN-Lifebar** output channel for diagnostics.
 - Zero runtime dependencies — pure native JavaScript, no build step.
 
+[1.0.1]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.0.1
 [1.0.0]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.0.0
