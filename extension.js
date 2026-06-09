@@ -7,7 +7,7 @@ const execAsync = util.promisify(exec);
 
 const CONFIG = {
     POLLING: {
-        MIN_INTERVAL_MS: 60000,
+        MIN_INTERVAL_MS: 10000,
         MAX_INTERVAL_MS: 600000,
     },
     TIMEOUTS: {
@@ -29,22 +29,41 @@ function colorDot(pct) {
     return '🟢';
 }
 
+function formatResetTime(resetTimeStr) {
+    if (!resetTimeStr) return null;
+    const resetTime = new Date(resetTimeStr);
+    const now = new Date();
+    const diffMs = resetTime - now;
+    if (diffMs <= 0) return "Refreshes soon";
+
+    const diffMins = Math.floor(diffMs / 60000);
+    const days = Math.floor(diffMins / (24 * 60));
+    const hours = Math.floor((diffMins % (24 * 60)) / 60);
+    const mins = diffMins % 60;
+
+    if (days > 0) {
+        return `Refreshes in ${days} day${days > 1 ? 's' : ''}, ${hours} hour${hours !== 1 ? 's' : ''}`;
+    } else if (hours > 0) {
+        return `Refreshes in ${hours} hour${hours !== 1 ? 's' : ''}, ${mins} minute${mins !== 1 ? 's' : ''}`;
+    } else {
+        return `Refreshes in ${mins} minute${mins !== 1 ? 's' : ''}`;
+    }
+}
+
 function getModelGroups(models) {
-    let gPro = null, gFlash = null, other = null;
+    let gemini = null, thirdParty = null;
     for (const m of models) {
         const label = (m.label || '').toLowerCase();
         const pct = m.quotaInfo?.remainingFraction !== undefined
             ? Math.round(m.quotaInfo.remainingFraction * 100)
             : null;
-        if (label.includes('gemini') && label.includes('pro')) {
-            if (gPro === null) gPro = pct;
-        } else if (label.includes('gemini') && label.includes('flash')) {
-            if (gFlash === null) gFlash = pct;
+        if (label.includes('gemini')) {
+            if (gemini === null) gemini = pct;
         } else {
-            if (other === null) other = pct;
+            if (thirdParty === null) thirdParty = pct;
         }
     }
-    return { gPro, gFlash, other };
+    return { gemini, thirdParty };
 }
 
 function formatStatusBar(userStatus) {
@@ -53,13 +72,13 @@ function formatStatusBar(userStatus) {
     if (!plan) return '$(graph) ARN-Lifebar';
 
     const models = userStatus.cascadeModelConfigData?.clientModelConfigs ?? [];
-    const { gPro, gFlash, other } = getModelGroups(models);
+    const { gemini, thirdParty } = getModelGroups(models);
     const fmtPct = (pct) => pct !== null ? `${pct}%` : '0%';
 
     const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
     const aiCredits = googleCredits ? googleCredits.creditAmount : null;
 
-    let text = `|  Pro ${fmtPct(gPro)} ${colorDot(gPro)} |  Flash ${fmtPct(gFlash)} ${colorDot(gFlash)} |  Other ${fmtPct(other)} ${colorDot(other)}`;
+    let text = `|  Gemini ${fmtPct(gemini)} ${colorDot(gemini)} |  Third-party ${fmtPct(thirdParty)} ${colorDot(thirdParty)}`;
     if (aiCredits !== null) text += ` |  ${aiCredits} credits  |`;
 
     return text;
@@ -70,20 +89,47 @@ function formatTooltip(userStatus) {
     const tier = userStatus.userTier;
     const models = userStatus.cascadeModelConfigData?.clientModelConfigs ?? [];
 
+    const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
+    const aiCredits = googleCredits ? googleCredits.creditAmount : null;
+
     const lines = [
         `Plan: ${tier?.name ?? plan?.planInfo?.planName ?? '?'}`,
         `Prompt credits: ${plan?.availablePromptCredits ?? '?'} / ${plan?.planInfo?.monthlyPromptCredits ?? '?'}`,
         `Flow credits: ${plan?.availableFlowCredits ?? '?'} / ${plan?.planInfo?.monthlyFlowCredits ?? '?'}`,
-        '',
-        'Model quotas:',
     ];
-
-    for (const m of models) {
-        const pct = m.quotaInfo?.remainingFraction !== undefined
-            ? `${Math.round(m.quotaInfo.remainingFraction * 100)}%`
-            : '0%';
-        lines.push(`  ${m.label}: ${pct}`);
+    
+    if (aiCredits !== null) {
+        lines.push(`Google One AI credits: ${aiCredits}`);
     }
+    
+    lines.push('', 'Model quotas:');
+
+    const { gemini, thirdParty } = getModelGroups(models);
+    const geminiPctStr = gemini !== null ? `${gemini}%` : '0%';
+    const thirdPartyPctStr = thirdParty !== null ? `${thirdParty}%` : '0%';
+
+    const getBaseLabel = (lbl) => lbl.replace(/\s*\([^)]*\)$/, '').trim();
+    
+    const rawGeminiLabels = models.filter(m => (m.label || '').toLowerCase().includes('gemini')).map(m => getBaseLabel(m.label));
+    const geminiLabels = [...new Set(rawGeminiLabels)].join(', ');
+
+    const rawThirdPartyLabels = models.filter(m => m.label && !m.label.toLowerCase().includes('gemini')).map(m => getBaseLabel(m.label));
+    const thirdPartyLabels = [...new Set(rawThirdPartyLabels)].join(', ');
+
+    const geminiResetTimeStr = models.find(m => (m.label || '').toLowerCase().includes('gemini') && m.quotaInfo?.resetTime)?.quotaInfo.resetTime;
+    const thirdPartyResetTimeStr = models.find(m => m.label && !m.label.toLowerCase().includes('gemini') && m.quotaInfo?.resetTime)?.quotaInfo.resetTime;
+
+    const geminiResetText = formatResetTime(geminiResetTimeStr);
+    const thirdPartyResetText = formatResetTime(thirdPartyResetTimeStr);
+
+    lines.push(`- Gemini : ${geminiPctStr}`);
+    if (geminiLabels) lines.push(`   ${geminiLabels}`);
+    if (geminiResetText) lines.push(`   ${geminiResetText}`);
+    lines.push('');
+    
+    lines.push(`- Third-party : ${thirdPartyPctStr}`);
+    if (thirdPartyLabels) lines.push(`   ${thirdPartyLabels}`);
+    if (thirdPartyResetText) lines.push(`   ${thirdPartyResetText}`);
     lines.push('', 'ARN-Lifebar | Click to open Settings');
     return lines.join('\n');
 }
@@ -359,4 +405,4 @@ function deactivate() {
 }
 
 // Exposed for unit tests — not part of the public extension API.
-module.exports = { activate, deactivate, CONFIG, colorDot, getModelGroups, formatStatusBar, formatTooltip };
+module.exports = { activate, deactivate, CONFIG, colorDot, getModelGroups, formatStatusBar, formatTooltip, formatResetTime };

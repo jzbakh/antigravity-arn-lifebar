@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('node:assert/strict');
-const { CONFIG, colorDot, getModelGroups, formatStatusBar, formatTooltip } = require('../../extension.js');
+const { CONFIG, colorDot, getModelGroups, formatStatusBar, formatTooltip, formatResetTime } = require('../../extension.js');
 
 const THRESHOLDS = CONFIG.UI.THRESHOLDS;
 const DOT_BLACK = '⚫';
@@ -31,41 +31,66 @@ describe('colorDot', () => {
     });
 });
 
-describe('getModelGroups', () => {
-    it('returns nulls for an empty models array', () => {
-        assert.deepEqual(getModelGroups([]), { gPro: null, gFlash: null, other: null });
+describe('formatResetTime', () => {
+    it('returns null when resetTime is missing', () => {
+        assert.equal(formatResetTime(null), null);
     });
 
-    it('classifies Gemini Pro / Flash / Other by label keywords', () => {
+    it('returns Refreshes soon when time is in the past', () => {
+        const past = new Date(Date.now() - 60000).toISOString();
+        assert.equal(formatResetTime(past), 'Refreshes soon');
+    });
+
+    it('formats days and hours properly', () => {
+        const future = new Date(Date.now() + (2 * 24 * 60 * 60 * 1000) + (3 * 60 * 60 * 1000) + 5000).toISOString();
+        assert.equal(formatResetTime(future), 'Refreshes in 2 days, 3 hours');
+    });
+
+    it('formats hours and minutes properly', () => {
+        const future = new Date(Date.now() + (4 * 60 * 60 * 1000) + (15 * 60 * 1000) + 5000).toISOString();
+        assert.equal(formatResetTime(future), 'Refreshes in 4 hours, 15 minutes');
+    });
+
+    it('formats minutes properly', () => {
+        const future = new Date(Date.now() + (45 * 60 * 1000) + 5000).toISOString();
+        assert.equal(formatResetTime(future), 'Refreshes in 45 minutes');
+    });
+});
+
+describe('getModelGroups', () => {
+    it('returns nulls for an empty models array', () => {
+        assert.deepEqual(getModelGroups([]), { gemini: null, thirdParty: null });
+    });
+
+    it('classifies Gemini / Third-party by label keywords', () => {
         const models = [
             { label: 'Gemini 2.5 Pro', quotaInfo: { remainingFraction: 0.75 } },
-            { label: 'Gemini 2.0 Flash', quotaInfo: { remainingFraction: 0.30 } },
             { label: 'Claude Sonnet 4', quotaInfo: { remainingFraction: 0.10 } },
         ];
-        assert.deepEqual(getModelGroups(models), { gPro: 75, gFlash: 30, other: 10 });
+        assert.deepEqual(getModelGroups(models), { gemini: 75, thirdParty: 10 });
     });
 
     it('keeps the first occurrence in each bucket (no overwrite)', () => {
         const models = [
             { label: 'Gemini Pro A', quotaInfo: { remainingFraction: 0.90 } },
-            { label: 'Gemini Pro B', quotaInfo: { remainingFraction: 0.10 } },
+            { label: 'Gemini Flash B', quotaInfo: { remainingFraction: 0.10 } },
         ];
-        assert.equal(getModelGroups(models).gPro, 90);
+        assert.equal(getModelGroups(models).gemini, 90);
     });
 
     it('returns null pct when quotaInfo.remainingFraction is missing', () => {
         const models = [{ label: 'Gemini Pro', quotaInfo: {} }];
-        assert.equal(getModelGroups(models).gPro, null);
+        assert.equal(getModelGroups(models).gemini, null);
     });
 
     it('tolerates missing label without throwing', () => {
         const models = [{ quotaInfo: { remainingFraction: 0.5 } }];
-        assert.equal(getModelGroups(models).other, 50);
+        assert.equal(getModelGroups(models).thirdParty, 50);
     });
 
     it('rounds percentages to nearest integer', () => {
         const models = [{ label: 'Gemini Pro', quotaInfo: { remainingFraction: 0.876 } }];
-        assert.equal(getModelGroups(models).gPro, 88);
+        assert.equal(getModelGroups(models).gemini, 88);
     });
 });
 
@@ -74,24 +99,21 @@ describe('formatStatusBar', () => {
         assert.equal(formatStatusBar({}), '$(graph) ARN-Lifebar');
     });
 
-    it('formats Pro / Flash / Other percentages with colored dots', () => {
+    it('formats Gemini / Third-party percentages with colored dots', () => {
         const userStatus = {
             planStatus: { availablePromptCredits: 100, planInfo: { monthlyPromptCredits: 500 } },
             userTier: { name: 'Premium', availableCredits: [] },
             cascadeModelConfigData: {
                 clientModelConfigs: [
                     { label: 'Gemini 2.5 Pro', quotaInfo: { remainingFraction: 0.80 } },
-                    { label: 'Gemini 2.0 Flash', quotaInfo: { remainingFraction: 0.40 } },
                     { label: 'Claude Sonnet', quotaInfo: { remainingFraction: 0.15 } },
                 ],
             },
         };
         const text = formatStatusBar(userStatus);
-        assert.match(text, /Pro 80%/);
-        assert.match(text, /Flash 40%/);
-        assert.match(text, /Other 15%/);
+        assert.match(text, /Gemini 80%/);
+        assert.match(text, /Third-party 15%/);
         assert.ok(text.includes(DOT_GREEN), 'expected green dot for 80%');
-        assert.ok(text.includes(DOT_ORANGE), 'expected orange dot for 40%');
         assert.ok(text.includes(DOT_RED), 'expected red dot for 15%');
     });
 
@@ -124,9 +146,8 @@ describe('formatStatusBar', () => {
             cascadeModelConfigData: { clientModelConfigs: [] },
         };
         const text = formatStatusBar(userStatus);
-        assert.match(text, /Pro 0%/);
-        assert.match(text, /Flash 0%/);
-        assert.match(text, /Other 0%/);
+        assert.match(text, /Gemini 0%/);
+        assert.match(text, /Third-party 0%/);
     });
 });
 
@@ -141,7 +162,8 @@ describe('formatTooltip', () => {
             userTier: { name: 'Pro Tier' },
             cascadeModelConfigData: {
                 clientModelConfigs: [
-                    { label: 'Gemini Pro', quotaInfo: { remainingFraction: 0.5 } },
+                    { label: 'Gemini Pro', quotaInfo: { remainingFraction: 0.5, resetTime: new Date(Date.now() + 120 * 60000 + 1000).toISOString() } },
+                    { label: 'Claude', quotaInfo: { remainingFraction: 0.1, resetTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 1000).toISOString() } },
                 ],
             },
         };
@@ -149,7 +171,12 @@ describe('formatTooltip', () => {
         assert.match(tip, /Plan: Pro Tier/);
         assert.match(tip, /Prompt credits: 250 \/ 500/);
         assert.match(tip, /Flow credits: 80 \/ 100/);
-        assert.match(tip, /Gemini Pro: 50%/);
+        assert.match(tip, /- Gemini : 50%/);
+        assert.match(tip, /Gemini Pro/);
+        assert.match(tip, /Refreshes in 2 hours, 0 minutes/);
+        assert.match(tip, /- Third-party : 10%/);
+        assert.match(tip, /Claude/);
+        assert.match(tip, /Refreshes in 2 days, 0 hours/);
         assert.match(tip, /ARN-Lifebar \| Click to open Settings/);
     });
 
