@@ -15,9 +15,12 @@ describe('colorDot', () => {
     });
 
     it('returns red dot at and below RED threshold', () => {
-        assert.equal(colorDot(0), DOT_RED);
         assert.equal(colorDot(1), DOT_RED);
         assert.equal(colorDot(THRESHOLDS.RED), DOT_RED);
+    });
+
+    it('returns black dot when pct is 0 (empty)', () => {
+        assert.equal(colorDot(0), DOT_BLACK);
     });
 
     it('returns orange dot above RED and up to ORANGE threshold', () => {

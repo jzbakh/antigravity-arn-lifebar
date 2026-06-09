@@ -23,7 +23,7 @@ const CONFIG = {
 };
 
 function colorDot(pct) {
-    if (pct === null) return '⚫';
+    if (pct === null || pct === 0) return '⚫';
     if (pct <= CONFIG.UI.THRESHOLDS.RED) return '🔴';
     if (pct <= CONFIG.UI.THRESHOLDS.ORANGE) return '🟠';
     return '🟢';
@@ -97,11 +97,11 @@ function formatTooltip(userStatus) {
         `Prompt credits: ${plan?.availablePromptCredits ?? '?'} / ${plan?.planInfo?.monthlyPromptCredits ?? '?'}`,
         `Flow credits: ${plan?.availableFlowCredits ?? '?'} / ${plan?.planInfo?.monthlyFlowCredits ?? '?'}`,
     ];
-    
+
     if (aiCredits !== null) {
         lines.push(`Google One AI credits: ${aiCredits}`);
     }
-    
+
     lines.push('', 'Model quotas:');
 
     const { gemini, thirdParty } = getModelGroups(models);
@@ -109,7 +109,7 @@ function formatTooltip(userStatus) {
     const thirdPartyPctStr = thirdParty !== null ? `${thirdParty}%` : '0%';
 
     const getBaseLabel = (lbl) => lbl.replace(/\s*\([^)]*\)$/, '').trim();
-    
+
     const rawGeminiLabels = models.filter(m => (m.label || '').toLowerCase().includes('gemini')).map(m => getBaseLabel(m.label));
     const geminiLabels = [...new Set(rawGeminiLabels)].join(', ');
 
@@ -126,7 +126,7 @@ function formatTooltip(userStatus) {
     if (geminiLabels) lines.push(`   ${geminiLabels}`);
     if (geminiResetText) lines.push(`   ${geminiResetText}`);
     lines.push('');
-    
+
     lines.push(`- Third-party : ${thirdPartyPctStr}`);
     if (thirdPartyLabels) lines.push(`   ${thirdPartyLabels}`);
     if (thirdPartyResetText) lines.push(`   ${thirdPartyResetText}`);
