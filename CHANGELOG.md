@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Quotas:** Aligned with Antigravity IDE 2.0's new architecture by consolidating AI models into two unified tracking pools: **Gemini** (Google models) and **Third-party** (Claude, GPT-OSS).
 - **UI:** Re-designed the status bar hover tooltip to group the model details clearly under their respective pools, and added a dynamic "Refreshes in..." timer to show when each quota resets.
 - **Performance:** Reduced the quota polling interval from 60 seconds to 10 seconds for more real-time status bar updates.
+- **Documentation:** Clarified the README and adjusted the UI logic to explicitly display a black dot (⚫) when the quota hits 0%.
 
 ### Fixed
 - Fixed an omission where `GOOGLE_ONE_AI` credits were shown in the status bar but missing from the hover tooltip.
