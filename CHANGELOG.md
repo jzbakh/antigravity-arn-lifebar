@@ -5,18 +5,20 @@ All notable changes to **Antigravity ARN-Lifebar** will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-06-09
+
+### Changed
+- **Quotas:** Aligned with Antigravity IDE 2.0's new architecture by consolidating AI models into two unified tracking pools: **Gemini** (Google models) and **Third-party** (Claude, GPT-OSS).
+- **UI:** Re-designed the status bar hover tooltip to group the model details clearly under their respective pools, and added a dynamic "Refreshes in..." timer to show when each quota resets.
+- **Performance:** Reduced the quota polling interval from 60 seconds to 10 seconds for more real-time status bar updates.
+
+### Fixed
+- Fixed an omission where `GOOGLE_ONE_AI` credits were shown in the status bar but missing from the hover tooltip.
+
 ## [1.0.1] — 2026-05-25
 
 ### Changed
 - Updated README.md documentation.
-
-### Fixed
-- Cached Open VSX badge data on the `badges` branch to avoid upstream rate limits.
-- Cast Marketplace `downloadCount` to integer in CI workflows (fixes display formatting from "9.0" to "9").
-
-### Chores & CI
-- Bumped GitHub Actions to the latest versions.
-- Bumped development dependencies (`mocha` to 11.7.6 and `@vscode/test-cli`).
 
 ## [1.0.0] — 2026-05-16
 
@@ -32,5 +34,6 @@ First public release on Visual Studio Marketplace and Open VSX.
 - Dedicated **ARN-Lifebar** output channel for diagnostics.
 - Zero runtime dependencies — pure native JavaScript, no build step.
 
+[1.1.0]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.1.0
 [1.0.1]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.0.1
 [1.0.0]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.0.0
