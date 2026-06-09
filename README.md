@@ -47,7 +47,7 @@
   <h2>🇬🇧 English</h2>
   <h3>
   View your AI usage in the Antigravity IDE Status Bar:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 1–25 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
   </h3>
   <a href="#en">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ARN-Lifebar screenshot" width="600">
@@ -211,7 +211,7 @@ If you'd like to financially support the development and future updates, you can
   <h2>🇫🇷 Français</h2>
   <h3>
   Vos quotas d'utilisation IA dans la barre inférieure de l'IDE Antigravity :<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 1–25 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
   </h3>
   <a href="#fr">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="Capture d'écran de ARN-Lifebar" width="600">
@@ -376,7 +376,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
   <h2>🇨🇳 中文</h2>
   <h3>
   在 Antigravity IDE 底部状态栏查看您的 AI 使用配额：<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 1–25 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
   </h3>
   <a href="#cn">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ARN-Lifebar 屏幕截图" width="600">
@@ -540,7 +540,7 @@ Antigravity ARN-Lifebar 专为读取 **Antigravity IDE** 上的 Google AI Plus/P
   <h2>🇪🇸 Español</h2>
   <h3>
   Tus cuotas de uso de IA en la barra inferior del IDE Antigravity:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 1–25 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
   </h3>
   <a href="#es">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="Captura de pantalla de ARN-Lifebar" width="600">
@@ -704,7 +704,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
   <h2>🇸🇦 العربية</h2>
   <h3>
   حصص استخدام الذكاء الاصطناعي في الشريط السفلي لبيئة التطوير Antigravity IDE:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 1–25 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
   </h3>
   <a href="#ar">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="لقطة شاشة لـ ARN-Lifebar" width="600">
@@ -868,7 +868,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
   <h2>🇹🇭 ภาษาไทย</h2>
   <h3>
   โควตาการใช้งาน AI ของคุณในแถบด้านล่างของ Antigravity IDE:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 1–25 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
   </h3>
   <a href="#th">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ภาพหน้าจอของ ARN-Lifebar" width="600">
