@@ -16,8 +16,8 @@ const CONFIG = {
     },
     UI: {
         THRESHOLDS: {
-            RED: 26,
-            ORANGE: 51,
+            RED: 24,
+            ORANGE: 50,
         },
     },
 };
