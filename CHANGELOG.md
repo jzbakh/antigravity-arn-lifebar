@@ -5,6 +5,12 @@ All notable changes to **Antigravity ARN-Lifebar** will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] — 2026-06-19
+
+### Fixed
+- **UI:** Adjusted quota color thresholds (🟢 / 🟠 / 🔴 / ⚫) to accurately support precise API percentage values instead of assuming rounded tens.
+- **Documentation:** Fixed the status percentage range order in `README.md`.
+
 ## [1.1.0] — 2026-06-09
 
 ### Changed
@@ -35,6 +41,7 @@ First public release on Visual Studio Marketplace and Open VSX.
 - Dedicated **ARN-Lifebar** output channel for diagnostics.
 - Zero runtime dependencies — pure native JavaScript, no build step.
 
+[1.1.1]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.1.1
 [1.1.0]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.1.0
 [1.0.1]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.0.1
 [1.0.0]: https://github.com/jzbakh/antigravity-arn-lifebar/releases/tag/v1.0.0
