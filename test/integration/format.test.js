@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('node:assert/strict');
-const { CONFIG, colorDot, getModelGroups, formatStatusBar, formatTooltip, formatResetTime } = require('../../extension.js');
+const { CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime } = require('../../extension.js');
 
 const THRESHOLDS = CONFIG.UI.THRESHOLDS;
 const DOT_BLACK = '⚫';
@@ -60,62 +60,70 @@ describe('formatResetTime', () => {
     });
 });
 
-describe('getModelGroups', () => {
-    it('returns nulls for an empty models array', () => {
-        assert.deepEqual(getModelGroups([]), { gemini: null, thirdParty: null });
+describe('parseQuotaSummary', () => {
+    it('returns empty array when summary is missing', () => {
+        assert.deepEqual(parseQuotaSummary(null), []);
+        assert.deepEqual(parseQuotaSummary({}), []);
     });
 
-    it('classifies Gemini / Third-party by label keywords', () => {
-        const models = [
-            { label: 'Gemini 2.5 Pro', quotaInfo: { remainingFraction: 0.75 } },
-            { label: 'Claude Sonnet 4', quotaInfo: { remainingFraction: 0.10 } },
-        ];
-        assert.deepEqual(getModelGroups(models), { gemini: 75, thirdParty: 10 });
+    it('extracts weekly and 5h buckets properly', () => {
+        const payload = {
+            response: {
+                groups: [
+                    {
+                        displayName: 'Claude',
+                        buckets: [
+                            { window: '5h', remainingFraction: 0.1 },
+                            { window: 'weekly', remainingFraction: 0.5 }
+                        ]
+                    }
+                ]
+            }
+        };
+        const res = parseQuotaSummary(payload);
+        assert.equal(res.length, 1);
+        assert.equal(res[0].label, 'Claude');
+        assert.equal(res[0].shortLabel, 'Claude & GPT');
+        assert.equal(res[0].fiveHour.remainingFraction, 0.1);
+        assert.equal(res[0].weekly.remainingFraction, 0.5);
     });
 
-    it('keeps the first occurrence in each bucket (no overwrite)', () => {
-        const models = [
-            { label: 'Gemini Pro A', quotaInfo: { remainingFraction: 0.90 } },
-            { label: 'Gemini Flash B', quotaInfo: { remainingFraction: 0.10 } },
-        ];
-        assert.equal(getModelGroups(models).gemini, 90);
-    });
-
-    it('returns null pct when quotaInfo.remainingFraction is missing', () => {
-        const models = [{ label: 'Gemini Pro', quotaInfo: {} }];
-        assert.equal(getModelGroups(models).gemini, null);
-    });
-
-    it('tolerates missing label without throwing', () => {
-        const models = [{ quotaInfo: { remainingFraction: 0.5 } }];
-        assert.equal(getModelGroups(models).thirdParty, 50);
-    });
-
-    it('rounds percentages to nearest integer', () => {
-        const models = [{ label: 'Gemini Pro', quotaInfo: { remainingFraction: 0.876 } }];
-        assert.equal(getModelGroups(models).gemini, 88);
+    it('tolerates groups with missing buckets', () => {
+        const payload = {
+            response: {
+                groups: [
+                    {
+                        displayName: 'Gemini',
+                        buckets: null
+                    }
+                ]
+            }
+        };
+        const res = parseQuotaSummary(payload);
+        assert.equal(res.length, 1);
+        assert.equal(res[0].shortLabel, 'Gemini');
+        assert.equal(res[0].fiveHour, null);
+        assert.equal(res[0].weekly, null);
     });
 });
 
 describe('formatStatusBar', () => {
-    it('returns the loading placeholder when planStatus is missing', () => {
-        assert.equal(formatStatusBar({}), '$(graph) ARN-Lifebar');
+    it('returns the loading placeholder when planStatus is missing and no groups', () => {
+        assert.equal(formatStatusBar({}, []), '$(graph) ARN-Lifebar');
     });
 
-    it('formats Gemini / Third-party percentages with colored dots', () => {
+    it('formats percentages with colored dots based on 5-hour limit', () => {
         const userStatus = {
             planStatus: { availablePromptCredits: 100, planInfo: { monthlyPromptCredits: 500 } },
-            userTier: { name: 'Premium', availableCredits: [] },
-            cascadeModelConfigData: {
-                clientModelConfigs: [
-                    { label: 'Gemini 2.5 Pro', quotaInfo: { remainingFraction: 0.80 } },
-                    { label: 'Claude Sonnet', quotaInfo: { remainingFraction: 0.15 } },
-                ],
-            },
+            userTier: { name: 'Premium', availableCredits: [] }
         };
-        const text = formatStatusBar(userStatus);
+        const parsedGroups = [
+            { shortLabel: 'Gemini', fiveHour: { remainingFraction: 0.80 } },
+            { shortLabel: 'Claude & GPT', fiveHour: { remainingFraction: 0.15 } },
+        ];
+        const text = formatStatusBar(userStatus, parsedGroups);
         assert.match(text, /Gemini 80%/);
-        assert.match(text, /Third-party 15%/);
+        assert.match(text, /Claude & GPT 15%/);
         assert.ok(text.includes(DOT_GREEN), 'expected green dot for 80%');
         assert.ok(text.includes(DOT_RED), 'expected red dot for 15%');
     });
@@ -127,64 +135,64 @@ describe('formatStatusBar', () => {
                 availableCredits: [
                     { creditType: 'GOOGLE_ONE_AI', creditAmount: 1500 },
                 ],
-            },
-            cascadeModelConfigData: { clientModelConfigs: [] },
+            }
         };
-        assert.match(formatStatusBar(userStatus), /1500 credits/);
+        assert.match(formatStatusBar(userStatus, []), /1500 credits/);
     });
 
     it('omits the credits suffix when no GOOGLE_ONE_AI credit entry exists', () => {
         const userStatus = {
             planStatus: {},
-            userTier: { availableCredits: [{ creditType: 'OTHER', creditAmount: 99 }] },
-            cascadeModelConfigData: { clientModelConfigs: [] },
+            userTier: { availableCredits: [{ creditType: 'OTHER', creditAmount: 99 }] }
         };
-        assert.doesNotMatch(formatStatusBar(userStatus), /credits/);
+        assert.doesNotMatch(formatStatusBar(userStatus, []), /credits/);
     });
 
-    it('falls back to 0% for missing model buckets', () => {
+    it('falls back to 0% for missing 5h bucket', () => {
         const userStatus = {
             planStatus: {},
-            userTier: { availableCredits: [] },
-            cascadeModelConfigData: { clientModelConfigs: [] },
+            userTier: { availableCredits: [] }
         };
-        const text = formatStatusBar(userStatus);
+        const parsedGroups = [
+            { shortLabel: 'Gemini', fiveHour: null }
+        ];
+        const text = formatStatusBar(userStatus, parsedGroups);
         assert.match(text, /Gemini 0%/);
-        assert.match(text, /Third-party 0%/);
     });
 });
 
 describe('formatTooltip', () => {
-    it('produces a multi-line tooltip with plan + credits + per-model quota', () => {
+    it('produces a multi-line tooltip with plan + credits + per-model quotas', () => {
         const userStatus = {
             planStatus: {
                 availablePromptCredits: 250,
                 availableFlowCredits: 80,
                 planInfo: { planName: 'Pro', monthlyPromptCredits: 500, monthlyFlowCredits: 100 },
             },
-            userTier: { name: 'Pro Tier' },
-            cascadeModelConfigData: {
-                clientModelConfigs: [
-                    { label: 'Gemini Pro', quotaInfo: { remainingFraction: 0.5, resetTime: new Date(Date.now() + 120 * 60000 + 1000).toISOString() } },
-                    { label: 'Claude', quotaInfo: { remainingFraction: 0.1, resetTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 1000).toISOString() } },
-                ],
-            },
+            userTier: { name: 'Pro Tier' }
         };
-        const tip = formatTooltip(userStatus);
+        const parsedGroups = [
+            {
+                label: 'Gemini Pro',
+                weekly: { remainingFraction: 0.80, resetTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 1000).toISOString() },
+                fiveHour: { remainingFraction: 0.50, resetTime: new Date(Date.now() + 120 * 60000 + 1000).toISOString() }
+            }
+        ];
+        
+        const tip = formatTooltip(userStatus, parsedGroups);
         assert.match(tip, /Plan: Pro Tier/);
         assert.match(tip, /Prompt credits: 250 \/ 500/);
         assert.match(tip, /Flow credits: 80 \/ 100/);
-        assert.match(tip, /- Gemini : 50%/);
-        assert.match(tip, /Gemini Pro/);
-        assert.match(tip, /Refreshes in 2 hours, 0 minutes/);
-        assert.match(tip, /- Third-party : 10%/);
-        assert.match(tip, /Claude/);
+        assert.match(tip, /- Gemini Pro/);
+        assert.match(tip, /Weekly Limit: 80%/);
         assert.match(tip, /Refreshes in 2 days, 0 hours/);
+        assert.match(tip, /Five Hour Limit: 50%/);
+        assert.match(tip, /Refreshes in 2 hours, 0 minutes/);
         assert.match(tip, /ARN-Lifebar \| Click to open Settings/);
     });
 
     it('uses ? placeholders when fields are missing', () => {
-        const tip = formatTooltip({ planStatus: {}, userTier: {}, cascadeModelConfigData: {} });
+        const tip = formatTooltip({ planStatus: {}, userTier: {} }, []);
         assert.match(tip, /Plan: \?/);
         assert.match(tip, /Prompt credits: \? \/ \?/);
         assert.match(tip, /Flow credits: \? \/ \?/);
