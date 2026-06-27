@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
       - name: package.json is valid JSON
         run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8'))"
       - name: extension.js parses cleanly
@@ -58,7 +58,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: test/package-lock.json
       - name: Install test harness
