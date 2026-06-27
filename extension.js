@@ -50,87 +50,113 @@ function formatResetTime(resetTimeStr) {
     }
 }
 
-function getModelGroups(models) {
-    let gemini = null, thirdParty = null;
-    for (const m of models) {
-        const label = (m.label || '').toLowerCase();
-        const pct = m.quotaInfo?.remainingFraction !== undefined
-            ? Math.round(m.quotaInfo.remainingFraction * 100)
-            : null;
-        if (label.includes('gemini')) {
-            if (gemini === null) gemini = pct;
-        } else {
-            if (thirdParty === null) thirdParty = pct;
+function parseQuotaSummary(quotaSummary) {
+    const groups = quotaSummary?.response?.groups || [];
+    const parsed = [];
+    
+    for (const group of groups) {
+        let weekly = null;
+        let fiveHour = null;
+        
+        for (const b of (group.buckets || [])) {
+            if (b.window === 'weekly') weekly = b;
+            if (b.window === '5h') fiveHour = b;
         }
+        
+        let label = group.displayName || '';
+        let shortLabel = label;
+        if (label.toLowerCase().includes('gemini')) shortLabel = 'Gemini';
+        else if (label.toLowerCase().includes('claude')) shortLabel = 'Claude & GPT';
+        
+        parsed.push({
+            label,
+            shortLabel,
+            weekly,
+            fiveHour
+        });
     }
-    return { gemini, thirdParty };
+    return parsed;
 }
 
-function formatStatusBar(userStatus) {
-    const plan = userStatus.planStatus;
-    const tier = userStatus.userTier;
-    if (!plan) return '$(graph) ARN-Lifebar';
+function formatStatusBar(userStatus, parsedGroups) {
+    const plan = userStatus?.planStatus;
+    const tier = userStatus?.userTier;
+    if (!plan && parsedGroups.length === 0) return '$(graph) ARN-Lifebar';
 
-    const models = userStatus.cascadeModelConfigData?.clientModelConfigs ?? [];
-    const { gemini, thirdParty } = getModelGroups(models);
-    const fmtPct = (pct) => pct !== null ? `${pct}%` : '0%';
+    const fmtPct = (bucket) => {
+        if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return '0%';
+        return `${Math.round(bucket.remainingFraction * 100)}%`;
+    };
+    
+    const getPctNum = (bucket) => {
+        if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return 0;
+        return Math.round(bucket.remainingFraction * 100);
+    };
+
+    let textParts = [];
+    for (const group of parsedGroups) {
+        const pctStr = fmtPct(group.fiveHour);
+        const pctNum = getPctNum(group.fiveHour);
+        textParts.push(`  ${group.shortLabel} ${pctStr} ${colorDot(pctNum)} `);
+    }
 
     const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
     const aiCredits = googleCredits ? googleCredits.creditAmount : null;
 
-    let text = `|  Gemini ${fmtPct(gemini)} ${colorDot(gemini)} |  Third-party ${fmtPct(thirdParty)} ${colorDot(thirdParty)}`;
-    if (aiCredits !== null) text += ` |  ${aiCredits} credits  |`;
+    let text = `|` + textParts.join('|');
+    if (aiCredits !== null) text += `|  ${aiCredits} credits  `;
+    text += `|`;
 
     return text;
 }
 
-function formatTooltip(userStatus) {
-    const plan = userStatus.planStatus;
-    const tier = userStatus.userTier;
-    const models = userStatus.cascadeModelConfigData?.clientModelConfigs ?? [];
+function formatTooltip(userStatus, parsedGroups) {
+    const plan = userStatus?.planStatus;
+    const tier = userStatus?.userTier;
 
-    const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
-    const aiCredits = googleCredits ? googleCredits.creditAmount : null;
-
-    const lines = [
-        `Plan: ${tier?.name ?? plan?.planInfo?.planName ?? '?'}`,
-        `Prompt credits: ${plan?.availablePromptCredits ?? '?'} / ${plan?.planInfo?.monthlyPromptCredits ?? '?'}`,
-        `Flow credits: ${plan?.availableFlowCredits ?? '?'} / ${plan?.planInfo?.monthlyFlowCredits ?? '?'}`,
-    ];
-
-    if (aiCredits !== null) {
-        lines.push(`Google One AI credits: ${aiCredits}`);
+    const lines = [];
+    if (plan || tier) {
+        lines.push(`Plan: ${tier?.name ?? plan?.planInfo?.planName ?? '?'}`);
+        lines.push(`Prompt credits: ${plan?.availablePromptCredits ?? '?'} / ${plan?.planInfo?.monthlyPromptCredits ?? '?'}`);
+        lines.push(`Flow credits: ${plan?.availableFlowCredits ?? '?'} / ${plan?.planInfo?.monthlyFlowCredits ?? '?'}`);
+        
+        const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
+        if (googleCredits) {
+            lines.push(`Google One AI credits: ${googleCredits.creditAmount}`);
+        }
+        lines.push('');
     }
 
-    lines.push('', 'Model quotas:');
+    lines.push('Model quotas:');
+    
+    if (parsedGroups.length === 0) {
+        lines.push('  No quota information available.');
+    }
 
-    const { gemini, thirdParty } = getModelGroups(models);
-    const geminiPctStr = gemini !== null ? `${gemini}%` : '0%';
-    const thirdPartyPctStr = thirdParty !== null ? `${thirdParty}%` : '0%';
+    const fmtPct = (bucket) => {
+        if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return '0%';
+        return `${Math.round(bucket.remainingFraction * 100)}%`;
+    };
 
-    const getBaseLabel = (lbl) => lbl.replace(/\s*\([^)]*\)$/, '').trim();
+    for (const group of parsedGroups) {
+        lines.push(`- ${group.label}`);
+        
+        if (group.weekly) {
+            let wkText = `   Weekly Limit: ${fmtPct(group.weekly)}`;
+            const resetWk = formatResetTime(group.weekly.resetTime);
+            if (resetWk) wkText += ` (${resetWk})`;
+            lines.push(wkText);
+        }
+        if (group.fiveHour) {
+            let fhText = `   Five Hour Limit: ${fmtPct(group.fiveHour)}`;
+            const resetFh = formatResetTime(group.fiveHour.resetTime);
+            if (resetFh) fhText += ` (${resetFh})`;
+            lines.push(fhText);
+        }
+        lines.push('');
+    }
 
-    const rawGeminiLabels = models.filter(m => (m.label || '').toLowerCase().includes('gemini')).map(m => getBaseLabel(m.label));
-    const geminiLabels = [...new Set(rawGeminiLabels)].join(', ');
-
-    const rawThirdPartyLabels = models.filter(m => m.label && !m.label.toLowerCase().includes('gemini')).map(m => getBaseLabel(m.label));
-    const thirdPartyLabels = [...new Set(rawThirdPartyLabels)].join(', ');
-
-    const geminiResetTimeStr = models.find(m => (m.label || '').toLowerCase().includes('gemini') && m.quotaInfo?.resetTime)?.quotaInfo.resetTime;
-    const thirdPartyResetTimeStr = models.find(m => m.label && !m.label.toLowerCase().includes('gemini') && m.quotaInfo?.resetTime)?.quotaInfo.resetTime;
-
-    const geminiResetText = formatResetTime(geminiResetTimeStr);
-    const thirdPartyResetText = formatResetTime(thirdPartyResetTimeStr);
-
-    lines.push(`- Gemini : ${geminiPctStr}`);
-    if (geminiLabels) lines.push(`   ${geminiLabels}`);
-    if (geminiResetText) lines.push(`   ${geminiResetText}`);
-    lines.push('');
-
-    lines.push(`- Third-party : ${thirdPartyPctStr}`);
-    if (thirdPartyLabels) lines.push(`   ${thirdPartyLabels}`);
-    if (thirdPartyResetText) lines.push(`   ${thirdPartyResetText}`);
-    lines.push('', 'ARN-Lifebar | Click to open Settings');
+    lines.push('ARN-Lifebar | Click to open Settings');
     return lines.join('\n');
 }
 
@@ -338,14 +364,20 @@ if ($results.Count -eq 0) { "[]" } else { $results | ConvertTo-Json -Compress }
             }
         }
         try {
-            const res = await this.lsPost(this.lsConnection.port, this.lsConnection.csrfToken, 'GetUserStatus', {});
-            if (res.status === 200 && res.body?.userStatus) {
-                const us = res.body.userStatus;
-                this.statusBarItem.text = formatStatusBar(us);
-                this.statusBarItem.tooltip = formatTooltip(us);
+            const [statusRes, quotaRes] = await Promise.all([
+                this.lsPost(this.lsConnection.port, this.lsConnection.csrfToken, 'GetUserStatus', {}),
+                this.lsPost(this.lsConnection.port, this.lsConnection.csrfToken, 'RetrieveUserQuotaSummary', {})
+            ]);
+
+            if (statusRes.status === 200 && quotaRes.status === 200 && statusRes.body?.userStatus) {
+                const us = statusRes.body.userStatus;
+                const parsedGroups = parseQuotaSummary(quotaRes.body);
+                
+                this.statusBarItem.text = formatStatusBar(us, parsedGroups);
+                this.statusBarItem.tooltip = formatTooltip(us, parsedGroups);
                 this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
             } else {
-                this.log(`Unexpected API response status: ${res.status}`);
+                this.log(`Unexpected API response status: GetUserStatus=${statusRes.status}, RetrieveUserQuotaSummary=${quotaRes.status}`);
                 this.lsConnection = null;
                 this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
             }
@@ -405,4 +437,4 @@ function deactivate() {
 }
 
 // Exposed for unit tests — not part of the public extension API.
-module.exports = { activate, deactivate, CONFIG, colorDot, getModelGroups, formatStatusBar, formatTooltip, formatResetTime };
+module.exports = { activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime };
