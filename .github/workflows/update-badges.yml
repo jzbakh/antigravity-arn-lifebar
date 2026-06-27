@@ -41,7 +41,7 @@ jobs:
             (.results // [])[0] // {}
             | (.extensions // [])[0] // {}
             | (.statistics // [])
-            | map(select(.statisticName == "downloadCount"))
+            | map(select(.statisticName == "install"))
             | (.[0].value // 0 | floor)
           ')
 
