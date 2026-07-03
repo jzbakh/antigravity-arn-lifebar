@@ -2,10 +2,10 @@
 
 # Antigravity ARN-Lifebar: Minimalist extension to view your AI usage in the Status Bar.
 
-[![VS Marketplace](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges/.github/badges/marketplace-version.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
-[![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges/.github/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
-[![Open VSX](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges/.github/badges/openvsx-version.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
-[![Open VSX Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges/.github/badges/openvsx-downloads.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
+[![VS Marketplace](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-version.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
+[![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
+[![Open VSX](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/openvsx-version.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
+[![Open VSX Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/openvsx-downloads.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
 
 [![GitLab stars](https://img.shields.io/gitlab/stars/jzbakh/antigravity-arn-lifebar?style=flat&color=gold)](https://gitlab.com/jzbakh/antigravity-arn-lifebar)
 [![GitLab issues](https://img.shields.io/gitlab/issues/open/jzbakh/antigravity-arn-lifebar)](https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/issues)
