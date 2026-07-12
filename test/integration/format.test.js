@@ -188,7 +188,7 @@ describe('formatTooltip', () => {
         assert.match(tip, /Refreshes in 2 days, 0 hours/);
         assert.match(tip, /Five Hour Limit: 50%/);
         assert.match(tip, /Refreshes in 2 hours, 0 minutes/);
-        assert.match(tip, /ARN-Lifebar \| Click to open Settings/);
+        assert.match(tip, /ARN-Lifebar/);
     });
 
     it('uses ? placeholders when fields are missing', () => {

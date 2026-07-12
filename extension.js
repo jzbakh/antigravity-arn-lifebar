@@ -7,7 +7,7 @@ const execAsync = util.promisify(exec);
 
 const CONFIG = {
     POLLING: {
-        MIN_INTERVAL_MS: 10000,
+        MIN_INTERVAL_MS: 5000,
         MAX_INTERVAL_MS: 600000,
     },
     TIMEOUTS: {
@@ -53,21 +53,21 @@ function formatResetTime(resetTimeStr) {
 function parseQuotaSummary(quotaSummary) {
     const groups = quotaSummary?.response?.groups || [];
     const parsed = [];
-    
+
     for (const group of groups) {
         let weekly = null;
         let fiveHour = null;
-        
+
         for (const b of (group.buckets || [])) {
             if (b.window === 'weekly') weekly = b;
             if (b.window === '5h') fiveHour = b;
         }
-        
+
         let label = group.displayName || '';
         let shortLabel = label;
         if (label.toLowerCase().includes('gemini')) shortLabel = 'Gemini';
         else if (label.toLowerCase().includes('claude')) shortLabel = 'Claude & GPT';
-        
+
         parsed.push({
             label,
             shortLabel,
@@ -87,7 +87,7 @@ function formatStatusBar(userStatus, parsedGroups) {
         if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return '0%';
         return `${Math.round(bucket.remainingFraction * 100)}%`;
     };
-    
+
     const getPctNum = (bucket) => {
         if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return 0;
         return Math.round(bucket.remainingFraction * 100);
@@ -119,7 +119,7 @@ function formatTooltip(userStatus, parsedGroups) {
         lines.push(`Plan: ${tier?.name ?? plan?.planInfo?.planName ?? '?'}`);
         lines.push(`Prompt credits: ${plan?.availablePromptCredits ?? '?'} / ${plan?.planInfo?.monthlyPromptCredits ?? '?'}`);
         lines.push(`Flow credits: ${plan?.availableFlowCredits ?? '?'} / ${plan?.planInfo?.monthlyFlowCredits ?? '?'}`);
-        
+
         const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
         if (googleCredits) {
             lines.push(`Google One AI credits: ${googleCredits.creditAmount}`);
@@ -128,7 +128,7 @@ function formatTooltip(userStatus, parsedGroups) {
     }
 
     lines.push('Model quotas:');
-    
+
     if (parsedGroups.length === 0) {
         lines.push('  No quota information available.');
     }
@@ -140,7 +140,7 @@ function formatTooltip(userStatus, parsedGroups) {
 
     for (const group of parsedGroups) {
         lines.push(`- ${group.label}`);
-        
+
         if (group.weekly) {
             let wkText = `   Weekly Limit: ${fmtPct(group.weekly)}`;
             const resetWk = formatResetTime(group.weekly.resetTime);
@@ -156,7 +156,7 @@ function formatTooltip(userStatus, parsedGroups) {
         lines.push('');
     }
 
-    lines.push('ARN-Lifebar | Click to open Settings');
+    lines.push('ARN-Lifebar');
     return lines.join('\n');
 }
 
@@ -170,7 +170,6 @@ class LifebarController {
         this.outputChannel = vscode.window.createOutputChannel("ARN-Lifebar");
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
 
-        this.statusBarItem.command = 'antigravity-arn-lifebar.openSettings';
         this.statusBarItem.text = '$(graph) ARN-Lifebar...';
         this.statusBarItem.tooltip = 'Loading quotas...';
 
@@ -372,7 +371,7 @@ if ($results.Count -eq 0) { "[]" } else { $results | ConvertTo-Json -Compress }
             if (statusRes.status === 200 && quotaRes.status === 200 && statusRes.body?.userStatus) {
                 const us = statusRes.body.userStatus;
                 const parsedGroups = parseQuotaSummary(quotaRes.body);
-                
+
                 this.statusBarItem.text = formatStatusBar(us, parsedGroups);
                 this.statusBarItem.tooltip = formatTooltip(us, parsedGroups);
                 this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
