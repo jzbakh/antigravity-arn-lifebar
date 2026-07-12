@@ -5,6 +5,13 @@ All notable changes to **Antigravity ARN-Lifebar** will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3] — 2026-07-12
+
+### Changed
+- **Documentation:** Migrated all repository URLs to the new GitLab group `arn_inside`, consolidated the version badge, and refined badge color hierarchy.
+- **UI:** Disabled the status bar click-to-open-settings action to prevent accidental triggers.
+- **Performance:** Decreased the polling interval from 10s to 5s for faster quota updates.
+
 ## [1.2.2] — 2026-07-03
 
 ### Documentation
@@ -55,9 +62,10 @@ First public release on Visual Studio Marketplace and Open VSX.
 - Dedicated **ARN-Lifebar** output channel for diagnostics.
 - Zero runtime dependencies — pure native JavaScript, no build step.
 
-[1.2.2]: https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/releases/v1.2.2
-[1.2.1]: https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/releases/v1.2.1
-[1.1.1]: https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/releases/v1.1.1
-[1.1.0]: https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/releases/v1.1.0
-[1.0.1]: https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/releases/v1.0.1
-[1.0.0]: https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/releases/v1.0.0
+[1.2.3]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.3
+[1.2.2]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.2
+[1.2.1]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.1
+[1.1.1]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.1.1
+[1.1.0]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.1.0
+[1.0.1]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.0.1
+[1.0.0]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.0.0
