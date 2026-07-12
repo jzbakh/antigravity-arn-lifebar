@@ -8,7 +8,7 @@
 
 [![GitLab stars](https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=flat&color=gold)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
 [![GitLab issues](https://img.shields.io/gitlab/issues/open/arn_inside/antigravity-arn-lifebar)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues)
-[![License](https://img.shields.io/gitlab/license/arn_inside/antigravity-arn-lifebar?color=success)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
+[![License](https://img.shields.io/gitlab/license/arn_inside/antigravity-arn-lifebar?color=blue)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/package.json)
 [![Telemetry](https://img.shields.io/badge/telemetry-none-success.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/extension.js)
