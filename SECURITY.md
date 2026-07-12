@@ -6,7 +6,7 @@ Found something that looks like a security issue in ARN-Lifebar? Thanks for taki
 
 Open a private report via GitHub's Security Advisory form:
 
-→ **https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/security/advisories/new**
+→ **https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/security/advisories/new**
 
 Please don't open a public issue or discussion for security topics.
 

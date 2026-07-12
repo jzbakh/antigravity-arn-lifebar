@@ -8,6 +8,6 @@ For the long version, this project follows the [Contributor Covenant 2.1](https:
 
 If someone's behavior makes you uncomfortable, you can reach me privately through the same channel used for security reports:
 
-→ **https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/security/advisories/new**
+→ **https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/security/advisories/new**
 
 I'll handle it discreetly.

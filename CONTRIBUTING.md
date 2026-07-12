@@ -32,7 +32,7 @@ If your idea collides with one of these, open a discussion first — happy to ch
    npm ci
    npm test
    ```
-5. Open the PR against `main`. GitLab CI re-runs the same suite on Linux; it must be green before merge.
+5. Open the PR against `main`. GitLab CI re-runs the same suite on Linux, Windows, and macOS; it must be green before merge.
 
 ## Before publishing a new version
 
