@@ -80,6 +80,32 @@ publish:
     - npx --yes @vscode/vsce package -o antigravity-arn-lifebar.vsix
     - npx --yes @vscode/vsce publish --packagePath antigravity-arn-lifebar.vsix -p "$VSCE_PUBLISH"
     - npx --yes ovsx publish antigravity-arn-lifebar.vsix -p "$OPEN_VSX"
+  artifacts:
+    paths:
+      - antigravity-arn-lifebar.vsix
+    expire_in: never
+
+# --- GITLAB RELEASE ---
+gitlab-release:
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  stage: publish
+  needs:
+    - publish
+  only:
+    - tags
+  script:
+    - TAG_VERSION="${CI_COMMIT_TAG#v}"
+    - echo "Extracting CHANGELOG for version $TAG_VERSION"
+    - echo "# What's new in v${TAG_VERSION} ?" > release_notes.md
+    - echo "" >> release_notes.md
+    - awk -v ver="[${TAG_VERSION}]" '/^## \[/ { if (p) exit; if (index($2, ver) == 1) { p=1; next } } p { print }' CHANGELOG.md >> release_notes.md
+    - |
+      release-cli create --name "Release $CI_COMMIT_TAG" \
+        --tag-name "$CI_COMMIT_TAG" \
+        --description "$(cat release_notes.md)" \
+        --assets-link "{\"name\":\"Extension Binary (.vsix)\",\"url\":\"${CI_PROJECT_URL}/-/jobs/artifacts/${CI_COMMIT_TAG}/raw/antigravity-arn-lifebar.vsix?job=publish\",\"filepath\":\"/antigravity-arn-lifebar.vsix\",\"link_type\":\"package\"}" \
+        --assets-link "{\"name\":\"Download on VS Marketplace\",\"url\":\"https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar\",\"link_type\":\"other\"}" \
+        --assets-link "{\"name\":\"Download on Open VSX\",\"url\":\"https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar\",\"link_type\":\"other\"}"
 
 # --- BADGES UPDATE (SCHEDULED) ---
 update-badges:
