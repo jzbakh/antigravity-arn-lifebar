@@ -48,13 +48,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/jzbakh/antigravity-arn-lifebar.git"
+    "url": "https://gitlab.com/arn_inside/antigravity-arn-lifebar.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/issues"
+    "url": "https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues"
   },
-  "homepage": "https://gitlab.com/jzbakh/antigravity-arn-lifebar#readme",
-  "qna": "https://gitlab.com/jzbakh/antigravity-arn-lifebar/-/issues",
+  "homepage": "https://gitlab.com/arn_inside/antigravity-arn-lifebar#readme",
+  "qna": "https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues",
   "sponsor": {
     "url": "https://www.buymeacoffee.com/ARN_Inside"
   }
