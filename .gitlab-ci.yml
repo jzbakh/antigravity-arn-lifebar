@@ -46,6 +46,8 @@ integration-tests-windows:
   stage: test
   tags:
     - saas-windows-medium-amd64
+  variables:
+    GCM_CREDENTIAL_STORE: dpapi
   cache: []
   before_script:
     - choco install nodejs-lts --no-progress -y
