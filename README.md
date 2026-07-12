@@ -2,14 +2,13 @@
 
 # Antigravity ARN-Lifebar: Minimalist extension to view your AI usage in the Status Bar.
 
-[![VS Marketplace](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-version.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
+[![Version](https://img.shields.io/gitlab/v/release/arn_inside%2Fantigravity-arn-lifebar?label=version&color=blue&sort=semver)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases)
 [![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
-[![Open VSX](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/openvsx-version.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
 [![Open VSX Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/openvsx-downloads.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
 
 [![GitLab stars](https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=flat&color=gold)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
 [![GitLab issues](https://img.shields.io/gitlab/issues/open/arn_inside/antigravity-arn-lifebar)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues)
-[![License](https://img.shields.io/gitlab/license/arn_inside/antigravity-arn-lifebar)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
+[![License](https://img.shields.io/gitlab/license/arn_inside/antigravity-arn-lifebar?color=success)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/package.json)
 [![Telemetry](https://img.shields.io/badge/telemetry-none-success.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/extension.js)
