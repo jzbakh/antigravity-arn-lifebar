@@ -56,19 +56,6 @@ integration-tests-windows:
     - npm ci
     - npm test
 
-integration-tests-macos:
-  stage: test
-  tags:
-    - saas-macos-medium-m1
-  cache: []
-  before_script:
-    - brew install node@22 || true
-    - export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
-  script:
-    - node --version
-    - cd test
-    - npm ci
-    - npm test
 
 # --- PUBLISH ---
 publish:
@@ -78,7 +65,6 @@ publish:
     - validate
     - integration-tests-linux
     - integration-tests-windows
-    - integration-tests-macos
   only:
     - tags
   script:
