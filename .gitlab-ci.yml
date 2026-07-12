@@ -42,6 +42,34 @@ integration-tests-linux:
     - npm ci
     - xvfb-run -a npm test
 
+integration-tests-windows:
+  stage: test
+  tags:
+    - saas-windows-medium-amd64
+  cache: []
+  before_script:
+    - choco install nodejs-lts --no-progress -y
+    - $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+  script:
+    - node --version
+    - cd test
+    - npm ci
+    - npm test
+
+integration-tests-macos:
+  stage: test
+  tags:
+    - saas-macos-medium-m1
+  cache: []
+  before_script:
+    - brew install node@22 || true
+    - export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+  script:
+    - node --version
+    - cd test
+    - npm ci
+    - npm test
+
 # --- PUBLISH ---
 publish:
   image: node:22
@@ -49,6 +77,8 @@ publish:
   needs:
     - validate
     - integration-tests-linux
+    - integration-tests-windows
+    - integration-tests-macos
   only:
     - tags
   script:
@@ -116,7 +146,8 @@ update-badges:
         git push origin badges-gitlab
       fi
 
-# --- SECURITY (SAST & SECRETS) ---
+# --- SECURITY (SAST, SECRETS & DEPENDENCIES) ---
 include:
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
