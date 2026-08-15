@@ -1,163 +1,68 @@
-name: update-badges
-
+name: Update Badges
 on:
-  schedule:
-    - cron: '0 */6 * * *'  # every 6 hours
   workflow_dispatch:
-  release:
-    types: [published]
-
-permissions:
-  contents: write
+  push:
+    branches:
+      - main
 
 jobs:
-  refresh:
-    name: Refresh VS Marketplace + Open VSX badge JSONs
+  update-badges:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the badges branch directly
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          ref: badges
+          node-version: 22
 
-      - name: Query VS Marketplace gallery API
-        id: query
+      - name: Checkout badges branch
         run: |
-          set -euo pipefail
-          RESPONSE=$(curl -sS \
-            -H "Accept: application/json;api-version=6.0-preview.1" \
+          mkdir -p /tmp/badges_repo
+          git clone --branch badges-gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/arn_inside/antigravity-arn-lifebar.git /tmp/badges_repo
+          cd /tmp/badges_repo
+          mkdir -p .gitlab/badges
+
+      - name: Fetch VS Marketplace stats
+        run: |
+          cd /tmp/badges_repo
+          RESPONSE=$(curl -sS -X POST \
             -H "Content-Type: application/json" \
-            -X POST https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery \
-            -d '{"flags":914,"filters":[{"criteria":[{"filterType":7,"value":"jzbakh.antigravity-arn-lifebar"}]}]}')
-
-          VERSION=$(echo "$RESPONSE" | jq -r '
-            (.results // [])[0] // {}
-            | (.extensions // [])[0] // {}
-            | (.versions // [])[0] // {}
-            | (.version // "unknown")
-          ')
-
-          DOWNLOADS=$(echo "$RESPONSE" | jq -r '
-            (.results // [])[0] // {}
-            | (.extensions // [])[0] // {}
-            | (.statistics // [])
-            | map(select(.statisticName == "install"))
-            | (.[0].value // 0 | floor)
-          ')
-
-          echo "version=$VERSION"   >> "$GITHUB_OUTPUT"
-          echo "downloads=$DOWNLOADS" >> "$GITHUB_OUTPUT"
-
-      - name: Bail out cleanly if the extension is not yet indexed
-        if: steps.query.outputs.version == 'unknown' && steps.query.outputs.downloads == '0'
-        run: |
-          echo "Marketplace has not propagated yet — skipping badge refresh."
-          exit 0
-
-      - name: Format numbers (1234 -> 1.2k, 1234567 -> 1.2M)
-        id: fmt
-        run: |
-          format_num() {
-            local n=$1
-            if   [ "$n" -ge 1000000 ]; then awk -v n="$n" 'BEGIN{printf "%.1fM", n/1000000}';
-            elif [ "$n" -ge 1000 ];    then awk -v n="$n" 'BEGIN{printf "%.1fk", n/1000}';
-            else echo "$n"; fi
-          }
-          DOWNLOADS_PRETTY=$(format_num "${{ steps.query.outputs.downloads }}")
-          echo "downloads_pretty=$DOWNLOADS_PRETTY" >> "$GITHUB_OUTPUT"
-
-      - name: Write shields.io endpoint JSONs
-        run: |
-          mkdir -p .github/badges
-          cat > .github/badges/marketplace-version.json <<EOF
-          {
-            "schemaVersion": 1,
-            "label": "VS Marketplace",
-            "message": "v${{ steps.query.outputs.version }}",
-            "color": "blue",
-            "namedLogo": "visualstudiocode"
-          }
-          EOF
-          cat > .github/badges/marketplace-downloads.json <<EOF
-          {
-            "schemaVersion": 1,
-            "label": "Downloads",
-            "message": "${{ steps.fmt.outputs.downloads_pretty }}",
-            "color": "success",
-            "namedLogo": "visualstudiocode"
-          }
-          EOF
-
-      - name: Query Open VSX API
-        id: query_vsx
-        run: |
-          set -uo pipefail
-          # Open VSX frequently returns HTTP 429 (rate limit) — handle gracefully
-          # by skipping the Open VSX badge refresh instead of failing the job.
-          HTTP_CODE=$(curl -sS -o /tmp/vsx.json -w "%{http_code}" \
-            "https://open-vsx.org/api/jzbakh/antigravity-arn-lifebar" || echo "000")
-
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Open VSX returned HTTP $HTTP_CODE — keeping previous cached badge values."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            -H "Accept: application/json;api-version=3.0-preview.1" \
+            -d '{"flags":914,"filters":[{"criteria":[{"filterType":7,"value":"jzbakh.antigravity-arn-lifebar"}]}]}' \
+            "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery")
+          VERSION=$(echo "$RESPONSE" | jq -r '(.results // [])[0] // {} | (.extensions // [])[0] // {} | (.versions // [])[0] // {} | (.version // "unknown")')
+          DOWNLOADS=$(echo "$RESPONSE" | jq -r '(.results // [])[0] // {} | (.extensions // [])[0] // {} | (.statistics // []) | map(select(.statisticName == "install")) | (first // {value: 0}) | (.value // 0) | floor')
+          
+          if [ "$VERSION" != "unknown" ]; then
+            DOWNLOADS_DISPLAY=$(if [ "$DOWNLOADS" -ge 1000000 ]; then awk -v n="$DOWNLOADS" 'BEGIN { printf "%.1fM", n/1000000 }'; elif [ "$DOWNLOADS" -ge 1000 ]; then awk -v n="$DOWNLOADS" 'BEGIN { printf "%.1fk", n/1000 }'; else echo "$DOWNLOADS"; fi)
+            echo "{ \"schemaVersion\": 1, \"label\": \"VS Marketplace\", \"message\": \"v${VERSION}\", \"color\": \"blue\", \"namedLogo\": \"visualstudiocode\" }" > .gitlab/badges/marketplace-version.json
+            echo "{ \"schemaVersion\": 1, \"label\": \"VS Marketplace Downloads\", \"message\": \"${DOWNLOADS_DISPLAY}\", \"color\": \"blueviolet\", \"namedLogo\": \"visualstudiocode\" }" > .gitlab/badges/marketplace-downloads.json
           fi
 
-          if ! jq -e . /tmp/vsx.json > /dev/null 2>&1; then
-            echo "Open VSX returned non-JSON payload — keeping previous cached badge values."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+      - name: Fetch Open VSX stats
+        run: |
+          cd /tmp/badges_repo
+          OVSX_RESPONSE=$(curl -sS "https://open-vsx.org/api/jzbakh/antigravity-arn-lifebar")
+          OVSX_VERSION=$(echo "$OVSX_RESPONSE" | jq -r '.version // "unknown"')
+          OVSX_DOWNLOADS=$(echo "$OVSX_RESPONSE" | jq -r '.downloadCount // 0')
+          
+          if [ "$OVSX_VERSION" != "unknown" ] && [ "$OVSX_VERSION" != "null" ]; then
+            OVSX_DL_DISP=$(if [ "$OVSX_DOWNLOADS" -ge 1000000 ]; then awk -v n="$OVSX_DOWNLOADS" 'BEGIN { printf "%.1fM", n/1000000 }'; elif [ "$OVSX_DOWNLOADS" -ge 1000 ]; then awk -v n="$OVSX_DOWNLOADS" 'BEGIN { printf "%.1fk", n/1000 }'; else echo "$OVSX_DOWNLOADS"; fi)
+            echo "{ \"schemaVersion\": 1, \"label\": \"Open VSX\", \"message\": \"v${OVSX_VERSION}\", \"color\": \"blue\", \"namedLogo\": \"openvsx\" }" > .gitlab/badges/openvsx-version.json
+            echo "{ \"schemaVersion\": 1, \"label\": \"Open VSX Downloads\", \"message\": \"${OVSX_DL_DISP}\", \"color\": \"blueviolet\", \"namedLogo\": \"openvsx\" }" > .gitlab/badges/openvsx-downloads.json
           fi
 
-          VSX_VERSION=$(jq -r '.version // "unknown"' /tmp/vsx.json)
-          VSX_DOWNLOADS=$(jq -r '(.downloadCount // 0) | floor' /tmp/vsx.json)
-
-          echo "skip=false"               >> "$GITHUB_OUTPUT"
-          echo "version=$VSX_VERSION"     >> "$GITHUB_OUTPUT"
-          echo "downloads=$VSX_DOWNLOADS" >> "$GITHUB_OUTPUT"
-
-      - name: Format Open VSX downloads
-        if: steps.query_vsx.outputs.skip == 'false'
-        id: fmt_vsx
+      - name: Commit and push badges
         run: |
-          format_num() {
-            local n=$1
-            if   [ "$n" -ge 1000000 ]; then awk -v n="$n" 'BEGIN{printf "%.1fM", n/1000000}';
-            elif [ "$n" -ge 1000 ];    then awk -v n="$n" 'BEGIN{printf "%.1fk", n/1000}';
-            else echo "$n"; fi
-          }
-          VSX_DOWNLOADS_PRETTY=$(format_num "${{ steps.query_vsx.outputs.downloads }}")
-          echo "downloads_pretty=$VSX_DOWNLOADS_PRETTY" >> "$GITHUB_OUTPUT"
-
-      - name: Write Open VSX shields.io endpoint JSONs
-        if: steps.query_vsx.outputs.skip == 'false'
-        run: |
-          mkdir -p .github/badges
-          cat > .github/badges/openvsx-version.json <<EOF
-          {
-            "schemaVersion": 1,
-            "label": "Open VSX",
-            "message": "v${{ steps.query_vsx.outputs.version }}",
-            "color": "blue"
-          }
-          EOF
-          cat > .github/badges/openvsx-downloads.json <<EOF
-          {
-            "schemaVersion": 1,
-            "label": "Downloads",
-            "message": "${{ steps.fmt_vsx.outputs.downloads_pretty }}",
-            "color": "success"
-          }
-          EOF
-
-      - name: Commit + push only if something changed
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/badges/
+          cd /tmp/badges_repo
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .gitlab/badges/
           if git diff --quiet --staged; then
-            echo "No badge changes."
-            exit 0
+            echo "Badges unchanged, nothing to commit."
+          else
+            git commit -m "chore(badges): refresh badge stats from github fallback"
+            git push origin badges-gitlab
           fi
-          git commit -m "chore(badges): refresh marketplace v${{ steps.query.outputs.version }} (${{ steps.query.outputs.downloads }} dl)"
-          git push origin badges
