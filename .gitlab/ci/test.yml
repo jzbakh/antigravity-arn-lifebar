@@ -1,0 +1,62 @@
+﻿# npm ci wipes node_modules before installing, so the npm store is the only
+# thing worth caching. Key it on the lockfile.
+.linux-node:
+  image: node:22
+  stage: test
+  cache:
+    key:
+      prefix: npm-linux
+      files:
+        - test/package-lock.json
+    paths:
+      - .npm
+
+integration-tests-linux:
+  extends:
+    - .linux-node
+    - .on-code
+  before_script:
+    - apt-get update && apt-get install -y libx11-xcb1 libxcb-dri3-0 libxtst6 libnss3 libxss1 libasound2 libgbm1 libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 xauth xvfb
+  script:
+    - cd test
+    - npm ci --prefer-offline
+    - xvfb-run -a npm test
+
+# macOS hosted runners are beta and gated to the Open Source program.
+# full-matrix-only until a run proves access works -- a job whose tag matches no
+# available runner fails after 1h and must never gate a release.
+integration-tests-macos:
+  rules:
+    - if: '$PIPELINE == "full-matrix"'
+  stage: test
+  image: macos-15-xcode-16
+  tags:
+    - saas-macos-medium-m1
+  variables:
+    HOMEBREW_NO_AUTO_UPDATE: "1"
+  timeout: 45m
+  cache: []
+  script:
+    - node --version
+    - cd test
+    - npm ci
+    - npm test
+
+# Windows runners cost 2x and take ~14 min (chocolatey install). Reserved for
+# the full-matrix run and release tags to avoid wasting CI minutes on every push.
+integration-tests-windows:
+  extends: .on-full-matrix
+  stage: test
+  tags:
+    - saas-windows-medium-amd64
+  variables:
+    GCM_CREDENTIAL_STORE: plaintext
+  cache: []
+  before_script:
+    - choco install nodejs-lts --no-progress -y
+    - $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+  script:
+    - node --version
+    - cd test
+    - npm ci
+    - npm test

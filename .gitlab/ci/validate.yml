@@ -1,0 +1,7 @@
+validate-manifest:
+  extends: .on-any-commit
+  image: node:22
+  stage: validate
+  script:
+    - node scripts/validate-manifest.js
+    - node -c extension.js
