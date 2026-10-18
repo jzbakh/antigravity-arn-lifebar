@@ -6,8 +6,9 @@
 [![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
 [![Open VSX Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/openvsx-downloads.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
 
-[![GitLab stars](https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=flat&color=gold)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
-[![GitLab issues](https://img.shields.io/gitlab/issues/open/arn_inside/antigravity-arn-lifebar)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues)
+[![GitHub stars](https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=flat&color=gold&logo=github)](https://github.com/jzbakh/antigravity-arn-lifebar)
+[![GitLab stars](https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=flat&color=gold&logo=gitlab)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
+[![GitHub issues](https://img.shields.io/github/issues/jzbakh/antigravity-arn-lifebar)](https://github.com/jzbakh/antigravity-arn-lifebar/issues)
 [![License](https://img.shields.io/gitlab/license/arn_inside/antigravity-arn-lifebar?color=blue)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/package.json)
@@ -81,7 +82,7 @@ Why install a heavy dashboard just to read a percentage?
 ARN-Lifebar reads Google AI Plus/Pro/Ultra quotas from **Antigravity IDE**, or from the **Google Antigravity extension** in other IDEs. This message remains visible until Antigravity starts in the window; ARN-Lifebar retries at least once a minute.
 
 -> *Are you using Antigravity IDE, or the Google Antigravity extension in your IDE? And are you logged into your Google account?*
-If so, then it is a bug: please open an issue [here](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues/new).
+If so, then it is a bug: please open an issue [here](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **I'm using Antigravity IDE 2.5 or older.**
 Since version 1.3, ARN-Lifebar reads quotas from Antigravity IDE 2.6 and later. Update the IDE, or install version 1.2.3 of ARN-Lifebar.
@@ -109,7 +110,7 @@ In Antigravity IDE, ARN-Lifebar works on its own. In other editors, such as VS C
 
 <br>
 
-1. Download the [`antigravity-arn-lifebar.vsix`](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/permalink/latest/downloads/antigravity-arn-lifebar.vsix) file.
+1. Download the [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix) file.
 2. In your editor, open the **Extensions** view (`Ctrl+Shift+X`).
 3. Click the "..." menu (Views and More Actions) at the top of the sidebar.
 4. Select **Install from VSIX...**
@@ -137,12 +138,18 @@ In Antigravity IDE, ARN-Lifebar works on its own. In other editors, such as VS C
 <br>
 
 <p align="center">
-  <b>💫 Do you like this project? Leave a ⭐ on GitLab to support it!</b>
+  <b>💫 Do you like this project? Leave a ⭐ on GitHub or GitLab to support it!</b>
 </p>
 <p align="center">
+  <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
+    <img src="https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=social" alt="Star on GitHub">
+  </a>
   <a href="https://gitlab.com/arn_inside/antigravity-arn-lifebar">
     <img src="https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=social" alt="Star on GitLab">
   </a>
+</p>
+<p align="center">
+  A review on <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> or the <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> also helps others find it.
 </p>
 
 <br>
@@ -250,7 +257,7 @@ Pourquoi installer un tableau de bord lourd juste pour lire un pourcentage ?
 ARN-Lifebar lit les quotas Google AI Plus/Pro/Ultra d'**Antigravity IDE**, ou de l'**extension Google Antigravity** dans les autres IDE. Ce message reste affiché tant qu'Antigravity n'a pas démarré dans la fenêtre ; ARN-Lifebar réessaie au moins une fois par minute.
 
 -> *Utilisez-vous Antigravity IDE, ou l'extension Google Antigravity dans votre IDE ? Et êtes-vous connecté(e) à votre compte Google ?*
-Si oui, alors il s'agit d'un bug : merci d'ouvrir une issue [ici](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues/new).
+Si oui, alors il s'agit d'un bug : merci d'ouvrir une issue [ici](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **J'utilise Antigravity IDE 2.5 ou une version plus ancienne.**
 Depuis sa version 1.3, ARN-Lifebar lit les quotas d'Antigravity IDE 2.6 et des versions suivantes. Mettez l'IDE à jour, ou installez la version 1.2.3 d'ARN-Lifebar.
@@ -278,7 +285,7 @@ Dans Antigravity IDE, ARN-Lifebar fonctionne seul. Dans un autre éditeur, comme
 
 <br>
 
-1. Téléchargez le fichier [`antigravity-arn-lifebar.vsix`](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/permalink/latest/downloads/antigravity-arn-lifebar.vsix).
+1. Téléchargez le fichier [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix).
 2. Dans votre éditeur, ouvrez la vue **Extensions** (`Ctrl+Shift+X`).
 3. Cliquez sur le menu "..." (Vues et plus d'actions) en haut de la barre latérale.
 4. Sélectionnez **Installer à partir d'un VSIX...**
@@ -306,12 +313,18 @@ Dans Antigravity IDE, ARN-Lifebar fonctionne seul. Dans un autre éditeur, comme
 <br>
 
 <p align="center">
-  <b>💫 Ce projet vous plaît ? Laissez une ⭐ sur GitLab pour soutenir le projet !</b>
+  <b>💫 Ce projet vous plaît ? Laissez une ⭐ sur GitHub ou GitLab pour soutenir le projet !</b>
 </p>
 <p align="center">
+  <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
+    <img src="https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=social" alt="Star sur GitHub">
+  </a>
   <a href="https://gitlab.com/arn_inside/antigravity-arn-lifebar">
     <img src="https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=social" alt="Star sur GitLab">
   </a>
+</p>
+<p align="center">
+  Un avis sur <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> ou le <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> aide aussi d'autres personnes à le découvrir.
 </p>
 
 <br>
@@ -418,7 +431,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
 ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，在其他 IDE 中则通过 **Google Antigravity 扩展**读取。此消息会一直显示，直到 Antigravity 在该窗口中启动；ARN-Lifebar 至少每分钟重试一次。
 
 -> *您使用的是 Antigravity IDE，还是在您的 IDE 中使用 Google Antigravity 扩展？您登录 Google 账号了吗？*
-如果是，那么这是一个 bug：请[在此处](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues/new)提交 issue。
+如果是，那么这是一个 bug：请[在此处](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose)提交 issue。
 
 **我使用的是 Antigravity IDE 2.5 或更早版本。**
 自 1.3 版起，ARN-Lifebar 读取 Antigravity IDE 2.6 及更高版本的配额。请更新 IDE，或安装 ARN-Lifebar 1.2.3 版。
@@ -446,7 +459,7 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 
 <br>
 
-1. 下载 [`antigravity-arn-lifebar.vsix`](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/permalink/latest/downloads/antigravity-arn-lifebar.vsix) 文件。
+1. 下载 [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix) 文件。
 2. 在您的编辑器中，打开**扩展**视图 (`Ctrl+Shift+X`)。
 3. 点击侧边栏顶部的 "..." 菜单（视图和更多操作）。
 4. 选择 **从 VSIX 安装...**
@@ -474,12 +487,18 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 <br>
 
 <p align="center">
-  <b>💫 喜欢这个项目吗？在 GitLab 上点亮 ⭐ 来支持我们吧！</b>
+  <b>💫 喜欢这个项目吗？在 GitHub 或 GitLab 上点亮 ⭐ 来支持我们吧！</b>
 </p>
 <p align="center">
+  <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
+    <img src="https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=social" alt="在 GitHub 上点亮星星">
+  </a>
   <a href="https://gitlab.com/arn_inside/antigravity-arn-lifebar">
     <img src="https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=social" alt="在 GitLab 上点亮星星">
   </a>
+</p>
+<p align="center">
+  在 <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> 或 <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> 上留下评价，也能帮助更多人发现它。
 </p>
 
 <br>
@@ -586,7 +605,7 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 ARN-Lifebar lee las cuotas de Google AI Plus/Pro/Ultra de **Antigravity IDE** o de la **extensión Google Antigravity** en los demás IDE. Este mensaje permanece visible hasta que Antigravity se inicie en la ventana; ARN-Lifebar vuelve a intentarlo al menos una vez por minuto.
 
 -> *¿Utilizas Antigravity IDE o la extensión Google Antigravity en tu IDE? ¿Y has iniciado sesión en tu cuenta de Google?*
-Si es así, entonces se trata de un bug: por favor, abre un issue [aquí](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues/new).
+Si es así, entonces se trata de un bug: por favor, abre un issue [aquí](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **Uso Antigravity IDE 2.5 o una versión anterior.**
 Desde la versión 1.3, ARN-Lifebar lee las cuotas de Antigravity IDE 2.6 y versiones posteriores. Actualiza el IDE o instala la versión 1.2.3 de ARN-Lifebar.
@@ -614,7 +633,7 @@ En Antigravity IDE, ARN-Lifebar funciona por sí solo. En otro editor, como VS C
 
 <br>
 
-1. Descarga el archivo [`antigravity-arn-lifebar.vsix`](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/permalink/latest/downloads/antigravity-arn-lifebar.vsix).
+1. Descarga el archivo [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix).
 2. En tu editor, abre la vista de **Extensiones** (`Ctrl+Shift+X`).
 3. Haz clic en el menú "..." (Vistas y más acciones) en la parte superior de la barra lateral.
 4. Selecciona **Instalar desde VSIX...**
@@ -642,12 +661,18 @@ En Antigravity IDE, ARN-Lifebar funciona por sí solo. En otro editor, como VS C
 <br>
 
 <p align="center">
-  <b>💫 ¿Te gusta este proyecto? ¡Deja una ⭐ en GitLab para apoyar el proyecto!</b>
+  <b>💫 ¿Te gusta este proyecto? ¡Deja una ⭐ en GitHub o GitLab para apoyar el proyecto!</b>
 </p>
 <p align="center">
+  <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
+    <img src="https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=social" alt="Estrella en GitHub">
+  </a>
   <a href="https://gitlab.com/arn_inside/antigravity-arn-lifebar">
     <img src="https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=social" alt="Estrella en GitLab">
   </a>
+</p>
+<p align="center">
+  Una reseña en <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> o en el <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> también ayuda a que otros lo descubran.
 </p>
 
 <br>
@@ -754,7 +779,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 تقرأ ARN-Lifebar حصص Google AI Plus/Pro/Ultra من **Antigravity IDE** أو من **إضافة Google Antigravity** في بيئات التطوير الأخرى. تبقى هذه الرسالة ظاهرة حتى يبدأ تشغيل Antigravity في النافذة؛ وتعيد ARN-Lifebar المحاولة مرة واحدة على الأقل كل دقيقة.
 
 -> *هل تستخدم Antigravity IDE أو إضافة Google Antigravity في بيئة تطويرك؟ وهل أنت مسجل الدخول إلى حساب Google الخاص بك؟*
-إذا كان الأمر كذلك، فهذا يعني وجود خلل (bug): يُرجى فتح مشكلة (issue) [هنا](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues/new).
+إذا كان الأمر كذلك، فهذا يعني وجود خلل (bug): يُرجى فتح مشكلة (issue) [هنا](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **أستخدم Antigravity IDE 2.5 أو إصدارًا أقدم.**
 منذ الإصدار 1.3، تقرأ ARN-Lifebar حصص Antigravity IDE 2.6 والإصدارات الأحدث. قم بتحديث بيئة التطوير أو ثبّت الإصدار 1.2.3 من ARN-Lifebar.
@@ -782,7 +807,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 <br>
 
-1. قم بتنزيل ملف [`antigravity-arn-lifebar.vsix`](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/permalink/latest/downloads/antigravity-arn-lifebar.vsix).
+1. قم بتنزيل ملف [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix).
 2. في محررك، افتح عرض **الإضافات** (`Ctrl+Shift+X`).
 3. انقر على قائمة "..." (طرق العرض ومزيد من الإجراءات) أعلى الشريط الجانبي.
 4. حدد **تثبيت من VSIX...**
@@ -810,12 +835,18 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 <br>
 
 <p align="center">
-  <b>💫 هل يعجبك هذا المشروع؟ اترك ⭐ على GitLab لدعم المشروع!</b>
+  <b>💫 هل يعجبك هذا المشروع؟ اترك ⭐ على GitHub أو GitLab لدعم المشروع!</b>
 </p>
 <p align="center">
+  <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
+    <img src="https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=social" alt="نجمة على GitHub">
+  </a>
   <a href="https://gitlab.com/arn_inside/antigravity-arn-lifebar">
     <img src="https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=social" alt="نجمة على GitLab">
   </a>
+</p>
+<p align="center">
+  تقييمك على <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> أو <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> يساعد الآخرين أيضًا على اكتشافه.
 </p>
 
 <br>
@@ -922,7 +953,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Antigravity IDE** หรือจาก **ส่วนขยาย Google Antigravity** ใน IDE อื่น ๆ ข้อความนี้จะแสดงอยู่จนกว่า Antigravity จะเริ่มทำงานในหน้าต่างนั้น และ ARN-Lifebar จะลองใหม่อย่างน้อยนาทีละครั้ง
 
 -> *คุณกำลังใช้ Antigravity IDE หรือส่วนขยาย Google Antigravity ใน IDE ของคุณอยู่หรือไม่? และคุณได้เข้าสู่ระบบบัญชี Google ของคุณแล้วหรือยัง?*
-หากใช่ แสดงว่าเป็นข้อผิดพลาด (bug): โปรดเปิดปัญหา (issue) [ที่นี่](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/issues/new)
+หากใช่ แสดงว่าเป็นข้อผิดพลาด (bug): โปรดเปิดปัญหา (issue) [ที่นี่](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose)
 
 **กรณีใช้ Antigravity IDE 2.5 หรือต่ำกว่า**
 ตั้งแต่เวอร์ชัน 1.3 เป็นต้นไป ARN-Lifebar จะอ่านโควตาของ Antigravity IDE 2.6 และเวอร์ชันที่ใหม่กว่า โปรดอัปเดต IDE หรือติดตั้ง ARN-Lifebar เวอร์ชัน 1.2.3
@@ -950,7 +981,7 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 
 <br>
 
-1. ดาวน์โหลดไฟล์ [`antigravity-arn-lifebar.vsix`](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/permalink/latest/downloads/antigravity-arn-lifebar.vsix)
+1. ดาวน์โหลดไฟล์ [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix)
 2. ในโปรแกรมแก้ไขของคุณ ให้เปิดมุมมอง **ส่วนขยาย (Extensions)** (`Ctrl+Shift+X`)
 3. คลิกที่เมนู "..." (มุมมองและการดำเนินการเพิ่มเติม) ที่ด้านบนสุดของแถบด้านข้าง
 4. เลือก **ติดตั้งจาก VSIX... (Install from VSIX...)**
@@ -978,12 +1009,18 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 <br>
 
 <p align="center">
-  <b>💫 คุณชอบโครงการนี้ไหม? กดให้ ⭐ บน GitLab เพื่อสนับสนุนโครงการ!</b>
+  <b>💫 คุณชอบโครงการนี้ไหม? กดให้ ⭐ บน GitHub หรือ GitLab เพื่อสนับสนุนโครงการ!</b>
 </p>
 <p align="center">
+  <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
+    <img src="https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=social" alt="ให้ดาวบน GitHub">
+  </a>
   <a href="https://gitlab.com/arn_inside/antigravity-arn-lifebar">
     <img src="https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=social" alt="ให้ดาวบน GitLab">
   </a>
+</p>
+<p align="center">
+  การรีวิวบน <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> หรือ <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> ก็ช่วยให้ผู้อื่นค้นพบโครงการนี้ได้เช่นกัน
 </p>
 
 <br>
