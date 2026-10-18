@@ -1,41 +1,63 @@
-name: Test Suite
+name: tests
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
+    name: Validate manifest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: node scripts/validate-manifest.js
       - run: node -c extension.js
 
-  test:
+  tests:
+    name: Tests (${{ matrix.os }})
     needs: validate
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: test
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: test/package-lock.json
       - run: npm ci
-        working-directory: ./test
-      - name: Run Tests (Linux)
+      - name: Run tests (headless)
         if: runner.os == 'Linux'
         run: xvfb-run -a npm test
-        working-directory: ./test
-      - name: Run Tests (Windows/macOS)
+      - name: Run tests
         if: runner.os != 'Linux'
         run: npm test
-        working-directory: ./test
+
+  ci-passed:
+    name: CI passed
+    needs: [validate, tests]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: test "${{ needs.validate.result }}" = success && test "${{ needs.tests.result }}" = success
