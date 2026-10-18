@@ -16,8 +16,10 @@ If your idea collides with one of these, open a discussion first — happy to ch
 ├── extension.js          # The whole extension — single file, zero runtime deps
 ├── package.json          # Extension manifest (dependency-free)
 ├── media/                # Icon and screenshots
+├── scripts/              # Manifest gate shared by the GitHub and GitLab pipelines
 └── test/                 # Isolated test harness — devDeps live here only
     ├── package.json
+    ├── fixtures/         # Captured quota payloads and a fake Google Antigravity extension
     └── integration/      # Tests that run inside VS Code via @vscode/test-cli
 ```
 
@@ -32,13 +34,13 @@ If your idea collides with one of these, open a discussion first — happy to ch
    npm ci
    npm test
    ```
-5. Open the PR against `main`. GitLab CI re-runs the same suite on Linux, Windows, and macOS; it must be green before merge.
+5. Open the PR against `main` on GitHub. GitHub Actions runs the suite on Linux, Windows and macOS; the `CI passed` check must be green before merge.
 
 ## Before publishing a new version
 
 The CI suite proves the code parses and activates, but ARN-Lifebar only shows real quotas inside **Antigravity IDE**, signed in to a Google account. So before tagging a release, this manual check is required:
 
-1. Build the `.vsix` locally: `npx vsce package`.
+1. Build the `.vsix` locally: `npx @vscode/vsce package`.
 2. Install it in Antigravity IDE → `Extensions: Install from VSIX...`.
 3. Confirm the status bar shows the live quotas — not `LS not found`.
 

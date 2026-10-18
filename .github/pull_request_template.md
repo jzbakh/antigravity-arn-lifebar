@@ -14,8 +14,7 @@
 
 ## Checklist
 - [ ] Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
-- [ ] `cd test && npm run test:unit` passes locally.
-- [ ] `cd test && npm run test:integration` passes locally *(or N/A — explain why)*.
+- [ ] `cd test && npm test` passes locally.
 - [ ] Extension manifest (`package.json` at the repo root) still has **zero runtime dependencies**.
 - [ ] No new network calls outside `127.0.0.1`.
 - [ ] No telemetry, analytics, or remote logging introduced.
