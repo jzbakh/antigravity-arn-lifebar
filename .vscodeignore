@@ -6,6 +6,10 @@
 # GitHub repo infrastructure
 .github/**
 
+# GitLab repo infrastructure
+.gitlab-ci.yml
+.gitlab/**
+
 # Test harness (own package.json with devDeps — must never ship)
 test/**
 
