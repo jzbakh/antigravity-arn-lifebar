@@ -50,64 +50,49 @@ function formatResetTime(resetTimeStr) {
     }
 }
 
+// Same rule as the IDE: a bucket without remainingFraction counts as 0%.
+function remainingPct(bucket) {
+    return Math.round((bucket.remainingFraction ?? 0) * 100);
+}
+
+function compactLabel(displayName) {
+    return displayName.replace(/\s+models?$/i, '').replace(/\s+and\s+/gi, ' & ');
+}
+
+function bucketLabel(bucket) {
+    return (bucket.displayName || bucket.window || 'Limit').replace(/\s+remaining$/i, '');
+}
+
+// Report the 5-hour window, or 0% as soon as any window is exhausted.
+function pickGauge(buckets) {
+    const lowest = buckets.reduce((min, b) => (!min || remainingPct(b) < remainingPct(min) ? b : min), null);
+    if (!lowest || remainingPct(lowest) === 0) return lowest;
+    return buckets.find(b => b.window === '5h') ?? lowest;
+}
+
 function parseQuotaSummary(quotaSummary) {
     const groups = quotaSummary?.response?.groups || [];
-    const parsed = [];
 
-    for (const group of groups) {
-        let weekly = null;
-        let fiveHour = null;
+    return groups.map((group) => {
+        const label = group.displayName || '';
+        const buckets = (group.buckets || []).filter(b => !b.disabled);
 
-        for (const b of (group.buckets || [])) {
-            if (b.window === 'weekly') weekly = b;
-            if (b.window === '5h') fiveHour = b;
-        }
-
-        let label = group.displayName || '';
-        let shortLabel = label;
-        if (label.toLowerCase().includes('gemini')) shortLabel = 'Gemini';
-        else if (label.toLowerCase().includes('claude')) shortLabel = 'Claude & GPT';
-
-        parsed.push({
-            label,
-            shortLabel,
-            weekly,
-            fiveHour
-        });
-    }
-    return parsed;
+        return { label, shortLabel: compactLabel(label), description: group.description, buckets, gauge: pickGauge(buckets) };
+    });
 }
 
 function formatStatusBar(userStatus, parsedGroups) {
-    const plan = userStatus?.planStatus;
-    const tier = userStatus?.userTier;
-    if (!plan && parsedGroups.length === 0) return '$(graph) ARN-Lifebar';
+    const parts = parsedGroups
+        .filter(group => group.gauge)
+        .map((group) => {
+            const pct = remainingPct(group.gauge);
+            return `  ${group.shortLabel} ${pct}% ${colorDot(pct)} `;
+        });
 
-    const fmtPct = (bucket) => {
-        if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return '0%';
-        return `${Math.round(bucket.remainingFraction * 100)}%`;
-    };
+    const googleCredits = userStatus?.userTier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
+    if (googleCredits) parts.push(`  ${googleCredits.creditAmount} credits  `);
 
-    const getPctNum = (bucket) => {
-        if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return 0;
-        return Math.round(bucket.remainingFraction * 100);
-    };
-
-    let textParts = [];
-    for (const group of parsedGroups) {
-        const pctStr = fmtPct(group.fiveHour);
-        const pctNum = getPctNum(group.fiveHour);
-        textParts.push(`  ${group.shortLabel} ${pctStr} ${colorDot(pctNum)} `);
-    }
-
-    const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
-    const aiCredits = googleCredits ? googleCredits.creditAmount : null;
-
-    let text = `|` + textParts.join('|');
-    if (aiCredits !== null) text += `|  ${aiCredits} credits  `;
-    text += `|`;
-
-    return text;
+    return parts.length ? `|${parts.join('|')}|` : '$(graph) ARN-Lifebar';
 }
 
 function formatTooltip(userStatus, parsedGroups) {
@@ -133,25 +118,13 @@ function formatTooltip(userStatus, parsedGroups) {
         lines.push('  No quota information available.');
     }
 
-    const fmtPct = (bucket) => {
-        if (!bucket || bucket.remainingFraction === undefined || bucket.remainingFraction === null) return '0%';
-        return `${Math.round(bucket.remainingFraction * 100)}%`;
-    };
-
     for (const group of parsedGroups) {
         lines.push(`- ${group.label}`);
+        if (group.description) lines.push(`   ${group.description}`);
 
-        if (group.weekly) {
-            let wkText = `   Weekly Limit: ${fmtPct(group.weekly)}`;
-            const resetWk = formatResetTime(group.weekly.resetTime);
-            if (resetWk) wkText += ` (${resetWk})`;
-            lines.push(wkText);
-        }
-        if (group.fiveHour) {
-            let fhText = `   Five Hour Limit: ${fmtPct(group.fiveHour)}`;
-            const resetFh = formatResetTime(group.fiveHour.resetTime);
-            if (resetFh) fhText += ` (${resetFh})`;
-            lines.push(fhText);
+        for (const bucket of group.buckets) {
+            const reset = formatResetTime(bucket.resetTime);
+            lines.push(`   ${bucketLabel(bucket)}: ${remainingPct(bucket)}%${reset ? ` (${reset})` : ''}`);
         }
         lines.push('');
     }
