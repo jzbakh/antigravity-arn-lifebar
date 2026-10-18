@@ -1,4 +1,4 @@
-﻿# npm ci wipes node_modules before installing, so the npm store is the only
+# npm ci wipes node_modules before installing, so the npm store is the only
 # thing worth caching. Key it on the lockfile.
 .linux-node:
   image: node:22

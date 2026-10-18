@@ -1,4 +1,4 @@
-﻿spec:
+spec:
   inputs:
     PIPELINE:
       description: "Pipeline mode: badges, full-matrix, or empty for a regular run"

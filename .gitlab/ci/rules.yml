@@ -1,4 +1,4 @@
-﻿# Trigger definitions. Every job in this project extends exactly one of these,
+# Trigger definitions. Every job in this project extends exactly one of these,
 # so the answer to "when does this run?" lives in a single file.
 #
 # $PIPELINE names a single-purpose pipeline and is set by pipeline schedules

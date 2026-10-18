@@ -1,4 +1,4 @@
-﻿// Manifest gate shared by the GitLab and GitHub pipelines.
+// Manifest gate shared by the GitLab and GitHub pipelines.
 
 const fs = require('node:fs');
 const path = require('node:path');

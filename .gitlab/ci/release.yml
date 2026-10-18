@@ -1,4 +1,4 @@
-﻿publish:
+publish:
   extends: .on-release
   image: node:22
   stage: publish
