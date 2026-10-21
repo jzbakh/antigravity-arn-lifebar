@@ -37,6 +37,16 @@ package:
       dotenv: release.env
     expire_in: never
 
+verify-tokens:
+  extends:
+    - .release-node
+    - .on-release
+  stage: package
+  needs: []
+  script:
+    - npx --yes "$VSCE" verify-pat jzbakh -p "$VSCE_PUBLISH"
+    - npx --yes "$OVSX" verify-pat jzbakh -p "$OPEN_VSX"
+
 .publish:
   extends:
     - .release-node
@@ -45,6 +55,7 @@ package:
   resource_group: release
   needs:
     - package
+    - verify-tokens
 
 publish:vs-marketplace:
   extends: .publish
