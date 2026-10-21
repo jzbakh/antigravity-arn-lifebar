@@ -1,34 +1,69 @@
-publish:
-  extends: .on-release
+# One VSIX per release tag: packaged once, then published to each store by its
+# own job, so a failed store can be retried without touching the other.
+
+.release-node:
   image: node:22
-  stage: publish
   interruptible: false
+  variables:
+    VSCE: "@vscode/vsce@4.0.0"
+    OVSX: "ovsx@1.2.0"
+
+package:
+  extends:
+    - .release-node
+    - .on-release
+  stage: package
   needs:
-    - validate-manifest
-    - integration-tests-linux
+    - job: validate-manifest
+      optional: true
+    - job: integration-tests-linux
+      optional: true
+    - job: integration-tests-windows
+      optional: true
   script:
+    - VERSION=$(node -p "require('./package.json').version")
     - |
-      PKG_VERSION=$(node -p "require('./package.json').version")
-      TAG_VERSION="${CI_COMMIT_TAG#v}"
-      if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
-        echo "Version mismatch - package.json says $PKG_VERSION, release tag is $TAG_VERSION."
+      if [ -n "$CI_COMMIT_TAG" ] && [ "$CI_COMMIT_TAG" != "v$VERSION" ]; then
+        echo "Tag $CI_COMMIT_TAG does not match package.json version $VERSION."
         exit 1
       fi
-    - npx --yes @vscode/vsce package -o antigravity-arn-lifebar.vsix
-    - npx --yes @vscode/vsce publish --packagePath antigravity-arn-lifebar.vsix -p "$VSCE_PUBLISH"
-    - npx --yes ovsx publish antigravity-arn-lifebar.vsix -p "$OPEN_VSX"
+    - npx --yes "$VSCE" package -o antigravity-arn-lifebar.vsix
+    - sha256sum antigravity-arn-lifebar.vsix
+    - echo "VERSION=$VERSION" > release.env
   artifacts:
     paths:
       - antigravity-arn-lifebar.vsix
+    reports:
+      dotenv: release.env
     expire_in: never
+
+.publish:
+  extends:
+    - .release-node
+    - .on-release
+  stage: publish
+  resource_group: release
+  needs:
+    - package
+
+publish:vs-marketplace:
+  extends: .publish
+  script:
+    - npx --yes "$VSCE" publish --packagePath antigravity-arn-lifebar.vsix --skip-duplicate -p "$VSCE_PUBLISH"
+
+publish:open-vsx:
+  extends: .publish
+  script:
+    - npx --yes "$OVSX" publish --packagePath antigravity-arn-lifebar.vsix --skip-duplicate -p "$OPEN_VSX"
 
 gitlab-release:
   extends: .on-release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
-  stage: publish
+  stage: release
   interruptible: false
   needs:
-    - publish
+    - publish:vs-marketplace
+    - publish:open-vsx
   script:
     - TAG_VERSION="${CI_COMMIT_TAG#v}"
     - echo "Extracting CHANGELOG for version $TAG_VERSION"
@@ -39,6 +74,6 @@ gitlab-release:
       release-cli create --name "Release $CI_COMMIT_TAG" \
         --tag-name "$CI_COMMIT_TAG" \
         --description "$(cat release_notes.md)" \
-        --assets-link "{\"name\":\"Extension Binary (.vsix)\",\"url\":\"${CI_PROJECT_URL}/-/jobs/artifacts/${CI_COMMIT_TAG}/raw/antigravity-arn-lifebar.vsix?job=publish\",\"filepath\":\"/antigravity-arn-lifebar.vsix\",\"link_type\":\"package\"}" \
+        --assets-link "{\"name\":\"Extension Binary (.vsix)\",\"url\":\"${CI_PROJECT_URL}/-/jobs/artifacts/${CI_COMMIT_TAG}/raw/antigravity-arn-lifebar.vsix?job=package\",\"filepath\":\"/antigravity-arn-lifebar.vsix\",\"link_type\":\"package\"}" \
         --assets-link "{\"name\":\"Download on VS Marketplace\",\"url\":\"https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar\",\"link_type\":\"other\"}" \
         --assets-link "{\"name\":\"Download on Open VSX\",\"url\":\"https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar\",\"link_type\":\"other\"}"
