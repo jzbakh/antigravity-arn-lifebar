@@ -16,7 +16,7 @@
 package:
   extends:
     - .release-node
-    - .on-release
+    - .on-release-build
   stage: package
   needs:
     - job: validate-manifest
@@ -45,7 +45,7 @@ package:
 verify-tokens:
   extends:
     - .release-node
-    - .on-release
+    - .on-release-build
   stage: package
   needs: []
   script:
@@ -97,3 +97,53 @@ release:gitlab:
         - name: Open VSX
           url: https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar
           link_type: other
+
+release:dry-run:
+  extends:
+    - .release-glab
+    - .on-release-dry-run
+  needs:
+    - package
+    - verify-tokens
+  script:
+    - sh scripts/release-notes.sh "$VERSION"
+    - sha256sum antigravity-arn-lifebar.vsix
+    - echo "Dry run of v$VERSION complete; nothing was published."
+
+backfill:fetch:
+  extends:
+    - .release-node
+    - .on-release-backfill
+  stage: package
+  needs: []
+  script:
+    - node scripts/fetch-published-vsix.mjs "$TAG"
+  artifacts:
+    paths:
+      - antigravity-arn-lifebar.vsix
+    reports:
+      dotenv: release.env
+    expire_in: never
+
+# The release keyword only takes a literal released_at, so the original date
+# goes through the CLI.
+release:backfill:
+  extends:
+    - .release-glab
+    - .on-release-backfill
+  needs:
+    - backfill:fetch
+  variables:
+    GLAB_ENABLE_CI_AUTOLOGIN: "true"
+  script:
+    - sh scripts/release-notes.sh "${TAG#v}" > release-notes.md
+    - |
+      glab release create "$TAG" --no-update \
+        --name "$TAG" \
+        --notes-file release-notes.md \
+        --released-at "$RELEASED_AT" \
+        --assets-links "[
+          {\"name\": \"antigravity-arn-lifebar.vsix\", \"url\": \"$CI_PROJECT_URL/-/jobs/$FETCH_JOB_ID/artifacts/raw/antigravity-arn-lifebar.vsix\", \"direct_asset_path\": \"/antigravity-arn-lifebar.vsix\", \"link_type\": \"package\"},
+          {\"name\": \"Visual Studio Marketplace\", \"url\": \"https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar\", \"link_type\": \"other\"},
+          {\"name\": \"Open VSX\", \"url\": \"https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar\", \"link_type\": \"other\"}
+        ]"

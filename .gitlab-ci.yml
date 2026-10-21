@@ -1,7 +1,10 @@
 spec:
   inputs:
     PIPELINE:
-      description: "Pipeline mode: badges, full-matrix, or empty for a regular run"
+      description: "Pipeline mode: badges, full-matrix, release-dry-run, release-backfill, or empty for a regular run"
+      default: ""
+    TAG:
+      description: "Existing release tag for release-backfill, such as v1.2.3"
       default: ""
 
 ---
@@ -20,6 +23,7 @@ default:
 
 variables:
   PIPELINE: $[[ inputs.PIPELINE ]]
+  TAG: $[[ inputs.TAG ]]
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
 
 workflow:
