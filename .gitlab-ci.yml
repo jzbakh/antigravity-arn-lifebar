@@ -24,7 +24,6 @@ default:
 variables:
   PIPELINE: $[[ inputs.PIPELINE ]]
   TAG: $[[ inputs.TAG ]]
-  npm_config_cache: "$CI_PROJECT_DIR/.npm"
 
 workflow:
   rules:
