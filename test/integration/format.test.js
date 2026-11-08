@@ -73,7 +73,7 @@ describe('parseQuotaSummary', () => {
     it('parses each group with its windows', () => {
         const [gemini, thirdParty] = parseQuotaSummary(usedSummary);
         assert.equal(gemini.label, 'Gemini Models');
-        assert.equal(gemini.shortLabel, 'Gemini');
+        assert.equal(gemini.shortLabel, 'Flash & Pro');
         assert.equal(gemini.buckets.length, 2);
         assert.equal(thirdParty.label, 'Claude and GPT models');
         assert.equal(thirdParty.shortLabel, 'Claude & GPT');
@@ -81,7 +81,23 @@ describe('parseQuotaSummary', () => {
 
     it('tracks a group with its own quota separately', () => {
         const groups = parseQuotaSummary(argonSummary);
-        assert.deepEqual(groups.map(g => g.shortLabel), ['Gemini', 'Claude & GPT', 'Gemini 4 Argon']);
+        assert.deepEqual(groups.map(g => g.shortLabel), ['Flash & Pro', 'Argon', 'Claude & GPT']);
+    });
+
+    it('lists third-party groups after Google ones', () => {
+        assert.deepEqual(
+            parseQuotaSummary(argonSummary).map(g => g.label),
+            ['Gemini Models', 'Gemini 4 Argon', 'Claude and GPT models']
+        );
+    });
+
+    it('names a group by its own name when its models span families', () => {
+        const [group] = parseQuotaSummary(summaryOf([{
+            displayName: 'Claude and GPT models',
+            description: 'Models within this group: Claude Opus, Claude Sonnet, GPT-OSS',
+            buckets: [],
+        }]));
+        assert.equal(group.shortLabel, 'Claude & GPT');
     });
 
     it('follows the 5-hour window even when the weekly one is lower', () => {
@@ -146,7 +162,7 @@ describe('formatStatusBar', () => {
     it('shows the 5-hour window of each group', () => {
         assert.equal(
             formatStatusBar({}, parseQuotaSummary(usedSummary)),
-            `|  Gemini 13% ${DOT_RED} |  Claude & GPT 100% ${DOT_GREEN} |`
+            `|  Flash & Pro 13% ${DOT_RED} |  Claude & GPT 100% ${DOT_GREEN} |`
         );
     });
 
@@ -164,7 +180,7 @@ describe('formatStatusBar', () => {
     it('gives a group with its own quota a dedicated entry', () => {
         assert.equal(
             formatStatusBar({}, parseQuotaSummary(argonSummary)),
-            `|  Gemini 100% ${DOT_GREEN} |  Claude & GPT 100% ${DOT_GREEN} |  Gemini 4 Argon 100% ${DOT_GREEN} |`
+            `|  Flash & Pro 100% ${DOT_GREEN} |  Argon 100% ${DOT_GREEN} |  Claude & GPT 100% ${DOT_GREEN} |`
         );
     });
 

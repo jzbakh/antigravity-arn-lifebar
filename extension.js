@@ -56,6 +56,28 @@ function compactLabel(displayName) {
     return displayName.replace(/\s+models?$/i, '').replace(/\s+and\s+/gi, ' & ');
 }
 
+// "Models within this group: Gemini Flash, Gemini Pro" → ['Gemini Flash', 'Gemini Pro'].
+function groupModels(description) {
+    const list = description?.match(/^Models within this group:\s*(.+)$/)?.[1];
+    return list ? list.split(/,\s*/) : [];
+}
+
+// Name a group by the models it covers ("Flash & Pro"), or by its own name
+// without family and version ("Gemini 4 Argon" → "Argon").
+function shortLabelOf(group) {
+    const models = groupModels(group.description);
+    const family = models[0]?.split(' ')[0];
+    if (models.length > 1 && models.every(m => m.startsWith(`${family} `))) {
+        return models.map(m => m.slice(family.length + 1)).join(' & ');
+    }
+    return compactLabel(group.displayName || '').replace(/^\S+ \d+(\.\d+)* (?=\S)/, '');
+}
+
+// Third-party groups come last; their bucket ids start with 3p-.
+function isThirdParty(group) {
+    return (group.buckets || []).some(b => b.bucketId?.startsWith('3p-'));
+}
+
 function bucketLabel(bucket) {
     return (bucket.displayName || bucket.window || 'Limit').replace(/\s+remaining$/i, '');
 }
@@ -70,11 +92,11 @@ function pickGauge(buckets) {
 function parseQuotaSummary(quotaSummary) {
     const groups = quotaSummary?.response?.groups || [];
 
-    return groups.map((group) => {
+    return [...groups].sort((a, b) => isThirdParty(a) - isThirdParty(b)).map((group) => {
         const label = group.displayName || '';
         const buckets = (group.buckets || []).filter(b => !b.disabled);
 
-        return { label, shortLabel: compactLabel(label), description: group.description, buckets, gauge: pickGauge(buckets) };
+        return { label, shortLabel: shortLabelOf(group), description: group.description, buckets, gauge: pickGauge(buckets) };
     });
 }
 
