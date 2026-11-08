@@ -19,6 +19,19 @@ const CONFIG = {
     },
 };
 
+const SUPPORT_PROMPT = {
+    STATE_KEY: 'supportPrompt.shownFor',
+    // Ask once the user is settled in, not while the window starts.
+    DELAY_MS: 45000,
+    MESSAGE: 'Enjoying ARN-Lifebar? A quick ⭐ is the best way to say thanks! 🙏',
+    STAR: { label: '⭐ Drop GitHub Star', url: 'https://github.com/jzbakh/antigravity-arn-lifebar' },
+    REVIEWS: {
+        MARKETPLACE: { label: '🚀 Rate on Marketplace', url: 'https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details' },
+        OPEN_VSX: { label: '🚀 Rate on Open VSX', url: 'https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews' },
+    },
+    LATER: 'Maybe later? 🥺',
+};
+
 function colorDot(pct) {
     if (pct === 0) return '⚫';
     if (pct <= CONFIG.UI.THRESHOLDS.RED) return '🔴';
@@ -163,12 +176,27 @@ function backoff(interval) {
     return Math.min(interval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
 }
 
+function minorVersion(version) {
+    return version.split('.').slice(0, 2).join('.');
+}
+
+function shouldPromptSupport(state, version) {
+    return state.get(SUPPORT_PROMPT.STATE_KEY) !== minorVersion(version);
+}
+
+// Microsoft's VS Code installs extensions from its Marketplace; the other editors use Open VSX.
+function supportLinks(appName) {
+    const { MARKETPLACE, OPEN_VSX } = SUPPORT_PROMPT.REVIEWS;
+    return [SUPPORT_PROMPT.STAR, appName.startsWith('Visual Studio Code') ? MARKETPLACE : OPEN_VSX];
+}
+
 class LifebarController {
     constructor(context) {
         this.context = context;
         this.server = null;
         this.pollTimer = null;
         this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
+        this.supportPromptTimer = null;
 
         this.outputChannel = vscode.window.createOutputChannel('ARN-Lifebar');
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
@@ -253,6 +281,13 @@ class LifebarController {
                 this.statusBarItem.text = formatStatusBar(userStatus, parsedGroups);
                 this.statusBarItem.tooltip = formatTooltip(userStatus, parsedGroups);
                 this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
+
+                if (!this.supportPromptTimer) {
+                    this.supportPromptTimer = setTimeout(
+                        () => this.promptSupport().catch(e => this.log('Support prompt failed', e)),
+                        SUPPORT_PROMPT.DELAY_MS
+                    );
+                }
             } else {
                 this.log(`Unexpected API response status: GetUserStatus=${statusRes.status}, RetrieveUserQuotaSummary=${quotaRes.status}`);
                 this.server = null;
@@ -263,6 +298,18 @@ class LifebarController {
             this.statusBarItem.text = '$(graph) ARN-Lifebar — error';
             this.currentPollInterval = backoff(this.currentPollInterval);
         }
+    }
+
+    async promptSupport() {
+        const state = this.context.globalState;
+        const version = this.context.extension.packageJSON.version;
+        if (!shouldPromptSupport(state, version)) return;
+        await state.update(SUPPORT_PROMPT.STATE_KEY, minorVersion(version));
+
+        const links = supportLinks(vscode.env.appName);
+        const choice = await vscode.window.showInformationMessage(SUPPORT_PROMPT.MESSAGE, ...links.map(link => link.label), SUPPORT_PROMPT.LATER);
+        const link = links.find(l => l.label === choice);
+        if (link) await vscode.env.openExternal(vscode.Uri.parse(link.url));
     }
 
     pollLoop() {
@@ -286,6 +333,7 @@ class LifebarController {
 
     dispose() {
         if (this.pollTimer) clearTimeout(this.pollTimer);
+        clearTimeout(this.supportPromptTimer);
         this.log('Controller disposed.');
     }
 }
@@ -293,6 +341,7 @@ class LifebarController {
 let lifebarController = null;
 
 function activate(context) {
+    context.globalState.setKeysForSync([SUPPORT_PROMPT.STATE_KEY]);
     lifebarController = new LifebarController(context);
 
     context.subscriptions.push(vscode.commands.registerCommand('antigravity-arn-lifebar.openSettings', () => {
@@ -314,4 +363,7 @@ function deactivate() {
 }
 
 // Exposed for unit tests — not part of the public extension API.
-module.exports = { activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime, serverOf, backoff };
+module.exports = {
+    activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime,
+    serverOf, backoff, SUPPORT_PROMPT, minorVersion, shouldPromptSupport, supportLinks,
+};
