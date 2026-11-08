@@ -20,7 +20,7 @@ const CONFIG = {
 };
 
 function colorDot(pct) {
-    if (pct === null || pct === 0) return '⚫';
+    if (pct === 0) return '⚫';
     if (pct <= CONFIG.UI.THRESHOLDS.RED) return '🔴';
     if (pct <= CONFIG.UI.THRESHOLDS.ORANGE) return '🟠';
     return '🟢';
@@ -181,7 +181,6 @@ class LifebarController {
     }
 
     log(msg, error = null) {
-        if (!this.outputChannel) return;
         const time = new Date().toLocaleTimeString();
         const errorStr = error ? ` | Err: ${error.message}` : '';
         this.outputChannel.appendLine(`[${time}] ${msg}${errorStr}`);
@@ -259,7 +258,7 @@ class LifebarController {
                 this.server = null;
                 this.currentPollInterval = backoff(this.currentPollInterval);
             }
-        } catch (e) {
+        } catch {
             this.server = null;
             this.statusBarItem.text = '$(graph) ARN-Lifebar — error';
             this.currentPollInterval = backoff(this.currentPollInterval);

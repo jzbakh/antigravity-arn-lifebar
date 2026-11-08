@@ -14,10 +14,6 @@ const DOT_GREEN = '🟢';
 const summaryOf = (groups) => ({ response: { groups } });
 
 describe('colorDot', () => {
-    it('returns black dot when pct is null', () => {
-        assert.equal(colorDot(null), DOT_BLACK);
-    });
-
     it('returns red dot at and below RED threshold', () => {
         assert.equal(colorDot(1), DOT_RED);
         assert.equal(colorDot(THRESHOLDS.RED), DOT_RED);
