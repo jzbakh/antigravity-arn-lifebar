@@ -12,8 +12,8 @@ Please don't open a public issue or discussion for security topics.
 
 ## What's mine to fix vs. what's upstream
 
-- Anything wrong with **ARN-Lifebar itself** — its code, how it talks to the local Antigravity language server, the data it reads — that's mine and I'll look into it.
-- Bugs in **Antigravity IDE** itself, or in its `language_server`, belong upstream with the Antigravity team. If you're not sure where it should go, send it my way and I'll redirect.
+- Anything wrong with **ARN-Lifebar itself** — its code, how it talks to Google's Antigravity extension and its local server, the data it reads — that's mine and I'll look into it.
+- Bugs in **Antigravity IDE** or **Google's Antigravity extension** belong upstream with the Antigravity team. If you're not sure where it should go, send it my way and I'll redirect.
 
 ## Response time
 

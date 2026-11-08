@@ -38,11 +38,11 @@ If your idea collides with one of these, open a discussion first — happy to ch
 
 ## Before publishing a new version
 
-The CI suite proves the code parses and activates, but ARN-Lifebar only shows real quotas inside **Antigravity IDE**, signed in to a Google account. So before tagging a release, this manual check is required:
+The CI suite reads quotas from a fake Google Antigravity extension, but only a real session shows live quotas: **Antigravity IDE**, or another editor with **Google's Antigravity extension**, signed in to a Google account. So before tagging a release, this manual check is required:
 
 1. Build the `.vsix` locally: `npx @vscode/vsce package`.
-2. Install it in Antigravity IDE → `Extensions: Install from VSIX...`.
-3. Confirm the status bar shows the live quotas — not `LS not found`.
+2. Install it in Antigravity IDE, and in VS Code with Google's Antigravity extension → `Extensions: Install from VSIX...`.
+3. Confirm the status bar shows the live quotas — not `waiting for Antigravity`.
 
 ## Reporting a security issue
 
