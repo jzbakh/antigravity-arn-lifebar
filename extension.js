@@ -78,8 +78,9 @@ function isThirdParty(group) {
     return (group.buckets || []).some(b => b.bucketId?.startsWith('3p-'));
 }
 
-function bucketLabel(bucket) {
-    return (bucket.displayName || bucket.window || 'Limit').replace(/\s+remaining$/i, '');
+function bucketLabel(bucket, groupLabel) {
+    const label = (bucket.displayName || bucket.window || 'Limit').replace(/\s+remaining$/i, '');
+    return label.startsWith(`${groupLabel} `) ? label.slice(groupLabel.length + 1) : label;
 }
 
 // Report the 5-hour window, or 0% as soon as any window is exhausted.
@@ -121,8 +122,6 @@ function formatTooltip(userStatus, parsedGroups) {
     const lines = [];
     if (plan || tier) {
         lines.push(`Plan: ${tier?.name ?? plan?.planInfo?.planName ?? '?'}`);
-        lines.push(`Prompt credits: ${plan?.availablePromptCredits ?? '?'} / ${plan?.planInfo?.monthlyPromptCredits ?? '?'}`);
-        lines.push(`Flow credits: ${plan?.availableFlowCredits ?? '?'} / ${plan?.planInfo?.monthlyFlowCredits ?? '?'}`);
 
         const googleCredits = tier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
         if (googleCredits) {
@@ -138,12 +137,13 @@ function formatTooltip(userStatus, parsedGroups) {
     }
 
     for (const group of parsedGroups) {
-        lines.push(`- ${group.label}`);
-        if (group.description) lines.push(`   ${group.description}`);
+        const models = groupModels(group.description);
+        lines.push(`- ${group.label}${models.length ? ` (${models.join(', ')})` : ''}`);
 
         for (const bucket of group.buckets) {
-            const reset = formatResetTime(bucket.resetTime);
-            lines.push(`   ${bucketLabel(bucket)}: ${remainingPct(bucket)}%${reset ? ` (${reset})` : ''}`);
+            const pct = remainingPct(bucket);
+            const reset = pct < 100 && formatResetTime(bucket.resetTime);
+            lines.push(`   ${bucketLabel(bucket, group.label)}: ${pct}%${reset ? ` (${reset})` : ''}`);
         }
         lines.push('');
     }

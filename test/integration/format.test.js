@@ -216,7 +216,7 @@ describe('formatStatusBar', () => {
 });
 
 describe('formatTooltip', () => {
-    it('produces a multi-line tooltip with plan, credits and per-group limits', () => {
+    it('produces a multi-line tooltip with the plan and per-group limits', () => {
         const userStatus = {
             planStatus: {
                 availablePromptCredits: 250,
@@ -246,10 +246,8 @@ describe('formatTooltip', () => {
 
         const tip = formatTooltip(userStatus, groups);
         assert.match(tip, /Plan: Pro Tier/);
-        assert.match(tip, /Prompt credits: 250 \/ 500/);
-        assert.match(tip, /Flow credits: 80 \/ 100/);
-        assert.match(tip, /- Gemini Models/);
-        assert.match(tip, /Models within this group: Gemini Flash, Gemini Pro/);
+        assert.doesNotMatch(tip, /Prompt credits|Flow credits/);
+        assert.match(tip, /- Gemini Models \(Gemini Flash, Gemini Pro\)\n/);
         assert.match(tip, /Weekly Limit: 80% \(Refreshes in 2 days, 0 hours\)/);
         assert.match(tip, /Five Hour Limit: 50% \(Refreshes in 2 hours, 0 minutes\)/);
         assert.match(tip, /ARN-Lifebar/);
@@ -263,10 +261,29 @@ describe('formatTooltip', () => {
         assert.match(formatTooltip({}, groups), /- Preview Models\n {3}Daily Limit: 40%/);
     });
 
-    it('uses ? placeholders when fields are missing', () => {
-        const tip = formatTooltip({ planStatus: {}, userTier: {} }, []);
-        assert.match(tip, /Plan: \?/);
-        assert.match(tip, /Prompt credits: \? \/ \?/);
-        assert.match(tip, /Flow credits: \? \/ \?/);
+    it('names each group with its models without repeating it on its limits', () => {
+        const tip = formatTooltip({}, parseQuotaSummary(argonSummary));
+        assert.match(tip, /- Gemini Models \(Gemini Flash, Gemini Pro\)\n/);
+        assert.match(tip, /- Gemini 4 Argon\n {3}Weekly Limit: 100%\n/);
+        assert.match(tip, /- Claude and GPT models \(Claude Opus, Claude Sonnet, GPT-OSS\)\n/);
+        assert.doesNotMatch(tip, /For paid Pro plans/);
+    });
+
+    it('shows the refresh time only once a limit is in use', () => {
+        const resetTime = new Date(Date.now() + 60 * 60000 + 1000).toISOString();
+        const groups = parseQuotaSummary(summaryOf([{
+            displayName: 'Gemini Models',
+            buckets: [
+                { displayName: 'Weekly Limit Remaining', window: 'weekly', remainingFraction: 1, resetTime },
+                { displayName: 'Five Hour Limit Remaining', window: '5h', remainingFraction: 0.5, resetTime },
+            ],
+        }]));
+        const tip = formatTooltip({}, groups);
+        assert.match(tip, /Weekly Limit: 100%\n/);
+        assert.match(tip, /Five Hour Limit: 50% \(Refreshes in 1 hour, 0 minutes\)/);
+    });
+
+    it('uses a ? placeholder when the plan name is missing', () => {
+        assert.match(formatTooltip({ planStatus: {}, userTier: {} }, []), /Plan: \?/);
     });
 });
