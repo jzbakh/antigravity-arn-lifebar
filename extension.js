@@ -31,7 +31,7 @@ function formatResetTime(resetTimeStr) {
     const resetTime = new Date(resetTimeStr);
     const now = new Date();
     const diffMs = resetTime - now;
-    if (diffMs <= 0) return "Refreshes soon";
+    if (diffMs <= 0) return 'Refreshes soon';
 
     const diffMins = Math.floor(diffMs / 60000);
     const days = Math.floor(diffMins / (24 * 60));
@@ -170,14 +170,14 @@ class LifebarController {
         this.pollTimer = null;
         this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
 
-        this.outputChannel = vscode.window.createOutputChannel("ARN-Lifebar");
+        this.outputChannel = vscode.window.createOutputChannel('ARN-Lifebar');
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
 
         this.statusBarItem.text = '$(graph) ARN-Lifebar...';
         this.statusBarItem.tooltip = 'Loading quotas...';
 
         this.context.subscriptions.push(this.outputChannel, this.statusBarItem);
-        this.log("Controller initialized.");
+        this.log('Controller initialized.');
     }
 
     log(msg, error = null) {
@@ -278,7 +278,7 @@ class LifebarController {
     }
 
     forceRefresh() {
-        this.log("Manual refresh triggered by user.");
+        this.log('Manual refresh triggered by user.');
         this.server = null;
         this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
         if (this.pollTimer) clearTimeout(this.pollTimer);
@@ -287,7 +287,7 @@ class LifebarController {
 
     dispose() {
         if (this.pollTimer) clearTimeout(this.pollTimer);
-        this.log("Controller disposed.");
+        this.log('Controller disposed.');
     }
 }
 
