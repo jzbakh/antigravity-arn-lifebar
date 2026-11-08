@@ -46,7 +46,7 @@
   <h2>🇬🇧 English</h2>
   <h3>
   View your AI usage in the Antigravity IDE Status Bar:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 24–1 % · ⚫ 0 %
   </h3>
   <a href="#en">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ARN-Lifebar screenshot" width="600">
@@ -67,7 +67,7 @@ Why install a heavy dashboard just to read a percentage?
 
 ### ✨ The essentials, nothing more
 
-* **Instant readout:** Your AI quotas at a glance with color coding and a refresh every 10 seconds.
+* **Instant readout:** Your AI quotas at a glance with color coding and a refresh every 5 seconds.
 * **Detailed tooltip:** Hover over the bar to see the included models and the **remaining time before your quotas reset**.
 * **Cross-platform:** Compatible with Windows, macOS, and Linux for Antigravity IDE.
 * **Documentation in 6 languages, clean code:** We translated this README for the community; the extension itself contains no heavy translation framework.
@@ -120,8 +120,8 @@ Works exclusively on Antigravity IDE.
 
 1. Create a folder named `ARN-Lifebar`, then download and place the 3 files `package.json`, `extension.js`, and `README.md` inside it.
 2. Copy this folder into your IDE's extensions directory (example for Antigravity IDE):
-   - **Windows**: `%USERPROFILE%\.antigravity\extensions\`
-   - **macOS/Linux**: `~/.antigravity/extensions/`
+   - **Windows**: `%USERPROFILE%\.antigravity-ide\extensions\`
+   - **macOS/Linux**: `~/.antigravity-ide/extensions/`
 3. Restart the IDE and enable the extension.
 
 </details>
@@ -210,7 +210,7 @@ If you'd like to financially support the development and future updates, you can
   <h2>🇫🇷 Français</h2>
   <h3>
   Vos quotas d'utilisation IA dans la barre inférieure de l'IDE Antigravity :<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 24–1 % · ⚫ 0 %
   </h3>
   <a href="#fr">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="Capture d'écran de ARN-Lifebar" width="600">
@@ -232,7 +232,7 @@ Pourquoi installer un tableau de bord lourd juste pour lire un pourcentage ?
 
 ### ✨ L'essentiel, rien de plus
 
-* **Lecture instantanée :** Vos quotas d'IA en un coup d'œil grâce au code couleur et un rafraîchissement toutes les 10 secondes.
+* **Lecture instantanée :** Vos quotas d'IA en un coup d'œil grâce au code couleur et un rafraîchissement toutes les 5 secondes.
 * **Info-bulle détaillée :** Survolez la barre pour voir les modèles inclus et le **temps restant avant la réinitialisation** de vos quotas.
 * **Multiplateforme :** Compatible Windows, macOS et Linux pour Antigravity IDE.
 * **Documentation en 6 langues, code propre :** Nous avons traduit ce README pour la communauté ; l'extension elle-même ne contient aucun framework de traduction lourd.
@@ -285,8 +285,8 @@ Compatible uniquement avec Antigravity IDE.
 
 1. Créez un dossier nommé `ARN-Lifebar`, puis téléchargez et placez-y les 3 fichiers `package.json`, `extension.js` et `README.md`.
 2. Copiez ce dossier dans le répertoire des extensions de votre IDE (exemple pour Antigravity IDE) :
-   - **Windows** : `%USERPROFILE%\.antigravity\extensions\`
-   - **macOS/Linux** : `~/.antigravity/extensions/`
+   - **Windows** : `%USERPROFILE%\.antigravity-ide\extensions\`
+   - **macOS/Linux** : `~/.antigravity-ide/extensions/`
 3. Relancez l'IDE et activez l'extension.
 
 </details>
@@ -375,7 +375,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
   <h2>🇨🇳 中文</h2>
   <h3>
   在 Antigravity IDE 底部状态栏查看您的 AI 使用配额：<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 24–1 % · ⚫ 0 %
   </h3>
   <a href="#cn">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ARN-Lifebar 屏幕截图" width="600">
@@ -396,7 +396,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
 
 ### ✨ The essentials, nothing more (核心必备，毫无多余)
 
-* **即时查看：** 凭借颜色编码和每 10 秒一次的刷新，您的 AI 配额一目了然。
+* **即时查看：** 凭借颜色编码和每 5 秒一次的刷新，您的 AI 配额一目了然。
 * **悬停提示：** 将鼠标悬停在状态栏上，即可查看涵盖的模型以及**配额重置的剩余时间**。
 * **跨平台：** 兼容 Windows、macOS 和 Linux（适用于 Antigravity IDE）。
 * **6 种语言文档，纯净代码：** 我们为社区翻译了此 README；扩展程序本身不包含任何笨重的翻译框架。
@@ -449,8 +449,8 @@ Antigravity ARN-Lifebar 专为读取 **Antigravity IDE** 上的 Google AI Plus/P
 
 1. 创建一个名为 `ARN-Lifebar` 的文件夹，然后下载并将 `package.json`、`extension.js` 和 `README.md` 这 3 个文件放入其中。
 2. 将此文件夹复制到您的 IDE 扩展目录中（以 Antigravity IDE 为例）：
-   - **Windows**: `%USERPROFILE%\.antigravity\extensions\`
-   - **macOS/Linux**: `~/.antigravity/extensions/`
+   - **Windows**: `%USERPROFILE%\.antigravity-ide\extensions\`
+   - **macOS/Linux**: `~/.antigravity-ide/extensions/`
 3. 重启 IDE 并启用扩展程序。
 
 </details>
@@ -539,7 +539,7 @@ Antigravity ARN-Lifebar 专为读取 **Antigravity IDE** 上的 Google AI Plus/P
   <h2>🇪🇸 Español</h2>
   <h3>
   Tus cuotas de uso de IA en la barra inferior del IDE Antigravity:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 24–1 % · ⚫ 0 %
   </h3>
   <a href="#es">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="Captura de pantalla de ARN-Lifebar" width="600">
@@ -560,7 +560,7 @@ Antigravity ARN-Lifebar 专为读取 **Antigravity IDE** 上的 Google AI Plus/P
 
 ### ✨ Lo esencial, nada más
 
-* **Lectura instantánea:** Tus cuotas de IA de un vistazo gracias al código de colores y una actualización cada 10 segundos.
+* **Lectura instantánea:** Tus cuotas de IA de un vistazo gracias al código de colores y una actualización cada 5 segundos.
 * **Información detallada:** Pasa el cursor sobre la barra para ver los modelos incluidos y el **tiempo restante antes de que se reinicien** tus cuotas.
 * **Multiplataforma:** Compatible con Windows, macOS y Linux para Antigravity IDE.
 * **Documentación en 6 idiomas, código limpio:** Hemos traducido este README para la comunidad; la extensión en sí no contiene ningún framework de traducción pesado.
@@ -613,8 +613,8 @@ Compatible únicamente con Antigravity IDE.
 
 1. Crea una carpeta llamada `ARN-Lifebar`, luego descarga y coloca en ella los 3 archivos `package.json`, `extension.js` y `README.md`.
 2. Copia esta carpeta en el directorio de extensiones de tu IDE (ejemplo para Antigravity IDE):
-   - **Windows**: `%USERPROFILE%\.antigravity\extensions\`
-   - **macOS/Linux**: `~/.antigravity/extensions/`
+   - **Windows**: `%USERPROFILE%\.antigravity-ide\extensions\`
+   - **macOS/Linux**: `~/.antigravity-ide/extensions/`
 3. Reinicia el IDE y activa la extensión.
 
 </details>
@@ -703,7 +703,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
   <h2>🇸🇦 العربية</h2>
   <h3>
   حصص استخدام الذكاء الاصطناعي في الشريط السفلي لبيئة التطوير Antigravity IDE:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 24–1 % · ⚫ 0 %
   </h3>
   <a href="#ar">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="لقطة شاشة لـ ARN-Lifebar" width="600">
@@ -724,7 +724,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 ### ✨ الأساسيات، لا أكثر
 
-* **قراءة فورية:** حصص الذكاء الاصطناعي الخاصة بك في لمحة بفضل الترميز اللوني وتحديث كل 10 ثوانٍ.
+* **قراءة فورية:** حصص الذكاء الاصطناعي الخاصة بك في لمحة بفضل الترميز اللوني وتحديث كل 5 ثوانٍ.
 * **معلومات تفصيلية:** مرر مؤشر الماوس فوق الشريط لرؤية النماذج المضمنة و**الوقت المتبقي قبل تجديد** حصصك.
 * **متعدد المنصات:** متوافق مع Windows و macOS و Linux لبيئة التطوير Antigravity IDE.
 * **توثيق بـ 6 لغات، كود نظيف:** قمنا بترجمة ملف README هذا من أجل المجتمع؛ الإضافة نفسها لا تحتوي على أي إطار عمل (framework) ترجمة ثقيل.
@@ -777,8 +777,8 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 1. أنشئ مجلدًا باسم `ARN-Lifebar`، ثم قم بتنزيل ووضع الملفات الثلاثة `package.json` و `extension.js` و `README.md` بداخله.
 2. انسخ هذا المجلد إلى دليل إضافات بيئة التطوير الخاصة بك (مثال لـ Antigravity IDE):
-   - **Windows:** `%USERPROFILE%\.antigravity\extensions\`
-   - **macOS/Linux:** `~/.antigravity/extensions/`
+   - **Windows:** `%USERPROFILE%\.antigravity-ide\extensions\`
+   - **macOS/Linux:** `~/.antigravity-ide/extensions/`
 3. أعد تشغيل بيئة التطوير وقم بتفعيل الإضافة.
 
 </details>
@@ -867,7 +867,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
   <h2>🇹🇭 ภาษาไทย</h2>
   <h3>
   โควตาการใช้งาน AI ของคุณในแถบด้านล่างของ Antigravity IDE:<br>
-  🟢 > 50 % · 🟠 25–50 % · 🔴 25–1 % · ⚫ 0 %
+  🟢 > 50 % · 🟠 25–50 % · 🔴 24–1 % · ⚫ 0 %
   </h3>
   <a href="#th">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ภาพหน้าจอของ ARN-Lifebar" width="600">
@@ -888,7 +888,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 ### ✨ สิ่งสำคัญเท่านั้น ไม่มีส่วนเกิน
 
-* **อ่านค่าได้ทันที:** โควตา AI ของคุณในพริบตาด้วยรหัสสีและการรีเฟรชทุกๆ 10 วินาที
+* **อ่านค่าได้ทันที:** โควตา AI ของคุณในพริบตาด้วยรหัสสีและการรีเฟรชทุกๆ 5 วินาที
 * **แสดงรายละเอียดเมื่อชี้เมาส์:** วางเมาส์เหนือแถบสถานะเพื่อดูโมเดลที่รองรับ และ**เวลาที่เหลือก่อนโควตาของคุณจะถูกรีเซ็ต**
 * **รองรับหลายแพลตฟอร์ม:** รองรับ Windows, macOS และ Linux สำหรับ Antigravity IDE
 * **เอกสารประกอบ 6 ภาษา, โค้ดสะอาด:** เราได้แปลไฟล์ README นี้สำหรับชุมชน ส่วนขยายนี้ไม่มีเฟรมเวิร์ก (framework) การแปลภาษาที่หนักหน่วง
@@ -941,8 +941,8 @@ Antigravity ARN-Lifebar ได้รับการออกแบบมาเ�
 
 1. สร้างโฟลเดอร์ชื่อ `ARN-Lifebar` จากนั้นดาวน์โหลดและวางไฟล์ 3 ไฟล์ ได้แก่ `package.json`, `extension.js` และ `README.md` ไว้ข้างใน
 2. คัดลอกโฟลเดอร์นี้ไปยังไดเรกทอรีส่วนขยายของ IDE ของคุณ (ตัวอย่างสำหรับ Antigravity IDE):
-   - **Windows:** `%USERPROFILE%\.antigravity\extensions\`
-   - **macOS/Linux:** `~/.antigravity/extensions/`
+   - **Windows:** `%USERPROFILE%\.antigravity-ide\extensions\`
+   - **macOS/Linux:** `~/.antigravity-ide/extensions/`
 3. รีสตาร์ท IDE และเปิดใช้งานส่วนขยาย
 
 </details>
