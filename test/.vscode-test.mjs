@@ -9,7 +9,8 @@ export default defineConfig({
         ui: 'bdd',
         timeout: 60000,
     },
-    extensionDevelopmentPath: '..',
+    // The second extension stands in for Google's Antigravity extension.
+    extensionDevelopmentPath: ['..', 'fixtures/google-antigravity'],
     launchArgs: [
         '--user-data-dir', path.join(os.tmpdir(), 'arn-test-data')
     ]

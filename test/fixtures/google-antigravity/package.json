@@ -1,0 +1,15 @@
+{
+  "name": "google-antigravity",
+  "publisher": "google",
+  "displayName": "Fake Google Antigravity",
+  "description": "Stands in for Google's Antigravity extension in ARN-Lifebar's tests.",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js"
+}

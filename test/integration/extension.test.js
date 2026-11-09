@@ -55,4 +55,11 @@ describe('Extension integration', () => {
         await wait(5500);
         assert.equal(ext.isActive, true, 'extension should still be active after a polling cycle');
     });
+
+    it('reads the quotas through the Antigravity extension', async () => {
+        const antigravity = await vscode.extensions.getExtension('google.google-antigravity').activate();
+        await vscode.commands.executeCommand('antigravity-arn-lifebar.refresh');
+        const request = await antigravity.received('RetrieveUserQuotaSummary');
+        assert.equal(request.csrfToken, antigravity.csrfToken);
+    });
 });
