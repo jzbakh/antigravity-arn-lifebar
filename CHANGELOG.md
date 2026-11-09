@@ -5,6 +5,26 @@ All notable changes to **Antigravity ARN-Lifebar** will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-11-11
+
+### Added
+- **Editors:** Added support for other editors such as VS Code through Google's Antigravity extension. Each window reads only the quotas of its own Antigravity session.
+- **Quotas:** Each quota group now has its own status bar entry, named after its models (`Flash & Pro`, `Argon`, `Claude & GPT`), with third-party groups last.
+- **UI:** Added a notification that asks for a GitHub star or a store review once per minor version, 45 seconds after quotas first appear.
+
+### Changed
+- **Quotas:** Quotas are now read through Google's Antigravity extension, built into Antigravity IDE 2.6, instead of the `language_server`. ARN-Lifebar no longer scans processes or runs PowerShell to find them.
+- **UI:** The status bar shows `waiting for Antigravity` instead of `LS not found` until Antigravity starts in the window, and ARN-Lifebar checks again at least once a minute.
+- **UI:** The tooltip now lists each group's models and no longer shows the Windsurf credits.
+- **Documentation:** Covered Antigravity IDE 2.6 and other editors in the README's six languages, and pointed the issue, VSIX download and security links to GitHub.
+- **Documentation:** Proofread the README in all six languages.
+
+### Removed
+- **Compatibility:** Antigravity IDE 2.5 and older are no longer supported; ARN-Lifebar 1.2.3 still reads their quotas.
+
+### Fixed
+- **Documentation:** Fixed the README's refresh interval (5 s), red threshold (24%) and install path (`.antigravity-ide`).
+
 ## [1.2.3] — 2026-07-12
 
 ### Changed
@@ -62,6 +82,7 @@ First public release on Visual Studio Marketplace and Open VSX.
 - Dedicated **ARN-Lifebar** output channel for diagnostics.
 - Zero runtime dependencies — pure native JavaScript, no build step.
 
+[1.3.0]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.3.0
 [1.2.3]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.3
 [1.2.2]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.2
 [1.2.1]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.1
