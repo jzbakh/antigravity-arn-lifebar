@@ -4,7 +4,8 @@ const http = require('http');
 const CONFIG = {
     POLLING: {
         MIN_INTERVAL_MS: 5000,
-        MAX_INTERVAL_MS: 600000,
+        // Google's extension can start its server minutes after the window: check at least once a minute.
+        MAX_INTERVAL_MS: 60000,
     },
     TIMEOUTS: {
         RPC_MS: 8000,
@@ -163,6 +164,10 @@ function serverOf(extension) {
     return api?.port && api.csrfToken ? { port: api.port, csrfToken: api.csrfToken } : null;
 }
 
+function backoff(interval) {
+    return Math.min(interval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
+}
+
 class LifebarController {
     constructor(context) {
         this.context = context;
@@ -235,7 +240,7 @@ class LifebarController {
             if (!this.server) {
                 this.statusBarItem.text = '$(graph) ARN-Lifebar — waiting for Antigravity';
                 this.statusBarItem.tooltip = 'Quotas appear as soon as Antigravity starts in this window.';
-                this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
+                this.currentPollInterval = backoff(this.currentPollInterval);
                 this.log(`Antigravity not found. Retrying in ${this.currentPollInterval / 1000}s`);
                 return;
             }
@@ -257,12 +262,12 @@ class LifebarController {
             } else {
                 this.log(`Unexpected API response status: GetUserStatus=${statusRes.status}, RetrieveUserQuotaSummary=${quotaRes.status}`);
                 this.server = null;
-                this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
+                this.currentPollInterval = backoff(this.currentPollInterval);
             }
         } catch (e) {
             this.server = null;
             this.statusBarItem.text = '$(graph) ARN-Lifebar — error';
-            this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
+            this.currentPollInterval = backoff(this.currentPollInterval);
         }
     }
 
@@ -315,4 +320,4 @@ function deactivate() {
 }
 
 // Exposed for unit tests — not part of the public extension API.
-module.exports = { activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime, serverOf };
+module.exports = { activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime, serverOf, backoff };
