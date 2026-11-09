@@ -1,9 +1,5 @@
 const vscode = require('vscode');
-const https = require('https');
-const { exec } = require('child_process');
-const util = require('util');
-
-const execAsync = util.promisify(exec);
+const http = require('http');
 
 const CONFIG = {
     POLLING: {
@@ -12,8 +8,8 @@ const CONFIG = {
     },
     TIMEOUTS: {
         RPC_MS: 8000,
-        EXEC_MS: 5000,
     },
+    ANTIGRAVITY_EXTENSION_ID: 'google.google-antigravity',
     UI: {
         THRESHOLDS: {
             RED: 24,
@@ -160,10 +156,17 @@ function formatTooltip(userStatus, parsedGroups) {
     return lines.join('\n');
 }
 
+// Google's Antigravity extension, built into Antigravity IDE 2.6+ and available for other
+// editors, exports the port and csrf token of its local server once that server is up.
+function serverOf(extension) {
+    const api = extension?.isActive ? extension.exports : undefined;
+    return api?.port && api.csrfToken ? { port: api.port, csrfToken: api.csrfToken } : null;
+}
+
 class LifebarController {
     constructor(context) {
         this.context = context;
-        this.lsConnection = null;
+        this.server = null;
         this.pollTimer = null;
         this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
 
@@ -184,7 +187,7 @@ class LifebarController {
         this.outputChannel.appendLine(`[${time}] ${msg}${errorStr}`);
     }
 
-    lsPost(port, csrfToken, method, body) {
+    rpc(port, csrfToken, method, body) {
         return new Promise((resolve, reject) => {
             const payload = JSON.stringify(body);
             const options = {
@@ -198,10 +201,9 @@ class LifebarController {
                     'x-codeium-csrf-token': csrfToken,
                     'Content-Length': Buffer.byteLength(payload),
                 },
-                rejectUnauthorized: false,
             };
 
-            const req = https.request(options, (res) => {
+            const req = http.request(options, (res) => {
                 let data = '';
                 res.on('data', chunk => data += chunk);
                 res.on('end', () => {
@@ -227,161 +229,38 @@ class LifebarController {
         });
     }
 
-    async discoverLsConnection() {
-        const isWin = process.platform === 'win32';
-
-        if (isWin) {
-            try {
-                const winScript = `
-$ProgressPreference = 'SilentlyContinue';
-$results = @();
-$p = Get-Process | Where-Object { $_.Name -like "*language_server*" };
-foreach ($proc in $p) {
-    try {
-        $f_id = $proc.Id;
-        $cmd = (Get-CimInstance Win32_Process -Filter "ProcessId=\${f_id}").CommandLine;
-        if ($cmd -match '--csrf_token\\s+([a-f0-9-]+)') {
-            $token = $matches[1];
-            $netstatLines = netstat -ano | Select-String "LISTENING" | Select-String "\${f_id}";
-            foreach ($mLine in $netstatLines) {
-                if ($mLine.Line.Trim() -match ":(\\d+).+LISTENING\\s+\${f_id}") {
-                    $results += @{ Token = $token; Port = [int]$matches[1] }
-                }
-            }
-        }
-    } catch { }
-}
-if ($results.Count -eq 0) { "[]" } else { $results | ConvertTo-Json -Compress }
-                `;
-
-                // Base64 + EncodedCommand bypasses ExecutionPolicy without touching disk.
-                const base64Script = Buffer.from(winScript, 'utf16le').toString('base64');
-                const { stdout } = await execAsync(`powershell.exe -NoProfile -ExecutionPolicy Bypass -EncodedCommand ${base64Script}`, { timeout: CONFIG.TIMEOUTS.RPC_MS });
-
-                const jsonMatch = stdout.match(/\[[\s\S]*\]/);
-                if (!jsonMatch) return null;
-
-                let candidates = [];
-                try {
-                    candidates = JSON.parse(jsonMatch[0]);
-                } catch (parseError) {
-                    this.log("Windows JSON parsing anomaly", parseError);
-                    return null;
-                }
-
-                const list = Array.isArray(candidates) ? candidates : [candidates];
-
-                for (const cand of list) {
-                    if (!cand.Port || !cand.Token) continue;
-                    try {
-                        const res = await this.lsPost(cand.Port, cand.Token, 'GetUserStatus', {});
-                        if (res && res.status === 200) {
-                            this.log(`Discovered LS on port ${cand.Port}`);
-                            return { port: cand.Port, csrfToken: cand.Token };
-                        }
-                    } catch { continue; }
-                }
-            } catch (e) {
-                this.log("PowerShell discovery execution failed", e);
-            }
-        } else {
-            // macOS / Linux: ps → csrf token, then fall through lsof → ss → netstat for ports.
-            try {
-                const { stdout: psOut } = await execAsync('ps -axww -o pid,command', { encoding: 'utf8', timeout: CONFIG.TIMEOUTS.EXEC_MS });
-                const lines = psOut.split('\n');
-                const lsLines = lines.filter(l => l.includes('language_server') && l.includes('--csrf_token'));
-
-                for (const line of lsLines) {
-                    const match = line.trim().match(/^(\d+)\s+(.+)$/);
-                    if (!match) continue;
-
-                    // pidNum is interpolated into a shell command — must be a clean integer.
-                    const pidNum = parseInt(match[1], 10);
-                    if (Number.isNaN(pidNum) || pidNum <= 0) continue;
-
-                    const cmd = match[2];
-                    const csrfMatch = cmd.match(/--csrf_token\s+([a-f0-9-]{36})/);
-                    if (!csrfMatch) continue;
-                    const token = csrfMatch[1];
-
-                    const ports = new Set();
-                    const execOpts = { encoding: 'utf8', timeout: CONFIG.TIMEOUTS.EXEC_MS };
-
-                    try {
-                        const { stdout: lsofOut } = await execAsync(`lsof -nP -iTCP -sTCP:LISTEN -p ${pidNum}`, execOpts);
-                        const portMatches = lsofOut.match(/:(\d+)\s+\(LISTEN\)/g);
-                        if (portMatches) portMatches.forEach(m => { const p = m.match(/:(\d+)/); if (p) ports.add(parseInt(p[1], 10)); });
-                    } catch { }
-
-                    if (ports.size === 0) {
-                        try {
-                            const { stdout: ssOut } = await execAsync('ss -lntp', execOpts);
-                            const ssLines = ssOut.split('\n').filter(l => l.includes(`pid=${pidNum}`));
-                            for (const ssLine of ssLines) {
-                                const portMatch = ssLine.match(/:(\d+)\s+/);
-                                if (portMatch) ports.add(parseInt(portMatch[1], 10));
-                            }
-                        } catch { }
-                    }
-
-                    if (ports.size === 0) {
-                        try {
-                            const { stdout: netstatOut } = await execAsync('netstat -lntp', execOpts);
-                            const netstatLines = netstatOut.split('\n').filter(l => l.includes(`${pidNum}/`));
-                            for (const nsLine of netstatLines) {
-                                const portMatch = nsLine.match(/:(\d+)\s+/);
-                                if (portMatch) ports.add(parseInt(portMatch[1], 10));
-                            }
-                        } catch { }
-                    }
-
-                    for (const port of ports) {
-                        try {
-                            const res = await this.lsPost(port, token, 'GetUserStatus', {});
-                            if (res && res.status === 200) {
-                                this.log(`Discovered Unix LS on port ${port} (PID: ${pidNum})`);
-                                return { port, csrfToken: token };
-                            }
-                        } catch { continue; }
-                    }
-                }
-            } catch (e) {
-                this.log("Unix discovery engine fault", e);
-            }
-        }
-        return null;
-    }
-
     async refreshQuotas() {
-        if (!this.lsConnection) {
-            this.lsConnection = await this.discoverLsConnection();
-            if (!this.lsConnection) {
-                this.statusBarItem.text = '$(graph) ARN-Lifebar — LS not found';
+        if (!this.server) {
+            this.server = serverOf(vscode.extensions.getExtension(CONFIG.ANTIGRAVITY_EXTENSION_ID));
+            if (!this.server) {
+                this.statusBarItem.text = '$(graph) ARN-Lifebar — waiting for Antigravity';
+                this.statusBarItem.tooltip = 'Quotas appear as soon as Antigravity starts in this window.';
                 this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
-                this.log(`LS not found. Backing off polling to ${this.currentPollInterval / 1000}s`);
+                this.log(`Antigravity not found. Retrying in ${this.currentPollInterval / 1000}s`);
                 return;
             }
+            this.log(`Found Antigravity on port ${this.server.port}`);
         }
         try {
             const [statusRes, quotaRes] = await Promise.all([
-                this.lsPost(this.lsConnection.port, this.lsConnection.csrfToken, 'GetUserStatus', {}),
-                this.lsPost(this.lsConnection.port, this.lsConnection.csrfToken, 'RetrieveUserQuotaSummary', {})
+                this.rpc(this.server.port, this.server.csrfToken, 'GetUserStatus', {}),
+                this.rpc(this.server.port, this.server.csrfToken, 'RetrieveUserQuotaSummary', {})
             ]);
 
             if (statusRes.status === 200 && quotaRes.status === 200 && statusRes.body?.userStatus) {
-                const us = statusRes.body.userStatus;
+                const { userStatus } = statusRes.body;
                 const parsedGroups = parseQuotaSummary(quotaRes.body);
 
-                this.statusBarItem.text = formatStatusBar(us, parsedGroups);
-                this.statusBarItem.tooltip = formatTooltip(us, parsedGroups);
+                this.statusBarItem.text = formatStatusBar(userStatus, parsedGroups);
+                this.statusBarItem.tooltip = formatTooltip(userStatus, parsedGroups);
                 this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
             } else {
                 this.log(`Unexpected API response status: GetUserStatus=${statusRes.status}, RetrieveUserQuotaSummary=${quotaRes.status}`);
-                this.lsConnection = null;
+                this.server = null;
                 this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
             }
         } catch (e) {
-            this.lsConnection = null;
+            this.server = null;
             this.statusBarItem.text = '$(graph) ARN-Lifebar — error';
             this.currentPollInterval = Math.min(this.currentPollInterval * 2, CONFIG.POLLING.MAX_INTERVAL_MS);
         }
@@ -400,7 +279,7 @@ if ($results.Count -eq 0) { "[]" } else { $results | ConvertTo-Json -Compress }
 
     forceRefresh() {
         this.log("Manual refresh triggered by user.");
-        this.lsConnection = null;
+        this.server = null;
         this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
         if (this.pollTimer) clearTimeout(this.pollTimer);
         this.pollLoop();
@@ -436,4 +315,4 @@ function deactivate() {
 }
 
 // Exposed for unit tests — not part of the public extension API.
-module.exports = { activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime };
+module.exports = { activate, deactivate, CONFIG, colorDot, parseQuotaSummary, formatStatusBar, formatTooltip, formatResetTime, serverOf };

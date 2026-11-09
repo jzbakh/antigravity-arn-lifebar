@@ -51,7 +51,7 @@ describe('Extension integration', () => {
 
     it('keeps the controller alive through one polling cycle', async function () {
         this.timeout(15000);
-        // 5.5s covers one full LS discovery (since we lowered interval to 5s).
+        // 5.5 s covers one polling cycle.
         await wait(5500);
         assert.equal(ext.isActive, true, 'extension should still be active after a polling cycle');
     });
