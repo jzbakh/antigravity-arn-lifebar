@@ -1,7 +1,7 @@
 {
   "name": "antigravity-arn-lifebar",
   "displayName": "Antigravity ARN-Lifebar",
-  "description": "AI usage in Antigravity IDE status bar.",
+  "description": "Your Google Antigravity AI quotas in your IDE's status bar.",
   "publisher": "jzbakh",
   "version": "1.2.3",
   "license": "GPL-3.0-or-later",
