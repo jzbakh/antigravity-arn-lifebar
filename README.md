@@ -1,6 +1,6 @@
 <div align="center">
 
-# Antigravity ARN-Lifebar: Minimalist extension to view your AI usage in the Status Bar.
+# Antigravity ARN-Lifebar: Minimalist extension to view your AI usage in the Status Bar
 
 [![Version](https://img.shields.io/gitlab/v/tag/arn_inside/antigravity-arn-lifebar?label=version&color=blue&sort=semver)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases)
 [![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
@@ -49,7 +49,7 @@
   <p>
   ARN-Lifebar uses Antigravity IDE's built-in quota reader, or the Google Antigravity extension in other IDEs. It then displays your quotas in the status bar:
   </p>
-  <h3>🟢 > 50 % · 🟠 50–25 % · 🔴 24–1 % · ⚫ 0 %</h3>
+  <h3>🟢 > 50% · 🟠 50–25% · 🔴 24–1% · ⚫ 0%</h3>
   <a href="#en">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ARN-Lifebar screenshot" width="600">
   </a>
@@ -63,7 +63,7 @@ Why install a heavy dashboard just to read a percentage?
 
 **ARN-Lifebar** gets straight to the point, **with no bloatware or telemetry:** 
 
-* **Zero Webview:** Everything is displayed natively in your `Status Bar`.
+* **Zero Webviews:** Everything is displayed natively in your `Status Bar`.
 * **Zero dependencies:** 100% native JavaScript with no build step, making the code fully readable and auditable.
 * **No internet connection:** ARN-Lifebar doesn't send anything anywhere. It reads your quotas from the Google Antigravity extension on your machine (`127.0.0.1`).
 
@@ -72,19 +72,22 @@ Why install a heavy dashboard just to read a percentage?
 * **Instant readout:** Your AI quotas at a glance with color coding and a refresh every 5 seconds.
 * **Detailed tooltip:** Hover over the bar to see the included models and the **remaining time before your quotas reset**.
 * **Cross-platform:** Compatible with Windows, macOS, and Linux.
-* **Documentation in 6 languages, clean code:** We translated this README for the community; the extension itself contains no heavy translation framework.
+* **Documentation in 6 languages, minimalist code:** We translated this README for the community; the extension itself contains no heavy translation framework.
 
 ---
 
 ## ❓ FAQ & Troubleshooting
 
 **What should I do if the status bar shows `waiting for Antigravity`?**
+
 ARN-Lifebar reads Google AI Plus/Pro/Ultra quotas from **Antigravity IDE**, or from the **Google Antigravity extension** in other IDEs. This message remains visible until Antigravity starts in the window; ARN-Lifebar retries at least once a minute.
 
--> *Are you using Antigravity IDE, or the Google Antigravity extension in your IDE? And are you logged into your Google account?*
-If so, then it is a bug: please open an issue [here](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
+-> *Are you using Antigravity IDE, or the Google Antigravity extension in your IDE? And are you signed in to your Google account?*
+
+If so, it's a bug: please open an issue [here](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **I'm using Antigravity IDE 2.5 or older.**
+
 Since version 1.3, ARN-Lifebar reads quotas from Antigravity IDE 2.6 and later. Update the IDE, or install version 1.2.3 of ARN-Lifebar.
 
 ---
@@ -100,7 +103,7 @@ In Antigravity IDE, ARN-Lifebar works on its own. In other editors, such as VS C
 
 1. Open the **Extensions** view (`Ctrl+Shift+X`).
 2. Search for `ARN-Lifebar`.
-> 💡 **Tip:** Filter search results by **Name** (and NOT by popularity, relevance, or download count) to find it easily.
+> 💡 **Tip:** Sort search results by **Name** (and NOT by popularity, relevance, or install count) to find it easily.
 3. Click **Install** and enable the extension.
 
 </details>
@@ -190,7 +193,7 @@ If you'd like to financially support the development and future updates, you can
 
 `0xdc593BfaD6Be146400B713c2787DCCb9392AC206`
 
-![Ethereum (ETH) & ERC-20](./media/Ethereum.png)
+![Ethereum (ETH) & ERC-20 Tokens](./media/Ethereum.png)
 
 </details>
 
@@ -223,7 +226,7 @@ If you'd like to financially support the development and future updates, you can
   <p>
   ARN-Lifebar utilise le lecteur de quotas natif d'Antigravity IDE, ou l'extension Google Antigravity dans les autres IDE. Il affiche ensuite vos quotas dans la barre d'état :
   </p>
-  <h3>🟢 > 50 % · 🟠 50–25 % · 🔴 24–1 % · ⚫ 0 %</h3>
+  <h3>🟢 > 50 % · 🟠 50-25 % · 🔴 24-1 % · ⚫ 0 %</h3>
   <a href="#fr">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="Capture d'écran de ARN-Lifebar" width="600">
   </a>
@@ -239,27 +242,30 @@ Pourquoi installer un tableau de bord lourd juste pour lire un pourcentage ?
 **ARN-Lifebar** va à l'essentiel, **sans bloatware ni télémétrie :** 
 
 * **Zéro Webview :** Tout s'affiche nativement dans votre barre d'état (`Status Bar`).
-* **Zéro dépendance :** 100 % JavaScript natif — aucune étape de build. Le code est lisible et auditable.
+* **Zéro dépendance :** 100 % JavaScript natif, sans étape de build. Le code est lisible et auditable.
 * **Aucune connexion internet :** ARN-Lifebar n'envoie rien nulle part. Il lit vos quotas auprès de l'extension Google Antigravity, sur votre machine (`127.0.0.1`).
 
 ### ✨ L'essentiel, rien de plus
 
-* **Lecture instantanée :** Vos quotas d'IA en un coup d'œil grâce au code couleur et un rafraîchissement toutes les 5 secondes.
+* **Lecture instantanée :** Vos quotas d'IA en un coup d'œil grâce au code couleur et à un rafraîchissement toutes les 5 secondes.
 * **Info-bulle détaillée :** Survolez la barre pour voir les modèles inclus et le **temps restant avant la réinitialisation** de vos quotas.
 * **Multiplateforme :** Compatible Windows, macOS et Linux.
-* **Documentation en 6 langues, code propre :** Nous avons traduit ce README pour la communauté ; l'extension elle-même ne contient aucun framework de traduction lourd.
+* **Documentation en 6 langues, code minimaliste :** Nous avons traduit ce README pour la communauté ; l'extension elle-même ne contient aucun framework de traduction lourd.
 
 ---
 
 ## ❓ FAQ & Dépannage
 
 **La barre d'état affiche `waiting for Antigravity`, que faire ?**
+
 ARN-Lifebar lit les quotas Google AI Plus/Pro/Ultra d'**Antigravity IDE**, ou de l'**extension Google Antigravity** dans les autres IDE. Ce message reste affiché tant qu'Antigravity n'a pas démarré dans la fenêtre ; ARN-Lifebar réessaie au moins une fois par minute.
 
 -> *Utilisez-vous Antigravity IDE, ou l'extension Google Antigravity dans votre IDE ? Et êtes-vous connecté(e) à votre compte Google ?*
+
 Si oui, alors il s'agit d'un bug : merci d'ouvrir une issue [ici](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **J'utilise Antigravity IDE 2.5 ou une version plus ancienne.**
+
 Depuis sa version 1.3, ARN-Lifebar lit les quotas d'Antigravity IDE 2.6 et des versions suivantes. Mettez l'IDE à jour, ou installez la version 1.2.3 d'ARN-Lifebar.
 
 ---
@@ -269,13 +275,13 @@ Depuis sa version 1.3, ARN-Lifebar lit les quotas d'Antigravity IDE 2.6 et des v
 Dans Antigravity IDE, ARN-Lifebar fonctionne seul. Dans un autre éditeur, comme VS Code, installez aussi l'extension Google Antigravity.
 
 <details>
-<summary><b>🔌 Via l'interface de votre éditeur (Recommandé)</b></summary>
+<summary><b>🔌 Via l'interface de votre éditeur (recommandé)</b></summary>
 
 <br>
 
 1. Ouvrez la vue **Extensions** (`Ctrl+Shift+X`).
 2. Recherchez `ARN-Lifebar`.
-> 💡 **Astuce :** Filtrez les résultats de recherche par **Nom** (et PAS par popularité, pertinence ou nombre de téléchargements) pour la trouver facilement.
+> 💡 **Astuce :** Triez les résultats de recherche par **Nom** (et PAS par popularité, pertinence ou nombre d'installations) pour trouver l'extension facilement.
 3. Cliquez sur **Installer** et activez l'extension.
 
 </details>
@@ -287,8 +293,8 @@ Dans Antigravity IDE, ARN-Lifebar fonctionne seul. Dans un autre éditeur, comme
 
 1. Téléchargez le fichier [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix).
 2. Dans votre éditeur, ouvrez la vue **Extensions** (`Ctrl+Shift+X`).
-3. Cliquez sur le menu "..." (Vues et plus d'actions) en haut de la barre latérale.
-4. Sélectionnez **Installer à partir d'un VSIX...**
+3. Cliquez sur le menu « ... » (Vues et autres actions) en haut de la barre latérale.
+4. Sélectionnez **Installer à partir de VSIX...**
 5. Choisissez le fichier téléchargé et redémarrez l'éditeur.
 
 </details>
@@ -313,7 +319,7 @@ Dans Antigravity IDE, ARN-Lifebar fonctionne seul. Dans un autre éditeur, comme
 <br>
 
 <p align="center">
-  <b>💫 Ce projet vous plaît ? Laissez une ⭐ sur GitHub ou GitLab pour soutenir le projet !</b>
+  <b>💫 Ce projet vous plaît ? Laissez une ⭐ sur GitHub ou GitLab pour le soutenir !</b>
 </p>
 <p align="center">
   <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
@@ -359,13 +365,13 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
 </details>
 
 <details>
-<summary><b>Ethereum (ETH) & ERC-20 Tokens</b></summary>
+<summary><b>Ethereum (ETH) et tokens ERC-20</b></summary>
 
 <br>
 
 `0xdc593BfaD6Be146400B713c2787DCCb9392AC206`
 
-![Ethereum (ETH) & ERC-20](./media/Ethereum.png)
+![Ethereum (ETH) et tokens ERC-20](./media/Ethereum.png)
 
 </details>
 
@@ -398,7 +404,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
   <p>
   ARN-Lifebar 使用 Antigravity IDE 原生的配额读取器，或在其他 IDE 中使用 Google Antigravity 扩展，然后将配额显示在状态栏中：
   </p>
-  <h3>🟢 > 50 % · 🟠 50–25 % · 🔴 24–1 % · ⚫ 0 %</h3>
+  <h3>🟢 > 50% · 🟠 50～25% · 🔴 24～1% · ⚫ 0%</h3>
   <a href="#cn">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ARN-Lifebar 屏幕截图" width="600">
   </a>
@@ -406,34 +412,37 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
 
 ---
 
-### ⛔ What we left out (我们省去的部分)
+### ⛔ 我们剔除的冗余
 
-为什么仅仅为了读取一个百分比就要安装一个笨重的仪表板？
+为什么只为了看一个百分比，就要安装一个笨重的仪表盘？
 
-**ARN-Lifebar** 直击本质，**无冗余软件 (Bloatware) 或遥测：** 
+**ARN-Lifebar** 直击本质，**无冗余软件（Bloatware）或遥测：**
 
-* **零 Webview：** 一切都在您的状态栏 (`Status Bar`) 中原生显示。
-* **零依赖：** 100% 原生 JavaScript — 无需 build step。代码具有高可读性和可审计性。
-* **无互联网连接：** ARN-Lifebar 不会向任何地方发送任何数据。它仅从您本机的 Google Antigravity 扩展读取配额（`127.0.0.1`）。
+* **零 Webview：** 一切都在您的状态栏（`Status Bar`）中原生显示。
+* **零依赖：** 100% 原生 JavaScript，无需构建步骤，代码清晰易读且易于审计。
+* **无需联网：** ARN-Lifebar 不会向任何地方发送任何数据。它仅从您本机的 Google Antigravity 扩展读取配额（`127.0.0.1`）。
 
-### ✨ The essentials, nothing more (核心必备，毫无多余)
+### ✨ 核心必备，毫无多余
 
-* **即时查看：** 凭借颜色编码和每 5 秒一次的刷新，您的 AI 配额一目了然。
-* **悬停提示：** 将鼠标悬停在状态栏上，即可查看涵盖的模型以及**配额重置的剩余时间**。
+* **即时查看：** 通过颜色编码与每 5 秒自动刷新，让您的 AI 配额一目了然。
+* **详细悬停提示：** 将鼠标悬停在状态栏上，即可查看包含的模型以及**配额重置前的剩余时间**。
 * **跨平台：** 兼容 Windows、macOS 和 Linux。
-* **6 种语言文档，纯净代码：** 我们为社区翻译了此 README；扩展程序本身不包含任何笨重的翻译框架。
+* **6 种语言文档，极简代码：** 我们为社区翻译了此 README；扩展程序本身不包含任何笨重的翻译框架。
 
 ---
 
 ## ❓ 常见问题与故障排除
 
 **状态栏显示 `waiting for Antigravity`，该怎么办？**
+
 ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，在其他 IDE 中则通过 **Google Antigravity 扩展**读取。此消息会一直显示，直到 Antigravity 在该窗口中启动；ARN-Lifebar 至少每分钟重试一次。
 
--> *您使用的是 Antigravity IDE，还是在您的 IDE 中使用 Google Antigravity 扩展？您登录 Google 账号了吗？*
+-> *您使用的是 Antigravity IDE，还是在您的 IDE 中使用 Google Antigravity 扩展？您是否已登录 Google 账号？*
+
 如果是，那么这是一个 bug：请[在此处](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose)提交 issue。
 
 **我使用的是 Antigravity IDE 2.5 或更早版本。**
+
 自 1.3 版起，ARN-Lifebar 读取 Antigravity IDE 2.6 及更高版本的配额。请更新 IDE，或安装 ARN-Lifebar 1.2.3 版。
 
 ---
@@ -447,9 +456,9 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 
 <br>
 
-1. 打开**扩展**视图 (`Ctrl+Shift+X`)。
+1. 打开**扩展**视图（`Ctrl+Shift+X`）。
 2. 搜索 `ARN-Lifebar`。
-> 💡 **提示：** 按**名称**（而**不是**按受欢迎程度、相关性或下载量）过滤搜索结果，以便轻松找到它。
+> 💡 **提示：** 将搜索结果按**名称**排序（而**不是**按热门程度、相关性或安装计数），即可轻松找到该扩展。
 3. 点击**安装**并启用扩展程序。
 
 </details>
@@ -460,8 +469,8 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 <br>
 
 1. 下载 [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix) 文件。
-2. 在您的编辑器中，打开**扩展**视图 (`Ctrl+Shift+X`)。
-3. 点击侧边栏顶部的 "..." 菜单（视图和更多操作）。
+2. 在您的编辑器中，打开**扩展**视图（`Ctrl+Shift+X`）。
+3. 点击侧边栏顶部的“...”菜单（视图和更多操作）。
 4. 选择 **从 VSIX 安装...**
 5. 选择下载的文件并重启编辑器。
 
@@ -474,8 +483,8 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 
 1. 创建一个名为 `ARN-Lifebar` 的文件夹，然后下载并将 `package.json`、`extension.js` 和 `README.md` 这 3 个文件放入其中。
 2. 将此文件夹复制到您的编辑器扩展目录中：
-   - **Antigravity IDE**: `%USERPROFILE%\.antigravity-ide\extensions\`（Windows）或 `~/.antigravity-ide/extensions/`（macOS/Linux）
-   - **VS Code**: `%USERPROFILE%\.vscode\extensions\`（Windows）或 `~/.vscode/extensions/`（macOS/Linux）
+   - **Antigravity IDE**：`%USERPROFILE%\.antigravity-ide\extensions\`（Windows）或 `~/.antigravity-ide/extensions/`（macOS/Linux）
+   - **VS Code**：`%USERPROFILE%\.vscode\extensions\`（Windows）或 `~/.vscode/extensions/`（macOS/Linux）
 3. 重启编辑器并启用扩展程序。
 
 </details>
@@ -487,7 +496,7 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 <br>
 
 <p align="center">
-  <b>💫 喜欢这个项目吗？在 GitHub 或 GitLab 上点亮 ⭐ 来支持我们吧！</b>
+  <b>💫 喜欢这个项目吗？在 GitHub 或 GitLab 上点亮 ⭐ 来支持一下吧！</b>
 </p>
 <p align="center">
   <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
@@ -522,35 +531,35 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 **加密货币捐赠：**
 
 <details>
-<summary><b>₿ 比特币 (Bitcoin)</b></summary>
+<summary><b>₿ 比特币（BTC）</b></summary>
 
 <br>
 
 `bc1q4zu08uxpfra9aecp28x6zelg23qdcdeg680hlg`
 
-![比特币 (Bitcoin)](./media/Bitcoin.png)
+![比特币（BTC）](./media/Bitcoin.png)
 
 </details>
 
 <details>
-<summary><b>以太坊 (Ethereum) & ERC-20 代币</b></summary>
+<summary><b>以太坊（ETH）与 ERC-20 代币</b></summary>
 
 <br>
 
 `0xdc593BfaD6Be146400B713c2787DCCb9392AC206`
 
-![以太坊 (Ethereum) & ERC-20 代币](./media/Ethereum.png)
+![以太坊（ETH）与 ERC-20 代币](./media/Ethereum.png)
 
 </details>
 
 <details>
-<summary><b>索拉纳 (Solana)</b></summary>
+<summary><b>索拉纳（SOL）</b></summary>
 
 <br>
 
 `FwBu1oqSCdfDvvFhy3crYBkgzjDuwDcU5gxXzVCqxTn9`
 
-![索拉纳 (Solana)](./media/Solana.png)
+![索拉纳（SOL）](./media/Solana.png)
 
 </details>
 
@@ -572,7 +581,7 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
   <p>
   ARN-Lifebar utiliza el lector de cuotas nativo de Antigravity IDE o la extensión Google Antigravity en los demás IDE. Luego las muestra en la barra de estado:
   </p>
-  <h3>🟢 > 50 % · 🟠 50–25 % · 🔴 24–1 % · ⚫ 0 %</h3>
+  <h3>🟢 > 50 % · 🟠 50-25 % · 🔴 24-1 % · ⚫ 0 %</h3>
   <a href="#es">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="Captura de pantalla de ARN-Lifebar" width="600">
   </a>
@@ -586,28 +595,31 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 
 **ARN-Lifebar** va a lo esencial, **sin bloatware ni telemetría:** 
 
-* **Cero Webview:** Todo se muestra nativamente en tu barra de estado (`Status Bar`).
-* **Cero dependencias:** 100% JavaScript nativo — sin build step. El código es legible y auditable.
+* **Cero Webviews:** Todo se muestra nativamente en tu barra de estado (`Status Bar`).
+* **Cero dependencias:** 100 % JavaScript nativo, sin paso de compilación. El código es legible y auditable.
 * **Sin conexión a internet:** ARN-Lifebar no envía nada a ninguna parte. Lee tus cuotas de la extensión Google Antigravity en tu máquina (`127.0.0.1`).
 
 ### ✨ Lo esencial, nada más
 
-* **Lectura instantánea:** Tus cuotas de IA de un vistazo gracias al código de colores y una actualización cada 5 segundos.
+* **Lectura instantánea:** Tus cuotas de IA de un vistazo gracias al código de colores y a una actualización cada 5 segundos.
 * **Información detallada:** Pasa el cursor sobre la barra para ver los modelos incluidos y el **tiempo restante antes de que se reinicien** tus cuotas.
 * **Multiplataforma:** Compatible con Windows, macOS y Linux.
-* **Documentación en 6 idiomas, código limpio:** Hemos traducido este README para la comunidad; la extensión en sí no contiene ningún framework de traducción pesado.
+* **Documentación en 6 idiomas, código minimalista:** Hemos traducido este README para la comunidad; la extensión en sí no contiene ningún framework de traducción pesado.
 
 ---
 
-## ❓ FAQ & Solución de problemas
+## ❓ Preguntas frecuentes y solución de problemas
 
 **La barra de estado muestra `waiting for Antigravity`, ¿qué hacer?**
+
 ARN-Lifebar lee las cuotas de Google AI Plus/Pro/Ultra de **Antigravity IDE** o de la **extensión Google Antigravity** en los demás IDE. Este mensaje permanece visible hasta que Antigravity se inicie en la ventana; ARN-Lifebar vuelve a intentarlo al menos una vez por minuto.
 
 -> *¿Utilizas Antigravity IDE o la extensión Google Antigravity en tu IDE? ¿Y has iniciado sesión en tu cuenta de Google?*
+
 Si es así, entonces se trata de un bug: por favor, abre un issue [aquí](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **Uso Antigravity IDE 2.5 o una versión anterior.**
+
 Desde la versión 1.3, ARN-Lifebar lee las cuotas de Antigravity IDE 2.6 y versiones posteriores. Actualiza el IDE o instala la versión 1.2.3 de ARN-Lifebar.
 
 ---
@@ -617,13 +629,13 @@ Desde la versión 1.3, ARN-Lifebar lee las cuotas de Antigravity IDE 2.6 y versi
 En Antigravity IDE, ARN-Lifebar funciona por sí solo. En otro editor, como VS Code, instala también la extensión Google Antigravity.
 
 <details>
-<summary><b>🔌 A través de la interfaz de tu editor (Recomendado)</b></summary>
+<summary><b>🔌 A través de la interfaz de tu editor (recomendado)</b></summary>
 
 <br>
 
 1. Abre la vista de **Extensiones** (`Ctrl+Shift+X`).
 2. Busca `ARN-Lifebar`.
-> 💡 **Consejo:** Filtra los resultados de búsqueda por **Nombre** (y NO por popularidad, relevancia o número de descargas) para encontrarla fácilmente.
+> 💡 **Consejo:** Ordena los resultados de búsqueda por **Nombre** (y NO por popularidad, relevancia o número de instalaciones) para encontrar la extensión fácilmente.
 3. Haz clic en **Instalar** y activa la extensión.
 
 </details>
@@ -661,7 +673,7 @@ En Antigravity IDE, ARN-Lifebar funciona por sí solo. En otro editor, como VS C
 <br>
 
 <p align="center">
-  <b>💫 ¿Te gusta este proyecto? ¡Deja una ⭐ en GitHub o GitLab para apoyar el proyecto!</b>
+  <b>💫 ¿Te gusta este proyecto? ¡Deja una ⭐ en GitHub o GitLab para apoyarlo!</b>
 </p>
 <p align="center">
   <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
@@ -707,13 +719,13 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 </details>
 
 <details>
-<summary><b>Ethereum (ETH) & ERC-20 Tokens</b></summary>
+<summary><b>Ethereum (ETH) y tokens ERC-20</b></summary>
 
 <br>
 
 `0xdc593BfaD6Be146400B713c2787DCCb9392AC206`
 
-![Ethereum (ETH) & ERC-20](./media/Ethereum.png)
+![Ethereum (ETH) y tokens ERC-20](./media/Ethereum.png)
 
 </details>
 
@@ -746,7 +758,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
   <p>
   تستخدم ARN-Lifebar قارئ الحصص المدمج في Antigravity IDE أو إضافة Google Antigravity في بيئات التطوير الأخرى، ثم تعرضها في شريط الحالة:
   </p>
-  <h3>🟢 > 50 % · 🟠 50–25 % · 🔴 24–1 % · ⚫ 0 %</h3>
+  <h3>🟢 > 50% · 🟠 50–25% · 🔴 24–1% · ⚫ 0%</h3>
   <a href="#ar">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="لقطة شاشة لـ ARN-Lifebar" width="600">
   </a>
@@ -754,34 +766,37 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 ---
 
-### ⛔ بدون إضافات غير ضرورية
+### ⛔ ما استغنينا عنه
 
-لماذا تقوم بتثبيت لوحة تحكم ثقيلة فقط لقراءة نسبة مئوية؟
+لماذا تثبّت لوحة تحكم ثقيلة لمجرد قراءة نسبة مئوية؟
 
-**ARN-Lifebar** تركز على الأهم، **بدون برامج زائدة (bloatware) أو قياس عن بعد (telemetry):** 
+تركز **ARN-Lifebar** على الأهم، **بدون برامج زائدة (bloatware) أو قياس عن بعد (telemetry):**
 
-* **بدون واجهة ويب (Webview):** يُعرض كل شيء بشكل أصلي في شريط الحالة (`Status Bar`) الخاص بك.
-* **بدون تبعيات:** JavaScript أصلي 100% — بدون خطوة بناء (build step). الكود قابل للقراءة والتدقيق.
+* **بدون واجهة ويب (Webview):** يُعرض كل شيء بشكل أصلي في شريط الحالة (`Status Bar`).
+* **بدون تبعيات:** JavaScript أصلي 100%، بدون خطوة بناء (build step). الكود قابل للقراءة والتدقيق.
 * **بدون اتصال بالإنترنت:** لا ترسل ARN-Lifebar أي بيانات إلى أي مكان، بل تقرأ حصصك محليًا من إضافة Google Antigravity على جهازك (`127.0.0.1`).
 
 ### ✨ الأساسيات، لا أكثر
 
-* **قراءة فورية:** حصص الذكاء الاصطناعي الخاصة بك في لمحة بفضل الترميز اللوني وتحديث كل 5 ثوانٍ.
-* **معلومات تفصيلية:** مرر مؤشر الماوس فوق الشريط لرؤية النماذج المضمنة و**الوقت المتبقي قبل تجديد** حصصك.
+* **قراءة فورية:** حصصك من الذكاء الاصطناعي في لمحة بفضل الترميز اللوني وتحديث كل 5 ثوانٍ.
+* **تلميح تفصيلي:** مرر مؤشر الماوس فوق الشريط لرؤية النماذج المضمنة و**الوقت المتبقي قبل تجديد** حصصك.
 * **متعدد المنصات:** متوافق مع Windows و macOS و Linux.
-* **توثيق بـ 6 لغات، كود نظيف:** قمنا بترجمة ملف README هذا من أجل المجتمع؛ الإضافة نفسها لا تحتوي على أي إطار عمل (framework) ترجمة ثقيل.
+* **توثيق بـ 6 لغات، كود بسيط:** قمنا بترجمة ملف README هذا من أجل المجتمع؛ الإضافة نفسها لا تحتوي على أي إطار عمل (framework) ترجمة ثقيل.
 
 ---
 
 ## ❓ الأسئلة الشائعة واستكشاف الأخطاء وإصلاحها
 
 **يعرض شريط الحالة `waiting for Antigravity`، ماذا أفعل؟**
+
 تقرأ ARN-Lifebar حصص Google AI Plus/Pro/Ultra من **Antigravity IDE** أو من **إضافة Google Antigravity** في بيئات التطوير الأخرى. تبقى هذه الرسالة ظاهرة حتى يبدأ تشغيل Antigravity في النافذة؛ وتعيد ARN-Lifebar المحاولة مرة واحدة على الأقل كل دقيقة.
 
--> *هل تستخدم Antigravity IDE أو إضافة Google Antigravity في بيئة تطويرك؟ وهل أنت مسجل الدخول إلى حساب Google الخاص بك؟*
+← *هل تستخدم Antigravity IDE أو إضافة Google Antigravity في بيئة تطويرك؟ وهل سجّلت الدخول إلى حسابك في Google؟*
+
 إذا كان الأمر كذلك، فهذا يعني وجود خلل (bug): يُرجى فتح مشكلة (issue) [هنا](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose).
 
 **أستخدم Antigravity IDE 2.5 أو إصدارًا أقدم.**
+
 منذ الإصدار 1.3، تقرأ ARN-Lifebar حصص Antigravity IDE 2.6 والإصدارات الأحدث. قم بتحديث بيئة التطوير أو ثبّت الإصدار 1.2.3 من ARN-Lifebar.
 
 ---
@@ -790,40 +805,40 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 في Antigravity IDE، تعمل ARN-Lifebar بمفردها. في محرر آخر مثل VS Code، ثبّت أيضًا إضافة Google Antigravity.
 
-<details>
+<details dir="rtl">
 <summary><b>🔌 عبر واجهة محررك (موصى به)</b></summary>
 
 <br>
 
-1. افتح عرض **الإضافات** (`Ctrl+Shift+X`).
+1. افتح عرض **الإضافات** (Extensions) بالضغط على `Ctrl+Shift+X`.
 2. ابحث عن `ARN-Lifebar`.
-> 💡 **تلميح:** قم بتصفية نتائج البحث حسب **الاسم** (وليس حسب الشعبية أو الصلة أو عدد التنزيلات) للعثور عليها بسهولة.
-3. انقر على **تثبيت** وقم بتفعيل الإضافة.
+> 💡 **نصيحة:** رتّب نتائج البحث حسب **الاسم** (Name)، وليس حسب الشعبية أو مدى الصلة أو عدد مرات التثبيت، للعثور على الإضافة بسهولة.
+3. انقر على **تثبيت** (Install) وقم بتفعيل الإضافة.
 
 </details>
 
-<details>
+<details dir="rtl">
 <summary><b>💻 التثبيت عبر VSIX</b></summary>
 
 <br>
 
 1. قم بتنزيل ملف [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix).
-2. في محررك، افتح عرض **الإضافات** (`Ctrl+Shift+X`).
-3. انقر على قائمة "..." (طرق العرض ومزيد من الإجراءات) أعلى الشريط الجانبي.
-4. حدد **تثبيت من VSIX...**
+2. في محررك، افتح عرض **الإضافات** (Extensions) بالضغط على `Ctrl+Shift+X`.
+3. انقر على قائمة «...» (Views and More Actions) أعلى الشريط الجانبي.
+4. حدد **Install from VSIX...** (تثبيت من VSIX).
 5. اختر الملف الذي تم تنزيله وأعد تشغيل المحرر.
 
 </details>
 
-<details>
+<details dir="rtl">
 <summary><b>🔧 التثبيت اليدوي</b></summary>
 
 <br>
 
 1. أنشئ مجلدًا باسم `ARN-Lifebar`، ثم قم بتنزيل ووضع الملفات الثلاثة `package.json` و `extension.js` و `README.md` بداخله.
-2. انسخ هذا المجلد إلى دليل إضافات محررك:
-   - **Antigravity IDE:** `%USERPROFILE%\.antigravity-ide\extensions\` (Windows) أو `~/.antigravity-ide/extensions/` (macOS/Linux)
-   - **VS Code:** `%USERPROFILE%\.vscode\extensions\` (Windows) أو `~/.vscode/extensions/` (macOS/Linux)
+2. انسخ هذا المجلد إلى مجلد إضافات محررك:
+   - في **Antigravity IDE:** `%USERPROFILE%\.antigravity-ide\extensions\` (Windows) أو `~/.antigravity-ide/extensions/` (macOS/Linux)
+   - في **VS Code:** `%USERPROFILE%\.vscode\extensions\` (Windows) أو `~/.vscode/extensions/` (macOS/Linux)
 3. أعد تشغيل المحرر وقم بتفعيل الإضافة.
 
 </details>
@@ -835,7 +850,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 <br>
 
 <p align="center">
-  <b>💫 هل يعجبك هذا المشروع؟ اترك ⭐ على GitHub أو GitLab لدعم المشروع!</b>
+  <b>💫 هل أعجبك هذا المشروع؟ اترك ⭐ على GitHub أو GitLab لدعمه!</b>
 </p>
 <p align="center">
   <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
@@ -869,36 +884,36 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 **التبرعات بالعملات المشفرة:**
 
-<details>
-<summary><b>₿ بيتكوين (Bitcoin)</b></summary>
+<details dir="rtl">
+<summary><b>₿ بيتكوين (BTC)</b></summary>
 
 <br>
 
 `bc1q4zu08uxpfra9aecp28x6zelg23qdcdeg680hlg`
 
-![بيتكوين (Bitcoin)](./media/Bitcoin.png)
+![بيتكوين (BTC)](./media/Bitcoin.png)
 
 </details>
 
-<details>
-<summary><b>إيثريوم (Ethereum) ورموز ERC-20</b></summary>
+<details dir="rtl">
+<summary><b>إيثريوم (ETH) ورموز ERC-20</b></summary>
 
 <br>
 
 `0xdc593BfaD6Be146400B713c2787DCCb9392AC206`
 
-![إيثريوم (Ethereum) ورموز ERC-20](./media/Ethereum.png)
+![إيثريوم (ETH) ورموز ERC-20](./media/Ethereum.png)
 
 </details>
 
-<details>
-<summary><b>سولانا (Solana)</b></summary>
+<details dir="rtl">
+<summary><b>سولانا (SOL)</b></summary>
 
 <br>
 
 `FwBu1oqSCdfDvvFhy3crYBkgzjDuwDcU5gxXzVCqxTn9`
 
-![سولانا (Solana)](./media/Solana.png)
+![سولانا (SOL)](./media/Solana.png)
 
 </details>
 
@@ -920,7 +935,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
   <p>
   ARN-Lifebar ใช้ตัวอ่านโควตาที่มีมาในตัวของ Antigravity IDE หรือส่วนขยาย Google Antigravity ใน IDE อื่น ๆ จากนั้นจึงแสดงผลในแถบสถานะ:
   </p>
-  <h3>🟢 > 50 % · 🟠 50–25 % · 🔴 24–1 % · ⚫ 0 %</h3>
+  <h3>🟢 > 50% · 🟠 50-25% · 🔴 24-1% · ⚫ 0%</h3>
   <a href="#th">
     <img src="./media/Antigravity_ARN-Lifebar.jpg" alt="ภาพหน้าจอของ ARN-Lifebar" width="600">
   </a>
@@ -928,34 +943,37 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 
 ---
 
-### ⛔ สิ่งที่คุณจะไม่เจอ
+### ⛔ สิ่งที่เราตัดออกไป
 
 ทำไมต้องติดตั้งแดชบอร์ดที่หนักหน่วงเพียงเพื่ออ่านค่าเปอร์เซ็นต์?
 
 **ARN-Lifebar** มุ่งเน้นไปที่สิ่งสำคัญ **ปราศจากซอฟต์แวร์ขยะ (bloatware) และการเก็บข้อมูลทางไกล (telemetry):** 
 
-* **ไม่มีเว็บวิว (Webview):** ทุกอย่างจะถูกแสดงผลแบบเนทีฟในแถบสถานะ (`Status Bar`) ของคุณ
-* **ไม่มี Dependency:** เป็น JavaScript แบบเนทีฟ 100% — ไม่มีขั้นตอนการสร้าง (build step) โค้ดสามารถอ่านและตรวจสอบได้
+* **ไม่มี Webview:** ทุกอย่างแสดงผลแบบเนทีฟในแถบสถานะ (`Status Bar`) ของคุณ
+* **ไม่มี Dependency:** JavaScript เนทีฟ 100% โดยไม่มีขั้นตอนการบิลด์ (build step) โค้ดอ่านง่ายและตรวจสอบได้
 * **ไม่ต้องเชื่อมต่ออินเทอร์เน็ต:** ARN-Lifebar ไม่ส่งข้อมูลใด ๆ ออกไปที่ไหนเลย โดยจะอ่านโควตาจากส่วนขยาย Google Antigravity บนเครื่องของคุณ (`127.0.0.1`)
 
 ### ✨ สิ่งสำคัญเท่านั้น ไม่มีส่วนเกิน
 
-* **อ่านค่าได้ทันที:** โควตา AI ของคุณในพริบตาด้วยรหัสสีและการรีเฟรชทุกๆ 5 วินาที
-* **แสดงรายละเอียดเมื่อชี้เมาส์:** วางเมาส์เหนือแถบสถานะเพื่อดูโมเดลที่รองรับ และ**เวลาที่เหลือก่อนโควตาของคุณจะถูกรีเซ็ต**
-* **รองรับหลายแพลตฟอร์ม:** รองรับ Windows, macOS และ Linux
-* **เอกสารประกอบ 6 ภาษา, โค้ดสะอาด:** เราได้แปลไฟล์ README นี้สำหรับชุมชน ส่วนขยายนี้ไม่มีเฟรมเวิร์ก (framework) การแปลภาษาที่หนักหน่วง
+* **อ่านค่าได้ทันที:** ดูโควตา AI ของคุณได้ในพริบตา ด้วยรหัสสีและการรีเฟรชทุก 5 วินาที
+* **แสดงรายละเอียดเมื่อชี้เมาส์:** วางเมาส์เหนือแถบสถานะเพื่อดูโมเดลที่รวมอยู่ และ**เวลาที่เหลือก่อนโควตาจะรีเซ็ต**
+* **รองรับหลายแพลตฟอร์ม:** ใช้งานได้บน Windows, macOS และ Linux
+* **เอกสารประกอบ 6 ภาษา โค้ดมินิมอล:** เราแปลไฟล์ README นี้เพื่อชุมชน แต่ตัวส่วนขยายเองไม่มีเฟรมเวิร์กแปลภาษาที่หนักหน่วง
 
 ---
 
 ## ❓ คำถามที่พบบ่อยและการแก้ไขปัญหา
 
 **หากแถบสถานะแสดง `waiting for Antigravity` ควรทำอย่างไร?**
+
 ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Antigravity IDE** หรือจาก **ส่วนขยาย Google Antigravity** ใน IDE อื่น ๆ ข้อความนี้จะแสดงอยู่จนกว่า Antigravity จะเริ่มทำงานในหน้าต่างนั้น และ ARN-Lifebar จะลองใหม่อย่างน้อยนาทีละครั้ง
 
--> *คุณกำลังใช้ Antigravity IDE หรือส่วนขยาย Google Antigravity ใน IDE ของคุณอยู่หรือไม่? และคุณได้เข้าสู่ระบบบัญชี Google ของคุณแล้วหรือยัง?*
-หากใช่ แสดงว่าเป็นข้อผิดพลาด (bug): โปรดเปิดปัญหา (issue) [ที่นี่](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose)
+-> *คุณกำลังใช้ Antigravity IDE หรือส่วนขยาย Google Antigravity ใน IDE ของคุณอยู่หรือไม่? และได้ลงชื่อเข้าใช้บัญชี Google แล้วหรือยัง?*
+
+หากใช่ แสดงว่าเป็นข้อผิดพลาด (bug): โปรดแจ้งปัญหา (issue) [ที่นี่](https://github.com/jzbakh/antigravity-arn-lifebar/issues/new/choose)
 
 **กรณีใช้ Antigravity IDE 2.5 หรือต่ำกว่า**
+
 ตั้งแต่เวอร์ชัน 1.3 เป็นต้นไป ARN-Lifebar จะอ่านโควตาของ Antigravity IDE 2.6 และเวอร์ชันที่ใหม่กว่า โปรดอัปเดต IDE หรือติดตั้ง ARN-Lifebar เวอร์ชัน 1.2.3
 
 ---
@@ -969,9 +987,9 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 
 <br>
 
-1. เปิดมุมมอง **ส่วนขยาย (Extensions)** (`Ctrl+Shift+X`)
+1. เปิดมุมมอง **ส่วนขยาย (Extensions)** โดยกด `Ctrl+Shift+X`
 2. ค้นหา `ARN-Lifebar`
-> 💡 **เคล็ดลับ:** กรองผลการค้นหาด้วย **ชื่อ** (ไม่ใช่ตามความนิยม ความเกี่ยวข้อง หรือจำนวนการดาวน์โหลด) เพื่อให้ค้นพบได้ง่าย
+> 💡 **เคล็ดลับ:** จัดเรียงผลการค้นหาตาม **ชื่อ (Name)** (ไม่ใช่ตามความนิยม ความเกี่ยวข้อง หรือจำนวนการติดตั้ง) เพื่อหาส่วนขยายได้ง่ายขึ้น
 3. คลิก **ติดตั้ง (Install)** และเปิดใช้งานส่วนขยาย
 
 </details>
@@ -982,10 +1000,10 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 <br>
 
 1. ดาวน์โหลดไฟล์ [`antigravity-arn-lifebar.vsix`](https://github.com/jzbakh/antigravity-arn-lifebar/releases/latest/download/antigravity-arn-lifebar.vsix)
-2. ในโปรแกรมแก้ไขของคุณ ให้เปิดมุมมอง **ส่วนขยาย (Extensions)** (`Ctrl+Shift+X`)
-3. คลิกที่เมนู "..." (มุมมองและการดำเนินการเพิ่มเติม) ที่ด้านบนสุดของแถบด้านข้าง
+2. ในโปรแกรมแก้ไขของคุณ ให้เปิดมุมมอง **ส่วนขยาย (Extensions)** โดยกด `Ctrl+Shift+X`
+3. คลิกที่เมนู "..." (Views and More Actions) ที่ด้านบนสุดของแถบด้านข้าง
 4. เลือก **ติดตั้งจาก VSIX... (Install from VSIX...)**
-5. เลือกไฟล์ที่ดาวน์โหลดมาแล้วรีสตาร์ทโปรแกรมแก้ไข
+5. เลือกไฟล์ที่ดาวน์โหลดมาแล้วรีสตาร์ตโปรแกรมแก้ไข
 
 </details>
 
@@ -995,21 +1013,21 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 <br>
 
 1. สร้างโฟลเดอร์ชื่อ `ARN-Lifebar` จากนั้นดาวน์โหลดและวางไฟล์ 3 ไฟล์ ได้แก่ `package.json`, `extension.js` และ `README.md` ไว้ข้างใน
-2. คัดลอกโฟลเดอร์นี้ไปยังไดเรกทอรีส่วนขยายของโปรแกรมแก้ไขของคุณ:
+2. คัดลอกโฟลเดอร์นี้ไปยังไดเรกทอรีส่วนขยายของโปรแกรมแก้ไข:
    - **Antigravity IDE:** `%USERPROFILE%\.antigravity-ide\extensions\` (Windows) หรือ `~/.antigravity-ide/extensions/` (macOS/Linux)
    - **VS Code:** `%USERPROFILE%\.vscode\extensions\` (Windows) หรือ `~/.vscode/extensions/` (macOS/Linux)
-3. รีสตาร์ทโปรแกรมแก้ไขและเปิดใช้งานส่วนขยาย
+3. รีสตาร์ตโปรแกรมแก้ไขและเปิดใช้งานส่วนขยาย
 
 </details>
 
 ---
 
-## 🩵 สนับสนุนโครงการ
+## 🩵 สนับสนุนโปรเจกต์
 
 <br>
 
 <p align="center">
-  <b>💫 คุณชอบโครงการนี้ไหม? กดให้ ⭐ บน GitHub หรือ GitLab เพื่อสนับสนุนโครงการ!</b>
+  <b>💫 ชอบโปรเจกต์นี้ไหม? กด ⭐ บน GitHub หรือ GitLab เพื่อสนับสนุนกันได้เลย!</b>
 </p>
 <p align="center">
   <a href="https://github.com/jzbakh/antigravity-arn-lifebar">
@@ -1020,7 +1038,7 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
   </a>
 </p>
 <p align="center">
-  การรีวิวบน <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> หรือ <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> ก็ช่วยให้ผู้อื่นค้นพบโครงการนี้ได้เช่นกัน
+  การรีวิวบน <a href="https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar/reviews">Open VSX</a> หรือ <a href="https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar&ssr=false#review-details">VS Marketplace</a> ก็ช่วยให้ผู้อื่นค้นพบโปรเจกต์นี้ได้เช่นกัน
 </p>
 
 <br>
@@ -1033,7 +1051,7 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 
 ### ☕ การสนับสนุนทางการเงิน
 
-หากคุณต้องการสนับสนุนทางการเงินสำหรับการพัฒนาและการอัปเดตในอนาคต คุณสามารถเลี้ยงกาแฟฉันหรือบริจาคเป็นสกุลเงินดิจิทัลได้ ขอบคุณมาก! 🫶
+หากคุณต้องการสนับสนุนทางการเงินสำหรับการพัฒนาและการอัปเดตในอนาคต ก็สามารถเลี้ยงกาแฟสักแก้วหรือบริจาคเป็นสกุลเงินดิจิทัลได้ ขอบคุณมาก! 🫶
 
 <div align="center">
 
@@ -1044,35 +1062,35 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 **การบริจาคสกุลเงินดิจิทัล:**
 
 <details>
-<summary><b>₿ บิตคอยน์ (Bitcoin)</b></summary>
+<summary><b>₿ บิตคอยน์ (BTC)</b></summary>
 
 <br>
 
 `bc1q4zu08uxpfra9aecp28x6zelg23qdcdeg680hlg`
 
-![บิตคอยน์ (Bitcoin)](./media/Bitcoin.png)
+![บิตคอยน์ (BTC)](./media/Bitcoin.png)
 
 </details>
 
 <details>
-<summary><b>อีเธอร์เรียม (Ethereum) และโทเค็น ERC-20</b></summary>
+<summary><b>อีเธอเรียม (ETH) และโทเคน ERC-20</b></summary>
 
 <br>
 
 `0xdc593BfaD6Be146400B713c2787DCCb9392AC206`
 
-![อีเธอร์เรียม (Ethereum) และโทเค็น ERC-20](./media/Ethereum.png)
+![อีเธอเรียม (ETH) และโทเคน ERC-20](./media/Ethereum.png)
 
 </details>
 
 <details>
-<summary><b>โซลานา (Solana)</b></summary>
+<summary><b>โซลานา (SOL)</b></summary>
 
 <br>
 
 `FwBu1oqSCdfDvvFhy3crYBkgzjDuwDcU5gxXzVCqxTn9`
 
-![โซลานา (Solana)](./media/Solana.png)
+![โซลานา (SOL)](./media/Solana.png)
 
 </details>
 
