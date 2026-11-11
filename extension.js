@@ -65,13 +65,18 @@ function remainingPct(bucket) {
     return Math.round((bucket.remainingFraction ?? 0) * 100);
 }
 
+// Single spaces let the patterns below match in linear time.
+function singleSpaced(text) {
+    return text.replace(/\s+/g, ' ').trim();
+}
+
 function compactLabel(displayName) {
-    return displayName.replace(/\s+models?$/i, '').replace(/\s+and\s+/gi, ' & ');
+    return singleSpaced(displayName).replace(/ models?$/i, '').replace(/ and /gi, ' & ');
 }
 
 // "Models within this group: Gemini Flash, Gemini Pro" → ['Gemini Flash', 'Gemini Pro'].
 function groupModels(description) {
-    const list = description?.match(/^Models within this group:\s*(.+)$/)?.[1];
+    const list = description?.match(/^Models within this group:\s*(\S.*)$/)?.[1];
     return list ? list.split(/,\s*/) : [];
 }
 
@@ -92,7 +97,7 @@ function isThirdParty(group) {
 }
 
 function bucketLabel(bucket, groupLabel) {
-    const label = (bucket.displayName || bucket.window || 'Limit').replace(/\s+remaining$/i, '');
+    const label = singleSpaced(bucket.displayName || bucket.window || 'Limit').replace(/ remaining$/i, '');
     return label.startsWith(`${groupLabel} `) ? label.slice(groupLabel.length + 1) : label;
 }
 
