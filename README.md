@@ -1,6 +1,6 @@
 <div align="center">
 
-# Antigravity ARN-Lifebar: Minimalist extension to view your AI usage in the Status Bar
+# Antigravity ARN-Lifebar: Minimalist extension to view your Google Antigravity AI quotas in your IDE's status bar
 
 [![Version](https://img.shields.io/gitlab/v/tag/arn_inside/antigravity-arn-lifebar?label=version&color=blue&sort=semver)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases)
 [![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
