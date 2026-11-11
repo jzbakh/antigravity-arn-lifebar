@@ -64,7 +64,7 @@ Why install a heavy dashboard just to read a percentage?
 **ARN-Lifebar** gets straight to the point, **with no bloatware or telemetry:** 
 
 * **Zero Webviews:** Everything is displayed natively in your `Status Bar`.
-* **Zero dependencies:** 100% native JavaScript with no build step, making the code fully readable and auditable.
+* **Zero dependencies:** Vanilla JavaScript with no build step, making the code fully readable and auditable.
 * **No internet connection:** ARN-Lifebar doesn't send anything anywhere. It reads your quotas from the Google Antigravity extension on your machine (`127.0.0.1`).
 
 ### ✨ The essentials, nothing more
@@ -242,7 +242,7 @@ Pourquoi installer un tableau de bord lourd juste pour lire un pourcentage ?
 **ARN-Lifebar** va à l'essentiel, **sans bloatware ni télémétrie :** 
 
 * **Zéro Webview :** Tout s'affiche nativement dans votre barre d'état (`Status Bar`).
-* **Zéro dépendance :** 100 % JavaScript natif, sans étape de build. Le code est lisible et auditable.
+* **Zéro dépendance :** JavaScript vanilla, sans étape de build. Le code est lisible et auditable.
 * **Aucune connexion internet :** ARN-Lifebar n'envoie rien nulle part. Il lit vos quotas auprès de l'extension Google Antigravity, sur votre machine (`127.0.0.1`).
 
 ### ✨ L'essentiel, rien de plus
@@ -419,7 +419,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
 **ARN-Lifebar** 直击本质，**无冗余软件（Bloatware）或遥测：**
 
 * **零 Webview：** 一切都在您的状态栏（`Status Bar`）中原生显示。
-* **零依赖：** 100% 原生 JavaScript，无需构建步骤，代码清晰易读且易于审计。
+* **零依赖：** 原生 JavaScript，无需构建步骤，代码清晰易读且易于审计。
 * **无需联网：** ARN-Lifebar 不会向任何地方发送任何数据。它仅从您本机的 Google Antigravity 扩展读取配额（`127.0.0.1`）。
 
 ### ✨ 核心必备，毫无多余
@@ -596,7 +596,7 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 **ARN-Lifebar** va a lo esencial, **sin bloatware ni telemetría:** 
 
 * **Cero Webviews:** Todo se muestra nativamente en tu barra de estado (`Status Bar`).
-* **Cero dependencias:** 100 % JavaScript nativo, sin paso de compilación. El código es legible y auditable.
+* **Cero dependencias:** JavaScript vanilla, sin paso de compilación. El código es legible y auditable.
 * **Sin conexión a internet:** ARN-Lifebar no envía nada a ninguna parte. Lee tus cuotas de la extensión Google Antigravity en tu máquina (`127.0.0.1`).
 
 ### ✨ Lo esencial, nada más
@@ -773,7 +773,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 تركز **ARN-Lifebar** على الأهم، **بدون برامج زائدة (bloatware) أو قياس عن بعد (telemetry):**
 
 * **بدون واجهة ويب (Webview):** يُعرض كل شيء بشكل أصلي في شريط الحالة (`Status Bar`).
-* **بدون تبعيات:** JavaScript أصلي 100%، بدون خطوة بناء (build step). الكود قابل للقراءة والتدقيق.
+* **بدون تبعيات:** JavaScript خالص (Vanilla)، بدون خطوة بناء (build step). الكود قابل للقراءة والتدقيق.
 * **بدون اتصال بالإنترنت:** لا ترسل ARN-Lifebar أي بيانات إلى أي مكان، بل تقرأ حصصك محليًا من إضافة Google Antigravity على جهازك (`127.0.0.1`).
 
 ### ✨ الأساسيات، لا أكثر
@@ -950,7 +950,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 **ARN-Lifebar** มุ่งเน้นไปที่สิ่งสำคัญ **ปราศจากซอฟต์แวร์ขยะ (bloatware) และการเก็บข้อมูลทางไกล (telemetry):** 
 
 * **ไม่มี Webview:** ทุกอย่างแสดงผลแบบเนทีฟในแถบสถานะ (`Status Bar`) ของคุณ
-* **ไม่มี Dependency:** JavaScript เนทีฟ 100% โดยไม่มีขั้นตอนการบิลด์ (build step) โค้ดอ่านง่ายและตรวจสอบได้
+* **ไม่มี Dependency:** ใช้ Vanilla JavaScript ล้วน โดยไม่มีขั้นตอนการบิลด์ (build step) โค้ดอ่านง่ายและตรวจสอบได้
 * **ไม่ต้องเชื่อมต่ออินเทอร์เน็ต:** ARN-Lifebar ไม่ส่งข้อมูลใด ๆ ออกไปที่ไหนเลย โดยจะอ่านโควตาจากส่วนขยาย Google Antigravity บนเครื่องของคุณ (`127.0.0.1`)
 
 ### ✨ สิ่งสำคัญเท่านั้น ไม่มีส่วนเกิน
