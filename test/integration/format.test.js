@@ -152,12 +152,12 @@ describe('parseQuotaSummary', () => {
 
 describe('formatStatusBar', () => {
     it('returns the placeholder when there is nothing to show', () => {
-        assert.equal(formatStatusBar({}, []), '$(graph) ARN-Lifebar');
+        assert.equal(formatStatusBar([]), '$(graph) ARN-Lifebar');
     });
 
     it('shows the 5-hour window of each group', () => {
         assert.equal(
-            formatStatusBar({}, parseQuotaSummary(usedSummary)),
+            formatStatusBar(parseQuotaSummary(usedSummary)),
             `|  Flash & Pro 13% ${DOT_RED} |  Claude & GPT 100% ${DOT_GREEN} |`
         );
     });
@@ -170,44 +170,24 @@ describe('formatStatusBar', () => {
                 { window: '5h', remainingFraction: 1 },
             ],
         }]));
-        assert.equal(formatStatusBar({}, groups), `|  Gemini 0% ${DOT_BLACK} |`);
+        assert.equal(formatStatusBar(groups), `|  Gemini 0% ${DOT_BLACK} |`);
     });
 
     it('gives a group with its own quota a dedicated entry', () => {
         assert.equal(
-            formatStatusBar({}, parseQuotaSummary(argonSummary)),
+            formatStatusBar(parseQuotaSummary(argonSummary)),
             `|  Flash & Pro 100% ${DOT_GREEN} |  Argon 100% ${DOT_GREEN} |  Claude & GPT 100% ${DOT_GREEN} |`
         );
     });
 
     it('treats a bucket without remainingFraction as exhausted', () => {
         const groups = parseQuotaSummary(summaryOf([{ displayName: 'Gemini Models', buckets: [{ window: '5h' }] }]));
-        assert.equal(formatStatusBar({}, groups), `|  Gemini 0% ${DOT_BLACK} |`);
+        assert.equal(formatStatusBar(groups), `|  Gemini 0% ${DOT_BLACK} |`);
     });
 
     it('hides groups without quota buckets', () => {
         const groups = parseQuotaSummary(summaryOf([{ displayName: 'Gemini Models', buckets: [] }]));
-        assert.equal(formatStatusBar({}, groups), '$(graph) ARN-Lifebar');
-    });
-
-    it('appends the GOOGLE_ONE_AI credits suffix when present', () => {
-        const userStatus = {
-            planStatus: {},
-            userTier: {
-                availableCredits: [
-                    { creditType: 'GOOGLE_ONE_AI', creditAmount: 1500 },
-                ],
-            }
-        };
-        assert.match(formatStatusBar(userStatus, []), /1500 credits/);
-    });
-
-    it('omits the credits suffix when no GOOGLE_ONE_AI credit entry exists', () => {
-        const userStatus = {
-            planStatus: {},
-            userTier: { availableCredits: [{ creditType: 'OTHER', creditAmount: 99 }] }
-        };
-        assert.doesNotMatch(formatStatusBar(userStatus, []), /credits/);
+        assert.equal(formatStatusBar(groups), '$(graph) ARN-Lifebar');
     });
 });
 
@@ -247,6 +227,16 @@ describe('formatTooltip', () => {
         assert.match(tip, /Weekly Limit: 80% \(Refreshes in 2 days, 0 hours\)/);
         assert.match(tip, /Five Hour Limit: 50% \(Refreshes in 2 hours, 0 minutes\)/);
         assert.match(tip, /ARN-Lifebar/);
+    });
+
+    it('shows the Google One AI credits', () => {
+        const userStatus = { userTier: { availableCredits: [{ creditType: 'GOOGLE_ONE_AI', creditAmount: 1500 }] } };
+        assert.match(formatTooltip(userStatus, []), /Google One AI credits: 1500\n/);
+    });
+
+    it('omits credits other than Google One AI ones', () => {
+        const userStatus = { userTier: { availableCredits: [{ creditType: 'OTHER', creditAmount: 99 }] } };
+        assert.doesNotMatch(formatTooltip(userStatus, []), /credits/);
     });
 
     it('lists limits the API introduces under their own names', () => {

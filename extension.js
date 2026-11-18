@@ -119,16 +119,13 @@ function parseQuotaSummary(quotaSummary) {
     });
 }
 
-function formatStatusBar(userStatus, parsedGroups) {
+function formatStatusBar(parsedGroups) {
     const parts = parsedGroups
         .filter(group => group.gauge)
         .map((group) => {
             const pct = remainingPct(group.gauge);
             return `  ${group.shortLabel} ${pct}% ${colorDot(pct)} `;
         });
-
-    const googleCredits = userStatus?.userTier?.availableCredits?.find(c => c.creditType === 'GOOGLE_ONE_AI');
-    if (googleCredits) parts.push(`  ${googleCredits.creditAmount} credits  `);
 
     return parts.length ? `|${parts.join('|')}|` : '$(graph) ARN-Lifebar';
 }
@@ -283,7 +280,7 @@ class LifebarController {
                 const { userStatus } = statusRes.body;
                 const parsedGroups = parseQuotaSummary(quotaRes.body);
 
-                this.statusBarItem.text = formatStatusBar(userStatus, parsedGroups);
+                this.statusBarItem.text = formatStatusBar(parsedGroups);
                 this.statusBarItem.tooltip = formatTooltip(userStatus, parsedGroups);
                 this.currentPollInterval = CONFIG.POLLING.MIN_INTERVAL_MS;
 
