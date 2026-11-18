@@ -114,6 +114,15 @@ describe('parseQuotaSummary', () => {
         assert.equal(group.shortLabel, 'Opus & Sonnet');
     });
 
+    it('separates three or more models with commas', () => {
+        const [group] = parseQuotaSummary(summaryOf([{
+            displayName: 'Gemini Models',
+            description: 'Models within this group: Gemini 4 Argon, Gemini 4 Hydrogen, Gemini 3.8 Flash',
+            buckets: [],
+        }]));
+        assert.equal(group.shortLabel, 'Argon, Hydrogen & Flash');
+    });
+
     it('follows the 5-hour window even when the weekly one is lower', () => {
         assert.equal(parseQuotaSummary(usedSummary)[0].gauge.bucketId, 'gemini-5h');
 

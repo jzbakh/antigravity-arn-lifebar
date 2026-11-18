@@ -90,8 +90,8 @@ function shortLabelOf(group) {
     const models = groupModels(group.description);
     const family = models[0]?.split(' ')[0];
     if (models.length > 1 && models.every(m => m.startsWith(`${family} `))) {
-        const names = models.map(m => withoutVersion(m.slice(family.length + 1)));
-        return [...new Set(names)].join(' & ');
+        const names = [...new Set(models.map(m => withoutVersion(m.slice(family.length + 1))))];
+        return names.length > 2 ? `${names.slice(0, -1).join(', ')} & ${names.at(-1)}` : names.join(' & ');
     }
     return compactLabel(group.displayName || '').replace(/^\S+ \d+(\.\d+)* (?=\S)/, '');
 }
