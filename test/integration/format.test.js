@@ -96,6 +96,24 @@ describe('parseQuotaSummary', () => {
         assert.equal(group.shortLabel, 'Claude & GPT');
     });
 
+    it('drops version numbers from model names', () => {
+        const [group] = parseQuotaSummary(summaryOf([{
+            displayName: 'Gemini Models',
+            description: 'Models within this group: Gemini 4 Hydrogen, Gemini 3.8 Flash',
+            buckets: [],
+        }]));
+        assert.equal(group.shortLabel, 'Hydrogen & Flash');
+    });
+
+    it('names a model once when only its versions differ', () => {
+        const [group] = parseQuotaSummary(summaryOf([{
+            displayName: 'Claude models',
+            description: 'Models within this group: Claude Opus 4.6, Claude Opus 5.5, Claude Sonnet 5.5',
+            buckets: [],
+        }]));
+        assert.equal(group.shortLabel, 'Opus & Sonnet');
+    });
+
     it('follows the 5-hour window even when the weekly one is lower', () => {
         assert.equal(parseQuotaSummary(usedSummary)[0].gauge.bucketId, 'gemini-5h');
 

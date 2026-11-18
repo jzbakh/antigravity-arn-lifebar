@@ -80,13 +80,18 @@ function groupModels(description) {
     return list ? list.split(/,\s*/) : [];
 }
 
-// Name a group by the models it covers ("Flash & Pro"), or by its own name
-// without family and version ("Gemini 4 Argon" → "Argon").
+function withoutVersion(name) {
+    return name.split(' ').filter(word => !/^\d+(\.\d+)*$/.test(word)).join(' ') || name;
+}
+
+// Name a group without family or version, after the models it covers
+// ("Hydrogen & Flash") or after its own name ("Gemini 4 Argon" → "Argon").
 function shortLabelOf(group) {
     const models = groupModels(group.description);
     const family = models[0]?.split(' ')[0];
     if (models.length > 1 && models.every(m => m.startsWith(`${family} `))) {
-        return models.map(m => m.slice(family.length + 1)).join(' & ');
+        const names = models.map(m => withoutVersion(m.slice(family.length + 1)));
+        return [...new Set(names)].join(' & ');
     }
     return compactLabel(group.displayName || '').replace(/^\S+ \d+(\.\d+)* (?=\S)/, '');
 }
