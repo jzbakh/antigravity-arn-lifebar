@@ -5,6 +5,12 @@ All notable changes to **Antigravity ARN-Lifebar** will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] — 2026-11-18
+
+### Changed
+- **UI:** Google One AI credits now appear only in the tooltip, which keeps the status bar shorter.
+- **UI:** Status bar entries name models without their version numbers (`Hydrogen & Flash`) and separate three or more models with commas.
+
 ## [1.3.0] — 2026-11-11
 
 ### Added
@@ -82,6 +88,7 @@ First public release on Visual Studio Marketplace and Open VSX.
 - Dedicated **ARN-Lifebar** output channel for diagnostics.
 - Zero runtime dependencies — pure native JavaScript, no build step.
 
+[1.3.1]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.3.1
 [1.3.0]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.3.0
 [1.2.3]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.3
 [1.2.2]: https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases/v1.2.2
