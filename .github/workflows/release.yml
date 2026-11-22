@@ -65,6 +65,11 @@ jobs:
           sh scripts/release-notes.sh "${TAG#v}" > release-notes.md
           cat release-notes.md
 
+      # Only the highest version takes "Latest", so a backfilled release never does.
       - name: Create the release
         if: env.DRY_RUN != 'true'
-        run: gh release create "$TAG" antigravity-arn-lifebar.vsix --verify-tag --title "$TAG" --notes-file release-notes.md
+        run: |
+          tags=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName --jq '.[].tagName')
+          highest=$(printf '%s\n%s\n' "$tags" "$TAG" | sort -V | tail -n 1)
+          latest=$([ "$highest" = "$TAG" ] && echo true || echo false)
+          gh release create "$TAG" antigravity-arn-lifebar.vsix --verify-tag --title "$TAG" --notes-file release-notes.md --latest="$latest"
