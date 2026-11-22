@@ -127,6 +127,8 @@ backfill:fetch:
   stage: package
   needs: []
   script:
+    # glab would create a missing tag on the default branch.
+    - git ls-remote --exit-code --tags origin "refs/tags/$TAG" > /dev/null || { echo "Tag $TAG does not exist."; exit 1; }
     - node scripts/fetch-published-vsix.mjs "$TAG"
   artifacts:
     paths:
