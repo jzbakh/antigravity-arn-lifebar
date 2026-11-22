@@ -61,7 +61,9 @@ jobs:
           echo "$digest  antigravity-arn-lifebar.vsix" | sha256sum -c -
 
       - name: Write the release notes
-        run: sh scripts/release-notes.sh "${TAG#v}" | tee release-notes.md
+        run: |
+          sh scripts/release-notes.sh "${TAG#v}" > release-notes.md
+          cat release-notes.md
 
       - name: Create the release
         if: env.DRY_RUN != 'true'
