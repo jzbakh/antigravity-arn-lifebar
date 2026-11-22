@@ -33,6 +33,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Check that the tag has no release yet
+        if: env.DRY_RUN != 'true'
+        run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "::error::$TAG already has a release"
+            exit 1
+          fi
+
       # GitLab publishes to the stores; this job releases the exact file Open VSX serves.
       - name: Wait for the version on Open VSX
         run: |
