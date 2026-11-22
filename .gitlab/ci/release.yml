@@ -35,10 +35,13 @@ package:
     - npx --yes "$VSCE" ls | LC_ALL=C sort | diff -u scripts/vsix-files.txt -
     - npx --yes "$VSCE" package -o antigravity-arn-lifebar.vsix
     - sha256sum antigravity-arn-lifebar.vsix
+    # After packaging, so neither file lands in the VSIX.
+    - sh scripts/release-notes.sh "$VERSION" > release-notes.md
     - echo "VERSION=$VERSION" > release.env
   artifacts:
     paths:
       - antigravity-arn-lifebar.vsix
+      - release-notes.md
     reports:
       dotenv: release.env
     expire_in: never
@@ -78,10 +81,11 @@ release:gitlab:
     - .release-glab
     - .on-release
   needs:
+    - package
     - publish:vs-marketplace
     - publish:open-vsx
   script:
-    - sh scripts/release-notes.sh "${CI_COMMIT_TAG#v}" > release-notes.md
+    - echo "Releasing $CI_COMMIT_TAG."
   release:
     tag_name: $CI_COMMIT_TAG
     name: $CI_COMMIT_TAG
@@ -107,7 +111,7 @@ release:dry-run:
     - package
     - verify-tokens
   script:
-    - sh scripts/release-notes.sh "$VERSION"
+    - cat release-notes.md
     - sha256sum antigravity-arn-lifebar.vsix
     - echo "Dry run of v$VERSION complete; nothing was published."
 
