@@ -3,9 +3,11 @@ spec:
     PIPELINE:
       description: "Pipeline mode: badges, full-matrix, release-dry-run, release-backfill, or empty for a regular run"
       default: ""
+      regex: ^(badges|full-matrix|release-dry-run|release-backfill)?$
     TAG:
       description: "Existing release tag for release-backfill, such as v1.2.3"
       default: ""
+      regex: ^(v[0-9]+\.[0-9]+\.[0-9]+)?$
 
 ---
 # Routing only. Job definitions live in .gitlab/ci/, trigger definitions in
