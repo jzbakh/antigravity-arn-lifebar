@@ -11,9 +11,12 @@ if (!/^v\d+\.\d+\.\d+$/.test(tag)) throw new Error(`Expected a release tag such 
 const ASSET = 'antigravity-arn-lifebar.vsix';
 const version = tag.slice(1);
 
+// Only a 404 means "not there"; any other error stops the job.
 async function request(url) {
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
-    return res.ok ? res : null;
+    if (res.ok) return res;
+    if (res.status === 404) return null;
+    throw new Error(`${url} answered HTTP ${res.status}; retry the job.`);
 }
 
 async function download(url) {
