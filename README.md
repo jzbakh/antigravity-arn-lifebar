@@ -211,7 +211,7 @@ If you'd like to financially support the development and future updates, you can
 ---
 
 <p align="center">
-  <b>Made with 🩵 by <a href="https://gitlab.com/arn_inside">jzbakh</a></b>
+  <b>Made with 🩵 by <a href="https://github.com/jzbakh">jzbakh</a></b>
 </p>
 
 ---
@@ -389,7 +389,7 @@ Si vous souhaitez contribuer financièrement au développement et aux futures mi
 ---
 
 <p align="center">
-  <b>Créé avec 🩵 par <a href="https://gitlab.com/arn_inside">jzbakh</a></b>
+  <b>Créé avec 🩵 par <a href="https://github.com/jzbakh">jzbakh</a></b>
 </p>
 
 ---
@@ -566,7 +566,7 @@ ARN-Lifebar 读取 **Antigravity IDE** 中的 Google AI Plus/Pro/Ultra 配额，
 ---
 
 <p align="center">
-  <b>由 <a href="https://gitlab.com/arn_inside">jzbakh</a> 用 🩵 制作</b>
+  <b>由 <a href="https://github.com/jzbakh">jzbakh</a> 用 🩵 制作</b>
 </p>
 
 ---
@@ -743,7 +743,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 ---
 
 <p align="center">
-  <b>Hecho con 🩵 por <a href="https://gitlab.com/arn_inside">jzbakh</a></b>
+  <b>Hecho con 🩵 por <a href="https://github.com/jzbakh">jzbakh</a></b>
 </p>
 
 ---
@@ -920,7 +920,7 @@ Si deseas contribuir económicamente al desarrollo y a futuras actualizaciones, 
 ---
 
 <p align="center">
-  <b>صُنع بـ 🩵 بواسطة <a href="https://gitlab.com/arn_inside">jzbakh</a></b>
+  <b>صُنع بـ 🩵 بواسطة <a href="https://github.com/jzbakh">jzbakh</a></b>
 </p>
 
 ---
@@ -1097,5 +1097,5 @@ ARN-Lifebar อ่านโควตา Google AI Plus/Pro/Ultra จาก **Ant
 ---
 
 <p align="center">
-  <b>สร้างด้วย 🩵 โดย <a href="https://gitlab.com/arn_inside">jzbakh</a></b>
+  <b>สร้างด้วย 🩵 โดย <a href="https://github.com/jzbakh">jzbakh</a></b>
 </p>
