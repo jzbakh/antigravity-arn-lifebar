@@ -2,14 +2,14 @@
 
 # Antigravity ARN-Lifebar: Minimalist extension to view your Google Antigravity AI quotas in your IDE's status bar
 
-[![Version](https://img.shields.io/gitlab/v/tag/arn_inside/antigravity-arn-lifebar?label=version&color=blue&sort=semver)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/releases)
+[![Version](https://img.shields.io/github/v/tag/jzbakh/antigravity-arn-lifebar?label=version&color=blue&sort=semver)](https://github.com/jzbakh/antigravity-arn-lifebar/releases)
 [![VS Marketplace Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/marketplace-downloads.json)](https://marketplace.visualstudio.com/items?itemName=jzbakh.antigravity-arn-lifebar)
 [![Open VSX Downloads](https://img.shields.io/endpoint?url=https://gitlab.com/arn_inside/antigravity-arn-lifebar/-/raw/badges-gitlab/.gitlab/badges/openvsx-downloads.json)](https://open-vsx.org/extension/jzbakh/antigravity-arn-lifebar)
 
 [![GitHub stars](https://img.shields.io/github/stars/jzbakh/antigravity-arn-lifebar?style=flat&color=gold&logo=github)](https://github.com/jzbakh/antigravity-arn-lifebar)
 [![GitLab stars](https://img.shields.io/gitlab/stars/arn_inside/antigravity-arn-lifebar?style=flat&color=gold&logo=gitlab)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
 [![GitHub issues](https://img.shields.io/github/issues/jzbakh/antigravity-arn-lifebar)](https://github.com/jzbakh/antigravity-arn-lifebar/issues)
-[![License](https://img.shields.io/gitlab/license/arn_inside/antigravity-arn-lifebar?color=blue)](https://gitlab.com/arn_inside/antigravity-arn-lifebar)
+[![License](https://img.shields.io/github/license/jzbakh/antigravity-arn-lifebar?color=blue)](https://github.com/jzbakh/antigravity-arn-lifebar/blob/main/LICENSE)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/package.json)
 [![Telemetry](https://img.shields.io/badge/telemetry-none-success.svg)](https://gitlab.com/arn_inside/antigravity-arn-lifebar/blob/main/extension.js)
